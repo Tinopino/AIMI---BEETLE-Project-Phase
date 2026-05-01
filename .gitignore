@@ -7,3 +7,21 @@
 # Python bytecode files
 __pycache__/
 *.py[cod]
+
+data/
+
+# Ignore nnU-Net environment variables/folders
+nnunet_raw/
+nnunet_preprocessed/
+nnunet_results/
+
+# Ignore macOS hidden files
+.DS_Store
+
+# Ignore Python cache and virtual environments
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+.ipynb_checkpoints/
