@@ -7,8 +7,8 @@ from PIL import Image
 from tqdm import tqdm
 
 def create_mini_nnunet_dataset():
-    wsi_dir = "data/images/development/wsis"
-    mask_dir = "data/annotations/masks"
+    wsi_dir = "D:/AIMI---BEETLE-Project-Phase/data/images/images/development/wsis"
+    mask_dir = "D:/AIMI---BEETLE-Project-Phase/data/annotations/annotations/masks"
     output_dir = os.environ.get("nnUNet_raw", "./nnunet_raw")
     
     dataset_name = "Dataset301_BEETLE"

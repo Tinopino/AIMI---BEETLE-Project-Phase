@@ -9,7 +9,8 @@ __pycache__/
 *.py[cod]
 
 data/
-
+inference
+inspection_outputs
 # Ignore nnU-Net environment variables/folders
 nnunet_raw/
 nnunet_preprocessed/
