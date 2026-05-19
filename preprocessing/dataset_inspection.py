@@ -585,6 +585,8 @@ def write_summary(df: pd.DataFrame, summary_path: Path, image_dir: Path, mask_di
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser()
+    parser.add_argument("--shard-index", type=int, default=0)
+    parser.add_argument("--num-shards", type=int, default=1)
     parser.add_argument("--max-cases", type=int, default=None)
     parser.add_argument("--image-dir", type=Path, default=IMAGE_DIR)
     parser.add_argument("--mask-dir", type=Path, default=MASK_DIR)
@@ -627,6 +629,8 @@ def main():
 
     image_files = find_files(args.image_dir)
     mask_files = find_files(args.mask_dir)
+    if args.num_shards > 1:
+        image_files = image_files[args.shard_index :: args.num_shards]
     if args.max_cases is not None:
         image_files = image_files[: args.max_cases]
     mask_by_stem = {p.stem: p for p in mask_files}
