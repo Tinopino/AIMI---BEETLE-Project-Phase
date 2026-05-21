@@ -1,0 +1,4 @@
+[submodule "nnUNet_pathology"]
+	path = nnUNet_pathology
+	url = https://github.com/DIAGNijmegen/nnUNet-for-pathology.git
+	branch = nnunet_for_pathology_v2
