@@ -39,10 +39,7 @@ class DC_and_Focal_loss(nn.Module):
         focal_loss = self.focal(net_output, target) if self.weight_ce != 0 else 0
         return self.weight_dice * dc_loss + self.weight_ce * focal_loss
 
-# NOTE: In nnUNet-for-pathology, WSI handling, stain augmentations, and batch 
-# norm are handled via the default nnUNetTrainer or its specific plans files.
-# By inheriting from nnUNetTrainer here, we get all the pathology features 
-# automatically when using the pathology fork, while only overriding the loss.
+
 
 class nnUNetTrainerPathologyFocal(nnUNetTrainer):
     """
