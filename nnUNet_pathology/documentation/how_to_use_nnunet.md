@@ -6,7 +6,7 @@ all the way to ensembling. After running nnU-Net, the trained model(s) can be ap
 ### Dataset Format
 nnU-Net expects datasets in a structured format. This format is inspired by the data structure of
 the [Medical Segmentation Decthlon](http://medicaldecathlon.com/). Please read
-[this](documentation/dataset_format.md) for information on how to set up datasets to be compatible with nnU-Net.
+[this](dataset_format.md) for information on how to set up datasets to be compatible with nnU-Net.
 
 **Since version 2 we support multiple image file formats (.nii.gz, .png, .tif, ...)! Read the dataset_format 
 documentation to learn more!**
@@ -189,7 +189,7 @@ wait
 **Important: The first time a training is run nnU-Net will extract the preprocessed data into uncompressed numpy 
 arrays for speed reasons! This operation must be completed before starting more than one training of the same 
 configuration! Wait with starting subsequent folds until the first training is using the GPU! Depending on the 
-dataset size and your System this should oly take a couple of minutes at most.**
+dataset size and your System this should only take a couple of minutes at most.**
 
 If you insist on running DDP multi-GPU training, we got you covered:
 

@@ -1,0 +1,47 @@
+{
+    "wholeslidedata": {
+        "default": {
+            "yaml_source": "",
+            "image_backend": "asap",
+            "labels": "",
+            "annotation_parser": {
+                "*object": "wholeslidedata.annotation.parser.WholeSlideAnnotationParser",
+                "sorters": [
+                    "${$wholeslidedata.annotation.selector.sort_by_area_with_roi}"
+                ],
+            "sample_annotation_types" : ["point", "polygon"]
+            },
+            "batch_shape": {
+                "batch_size": "",
+                "spacing": "",
+                "shape": ""
+            },
+            "dataset": {
+                "copy_path": "/home/user/data",
+                "spacing": 0.5
+            },
+            "label_sampler_name": "WeightedLabelSampler",
+            "label_sampler": {
+                "labels": ""
+            },
+            "point_sampler_name": "RandomPointSampler",
+            "batch_callbacks": [
+                {
+                    "*object": "nnunetv2.training.nnUNetTrainer.variants.pathology.wsd_points_to_seg_callback.PointsToSegBatchCallbackInnerBorderTillCentroid",
+                        "point_sizes_dict": "",
+                        "spacing": 0.5,
+                        "centroid_size": "",
+                        "border_value": ""
+                    },
+
+                {
+                    "*object": "nnunetv2.training.nnUNetTrainer.variants.pathology.wsd_pathology_DA_callback.nnUnetBatchCallback",
+                        "patch_size_spatial": []},
+                {
+                    "*object": "wholeslidedata.samplers.callbacks.DeepSupervisionBatchCallback",
+                        "sizes": []
+                }
+            ]
+        }
+    }
+}

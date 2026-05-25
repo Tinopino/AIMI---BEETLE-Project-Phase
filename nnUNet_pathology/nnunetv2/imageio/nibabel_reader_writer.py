@@ -41,14 +41,14 @@ class NibabelIO(BaseReaderWriter):
         spacings_for_nnunet = []
         for f in image_fnames:
             nib_image = nibabel.load(f)
-            assert len(nib_image.shape) == 3, 'only 3d images are supported by NibabelIO'
+            assert nib_image.ndim == 3, 'only 3d images are supported by NibabelIO'
             original_affine = nib_image.affine
 
             original_affines.append(original_affine)
 
             # spacing is taken in reverse order to be consistent with SimpleITK axis ordering (confusing, I know...)
             spacings_for_nnunet.append(
-                    nib_image.header.get_zooms()[::-1]
+                    [float(i) for i in nib_image.header.get_zooms()[::-1]]
             )
 
             # transpose image to be consistent with the way SimpleITk reads images. Yeah. Annoying.
@@ -120,7 +120,7 @@ class NibabelIOWithReorient(BaseReaderWriter):
         spacings_for_nnunet = []
         for f in image_fnames:
             nib_image = nibabel.load(f)
-            assert len(nib_image.shape) == 3, 'only 3d images are supported by NibabelIO'
+            assert nib_image.ndim == 3, 'only 3d images are supported by NibabelIO'
             original_affine = nib_image.affine
             reoriented_image = nib_image.as_reoriented(io_orientation(original_affine))
             reoriented_affine = reoriented_image.affine
@@ -130,7 +130,7 @@ class NibabelIOWithReorient(BaseReaderWriter):
 
             # spacing is taken in reverse order to be consistent with SimpleITK axis ordering (confusing, I know...)
             spacings_for_nnunet.append(
-                    nib_image.header.get_zooms()[::-1]
+                    [float(i) for i in reoriented_image.header.get_zooms()[::-1]]
             )
 
             # transpose image to be consistent with the way SimpleITk reads images. Yeah. Annoying.
@@ -179,7 +179,7 @@ class NibabelIOWithReorient(BaseReaderWriter):
 
         seg_nib = nibabel.Nifti1Image(seg, affine=properties['nibabel_stuff']['reoriented_affine'])
         seg_nib_reoriented = seg_nib.as_reoriented(io_orientation(properties['nibabel_stuff']['original_affine']))
-        assert np.all(np.isclose(properties['nibabel_stuff']['original_affine'], seg_nib_reoriented.affine)), \
+        assert np.allclose(properties['nibabel_stuff']['original_affine'], seg_nib_reoriented.affine), \
             'restored affine does not match original affine'
         nibabel.save(seg_nib_reoriented, output_fname)
 
