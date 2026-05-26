@@ -2,12 +2,8 @@ import torch
 import torch.nn as nn
 from nnunetv2.training.nnUNetTrainer.nnUNetTrainer import nnUNetTrainer
 from nnunetv2.training.loss.dice import MemoryEfficientSoftDiceLoss
-from nnunetv2.training.loss.compound_losses import MultipleOutputLoss2
 
 class FocalLoss(nn.Module):
-    """
-    Standard PyTorch implementation of Focal Loss for multi-class segmentation.
-    """
     def __init__(self, gamma=2.0):
         super(FocalLoss, self).__init__()
         self.gamma = gamma
@@ -22,9 +18,6 @@ class FocalLoss(nn.Module):
         return focal_loss.mean()
 
 class DC_and_Focal_loss(nn.Module):
-    """
-    Custom wrapper to combine Dice Loss and Focal Loss.
-    """
     def __init__(self, soft_dice_kwargs, focal_kwargs, weight_ce=1.0, weight_dice=1.0, ignore_label=None):
         super(DC_and_Focal_loss, self).__init__()
         self.weight_dice = weight_dice
@@ -39,18 +32,10 @@ class DC_and_Focal_loss(nn.Module):
         focal_loss = self.focal(net_output, target) if self.weight_ce != 0 else 0
         return self.weight_dice * dc_loss + self.weight_ce * focal_loss
 
-
-
 class nnUNetTrainerPathologyFocal(nnUNetTrainer):
-    """
-    Custom Trainer for the BEETLE Challenge WSI data.
-    Uses Dice + Focal Loss to handle severe class imbalance for Necrosis
-    while retaining the pathology fork's native WSI loading and augmentations.
-    """
     def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True, device: torch.device = torch.device('cuda')):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
-        # IMPORTANT: Set to 250 or 1000 for your actual server training run!
-        self.num_epochs = 250 
+        self.num_epochs = 250
 
     def _build_loss(self):
         dice_kwargs = {
@@ -60,7 +45,6 @@ class nnUNetTrainerPathologyFocal(nnUNetTrainer):
             'ddp': self.is_ddp
         }
         
-        # gamma=2.0 heavily penalizes the network for missing rare classes (necrosis)
         focal_kwargs = {'gamma': 2.0}
 
         loss = DC_and_Focal_loss(
@@ -71,8 +55,14 @@ class nnUNetTrainerPathologyFocal(nnUNetTrainer):
             ignore_label=self.label_manager.ignore_label
         )
 
-        if self.enable_deep_supervision:
+        # Check if deep_supervision is enabled using getattr to be completely safe
+        # across both old and new nnU-Net versions
+        do_ds = getattr(self, 'enable_deep_supervision', getattr(self, 'deep_supervision', True))
+        
+        if do_ds:
             from nnunetv2.training.loss.deep_supervision import DeepSupervisionWrapper
-            loss = DeepSupervisionWrapper(loss, self.configuration_manager.pool_op_kernel_sizes)
+            # In the pathology fork, deep supervision weights are precomputed and stored
+            # in self.ds_loss_weights, so we must pass those instead of kernel sizes!
+            loss = DeepSupervisionWrapper(loss, getattr(self, 'ds_loss_weights', None))
             
         return loss
