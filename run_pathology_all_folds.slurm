@@ -8,7 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=12
 #SBATCH --mem=18G
-#SBATCH --time=12:00:00
+#SBATCH --time=6:00:00
 #SBATCH --output=logs/pathology-fold-%A_%a.out
 #SBATCH --error=logs/pathology-fold-%A_%a.out
 
@@ -16,7 +16,7 @@ set -euo pipefail
 umask 002
 
 FOLD="${SLURM_ARRAY_TASK_ID:-${1:-0}}"
-TRAINER="nnUNetTrainer_WSD_wei_i0_nnunet_aug_json"
+TRAINER="nnUNetTrainerPathologyFocalClassMetricsAlpha"
 
 cd ~/AIMI---BEETLE-Project-Phase
 mkdir -p logs
