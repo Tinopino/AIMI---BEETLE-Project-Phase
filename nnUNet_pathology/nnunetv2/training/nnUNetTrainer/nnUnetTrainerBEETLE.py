@@ -805,3 +805,160 @@ class nnUNetTrainerPathologyFocalClassMetricsAlpha(nnUNetTrainerPathologyFocalCl
 
         return DeepSupervisionWrapper(loss, weights)
 
+
+# Append this block to the bottom of the existing trainer Python file
+# that already defines nnUNetTrainerPathologyFocalClassMetricsAlpha.
+
+# =============================================================================
+# LONG-RUN TRAINER: 1000 EPOCHS + BEST-SO-FAR MILESTONE ARCHIVES
+# =============================================================================
+
+class nnUNetTrainerPathologyFocalClassMetricsAlpha1000Milestones(
+    nnUNetTrainerPathologyFocalClassMetricsAlpha
+):
+    """
+    Uses the existing alpha-weighted focal-loss trainer unchanged, but:
+    - trains for 1000 epochs;
+    - preserves the normal live checkpoint_best.pth;
+    - preserves the normal live checkpoint_best_class_<label>_<name>.pth files;
+    - archives best-so-far copies after 250, 500, 750 and 1000 completed epochs.
+
+    The archived milestone directories contain the best checkpoints observed
+    up to that milestone, not merely the network state from the exact final
+    epoch in the interval.
+    """
+
+    MILESTONE_EPOCHS = (250, 500, 750, 1000)
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        super().__init__(
+            plans,
+            configuration,
+            fold,
+            dataset_json,
+            unpack_dataset,
+            device,
+        )
+
+        # Override the 250-epoch limit inherited from nnUNetTrainerPathologyFocal.
+        # This is set before initialize(), so the LR scheduler sees 1000 epochs.
+        self.num_epochs = 1000
+
+        # Keep a resumable latest checkpoint after every epoch.
+        self.save_every = 1
+
+    def _archive_best_so_far(
+        self,
+        completed_epoch: int,
+        include_final: bool = False,
+    ) -> None:
+        """
+        Copy the current best-so-far checkpoints into:
+            fold_X/milestone_best_checkpoints/epoch_0250/
+            fold_X/milestone_best_checkpoints/epoch_0500/
+            fold_X/milestone_best_checkpoints/epoch_0750/
+            fold_X/milestone_best_checkpoints/epoch_1000/
+        """
+        if not self._is_rank0():
+            return
+
+        import glob
+        import shutil
+
+        destination = join(
+            self.output_folder,
+            "milestone_best_checkpoints",
+            f"epoch_{completed_epoch:04d}",
+        )
+        os.makedirs(destination, exist_ok=True)
+
+        copied_files = []
+
+        # Copies:
+        #   checkpoint_best.pth
+        #   checkpoint_best_class_1_other.pth
+        #   checkpoint_best_class_2_non-invasive_epithelium.pth
+        #   checkpoint_best_class_3_invasive_epithelium.pth
+        #   checkpoint_best_class_4_necrosis.pth
+        for source in sorted(
+            glob.glob(join(self.output_folder, "checkpoint_best*.pth"))
+        ):
+            filename = os.path.basename(source)
+            shutil.copy2(source, join(destination, filename))
+            copied_files.append(filename)
+
+        # Optional but useful: exact resumable state at the milestone.
+        latest_path = join(self.output_folder, "checkpoint_latest.pth")
+        if os.path.isfile(latest_path):
+            shutil.copy2(latest_path, join(destination, "checkpoint_latest.pth"))
+            copied_files.append("checkpoint_latest.pth")
+
+        # At training end, include the standard final checkpoint as well.
+        if include_final:
+            final_path = join(self.output_folder, "checkpoint_final.pth")
+            if os.path.isfile(final_path):
+                shutil.copy2(final_path, join(destination, "checkpoint_final.pth"))
+                copied_files.append("checkpoint_final.pth")
+
+        manifest = {
+            "trainer_name": self.__class__.__name__,
+            "fold": int(self.fold),
+            "completed_epoch": int(completed_epoch),
+            "best_general_ema": (
+                None if self._best_ema is None else float(self._best_ema)
+            ),
+            "best_class_dice": {
+                str(label): float(value)
+                for label, value in sorted(self.best_class_dice.items())
+            },
+            "copied_files": sorted(set(copied_files)),
+        }
+
+        with open(join(destination, "manifest.json"), "w") as f:
+            json.dump(manifest, f, indent=4)
+
+        self.print_to_log_file(
+            f"Archived best-so-far checkpoints after epoch {completed_epoch}: "
+            f"{sorted(set(copied_files))}",
+            also_print_to_console=True,
+        )
+
+    def on_epoch_end(self):
+        """
+        Run the inherited logic first.
+
+        The pathology parent saves checkpoint_latest.pth, updates the normal
+        checkpoint_best.pth if the overall EMA improved, and increments
+        self.current_epoch. The per-class checkpoints were already updated in
+        on_validation_epoch_end().
+        """
+        super().on_epoch_end()
+
+        # After super().on_epoch_end(), self.current_epoch is the number of
+        # completed epochs: 250, 500, 750 or 1000.
+        if self.current_epoch in self.MILESTONE_EPOCHS:
+            self._archive_best_so_far(self.current_epoch)
+
+    def on_train_end(self):
+        """
+        Keep the normal final-checkpoint behavior and add checkpoint_final.pth
+        to the epoch-1000 archive.
+        """
+        super().on_train_end()
+
+        if self.current_epoch >= 1000:
+            self._archive_best_so_far(1000, include_final=True)
+
+
+
+
+
+

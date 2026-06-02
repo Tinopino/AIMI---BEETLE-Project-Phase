@@ -295,8 +295,8 @@ predictor = nnUNetPredictor(
 
 predictor.initialize_from_trained_model_folder(
     model_base_path,
-    use_folds=(0, 1, 2, 3, 4),
-    checkpoint_name='checkpoint_best.pth',
+    use_folds=getattr(config, "folds_to_use", (0,)),
+    checkpoint_name=getattr(config, "checkpoint_name", "checkpoint_best.pth"),
 )
 
 #################################################################
@@ -455,7 +455,7 @@ for idx_match, (image_path, mask_path) in enumerate(matches_to_run):
             # Only write inner part
             pred_output_inner = crop_data(pred_output, [output_patch_size, output_patch_size])
             uncertainty_output_inner = crop_data(uncertainty_output, [output_patch_size, output_patch_size])
-            y_batch_inner = crop_data(y_batch[0], [output_patch_size, output_patch_size]).astype('int64')
+            y_batch_inner = (crop_data(y_batch[0], [output_patch_size, output_patch_size]) > 0).astype('uint8')
             # Get patch point
             x_coord, y_coord = info['x']//downsampling, info['y']//downsampling # convert coordinates to writing spacing
             x_coord, y_coord = x_coord - output_patch_size/2, y_coord - output_patch_size/2 # from middle point to upper left point of tile to write
