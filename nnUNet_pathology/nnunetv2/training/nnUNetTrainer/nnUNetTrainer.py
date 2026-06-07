@@ -1069,6 +1069,8 @@ class nnUNetTrainer(object):
 
         if isinstance(filename_or_checkpoint, str):
             checkpoint = torch.load(filename_or_checkpoint, map_location=self.device, weights_only=False)
+        else:
+            checkpoint = filename_or_checkpoint
         # if state dict comes from nn.DataParallel but we use non-parallel model here then the state dict keys do not
         # match. Use heuristic to make it match
         new_state_dict = {}

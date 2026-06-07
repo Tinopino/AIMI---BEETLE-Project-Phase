@@ -1,0 +1,858 @@
+
+#######################################################################
+Please cite the following paper when using nnU-Net:
+Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H. (2021). nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nature methods, 18(2), 203-211.
+#######################################################################
+ 
+2026-06-05 14:42:42.221289: Using larger-context weighted-focal fine-tuning: patch_size=[1024, 1024], WSD batch_size=2, initial_lr=0.001, num_epochs=100 
+2026-06-05 14:42:43.771693: Using Dice + AlphaWeightedFocal loss with focal_alpha={1: 0.859, 2: 1.05, 3: 1.718, 4: 1.336} 
+
+This is the configuration used by this training:
+Configuration name: 2d_context1024
+ {'data_identifier': 'nnUNetWholeSlideDataPlans_2d', 'preprocessor_name': 'DefaultPreprocessor', 'batch_size': 2, 'patch_size': [1024, 1024], 'median_image_size_in_voxels': [1024, 1024], 'spacing': [1, 1], 'normalization_schemes': ['RGBTo01Normalization', 'RGBTo01Normalization', 'RGBTo01Normalization'], 'use_mask_for_norm': [False, False, False], 'UNet_class_name': 'PlainConvUNet', 'UNet_base_num_features': 32, 'n_conv_per_stage_encoder': [2, 2, 2, 2, 2, 2, 2, 2], 'n_conv_per_stage_decoder': [2, 2, 2, 2, 2, 2, 2], 'num_pool_per_axis': [7, 7], 'pool_op_kernel_sizes': [[1, 1], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2]], 'conv_kernel_sizes': [[3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3]], 'unet_max_num_features': 512, 'batch_dice': True} 
+ 
+These are the global plan.json settings:
+ {'dataset_name': 'Dataset301_BEETLE', 'plans_name': 'nnUNetWholeSlideDataPlans', 'image_reader_writer': 'NaturalImage2DIO', 'transpose_forward': [0, 1, 2], 'transpose_backward': [0, 1, 2], 'experiment_planner_used': 'PathologyExperimentPlanner', 'label_manager': 'LabelManager'} 
+ 
+2026-06-05 14:43:20.616925: Unable to plot network architecture: 
+2026-06-05 14:43:20.619792: No module named 'hiddenlayer' 
+2026-06-05 14:43:20.720035:  
+2026-06-05 14:43:20.728714: Epoch 0 
+2026-06-05 14:43:20.731838: Current learning rate: 0.001 
+2026-06-05 14:45:25.909718: Per-class validation Dice: 1_other=0.5498 | 2_non-invasive_epithelium=0.5963 | 3_invasive_epithelium=0.5807 | 4_necrosis=0.7254 
+2026-06-05 14:45:25.957771: New best validation Dice for class 1 (other): 0.5498 at epoch 0. Saving checkpoint_best_class_1_other.pth 
+2026-06-05 14:45:29.226465: New best validation Dice for class 2 (non-invasive epithelium): 0.5963 at epoch 0. Saving checkpoint_best_class_2_non-invasive_epithelium.pth 
+2026-06-05 14:45:31.761540: New best validation Dice for class 3 (invasive epithelium): 0.5807 at epoch 0. Saving checkpoint_best_class_3_invasive_epithelium.pth 
+2026-06-05 14:45:36.510913: New best validation Dice for class 4 (necrosis): 0.7254 at epoch 0. Saving checkpoint_best_class_4_necrosis.pth 
+2026-06-05 14:45:39.605624: train_loss -0.2048 
+2026-06-05 14:45:39.650850: val_loss -0.1626 
+2026-06-05 14:45:39.690317: Pseudo dice [0.5498, 0.5963, 0.5807, 0.7254] 
+2026-06-05 14:45:39.724966: Epoch time: 138.89 s 
+2026-06-05 14:45:43.554730: Yayy! New best EMA pseudo Dice: 0.613 
+2026-06-05 14:45:47.631545:  
+2026-06-05 14:45:47.661737: Epoch 1 
+2026-06-05 14:45:47.688538: Current learning rate: 0.00099 
+2026-06-05 14:47:05.142935: Per-class validation Dice: 1_other=0.5495 | 2_non-invasive_epithelium=0.6262 | 3_invasive_epithelium=0.6226 | 4_necrosis=0.7131 
+2026-06-05 14:47:05.154829: New best validation Dice for class 2 (non-invasive epithelium): 0.6262 at epoch 1. Saving checkpoint_best_class_2_non-invasive_epithelium.pth 
+2026-06-05 14:47:09.930946: New best validation Dice for class 3 (invasive epithelium): 0.6226 at epoch 1. Saving checkpoint_best_class_3_invasive_epithelium.pth 
+2026-06-05 14:47:13.074625: train_loss -0.1852 
+2026-06-05 14:47:13.240503: val_loss 0.0094 
+2026-06-05 14:47:13.375502: Pseudo dice [0.5495, 0.6262, 0.6226, 0.7131] 
+2026-06-05 14:47:13.464313: Epoch time: 85.44 s 
+2026-06-05 14:47:16.367938: Yayy! New best EMA pseudo Dice: 0.6145 
+2026-06-05 14:47:22.021616:  
+2026-06-05 14:47:22.081872: Epoch 2 
+2026-06-05 14:47:22.134850: Current learning rate: 0.00098 
+2026-06-05 14:48:30.860693: Per-class validation Dice: 1_other=0.5449 | 2_non-invasive_epithelium=0.5665 | 3_invasive_epithelium=0.5517 | 4_necrosis=0.7595 
+2026-06-05 14:48:30.864814: New best validation Dice for class 4 (necrosis): 0.7595 at epoch 2. Saving checkpoint_best_class_4_necrosis.pth 
+2026-06-05 14:48:34.326788: train_loss -0.1943 
+2026-06-05 14:48:34.358256: val_loss 0.0013 
+2026-06-05 14:48:34.385883: Pseudo dice [0.5449, 0.5665, 0.5517, 0.7595] 
+2026-06-05 14:48:34.410266: Epoch time: 72.31 s 
+2026-06-05 14:48:39.305850:  
+2026-06-05 14:48:39.367251: Epoch 3 
+2026-06-05 14:48:39.427391: Current learning rate: 0.00097 
+2026-06-05 14:49:47.609318: Per-class validation Dice: 1_other=0.5425 | 2_non-invasive_epithelium=0.6723 | 3_invasive_epithelium=0.6131 | 4_necrosis=0.7466 
+2026-06-05 14:49:47.613781: New best validation Dice for class 2 (non-invasive epithelium): 0.6723 at epoch 3. Saving checkpoint_best_class_2_non-invasive_epithelium.pth 
+2026-06-05 14:49:50.809297: train_loss -0.1867 
+2026-06-05 14:49:50.856314: val_loss -0.0254 
+2026-06-05 14:49:50.896605: Pseudo dice [0.5425, 0.6723, 0.6131, 0.7466] 
+2026-06-05 14:49:50.935290: Epoch time: 71.5 s 
+2026-06-05 14:49:54.671628: Yayy! New best EMA pseudo Dice: 0.6166 
+2026-06-05 14:49:59.776247:  
+2026-06-05 14:49:59.797076: Epoch 4 
+2026-06-05 14:49:59.815175: Current learning rate: 0.00096 
+2026-06-05 14:51:06.293314: Per-class validation Dice: 1_other=0.6116 | 2_non-invasive_epithelium=0.5975 | 3_invasive_epithelium=0.6108 | 4_necrosis=0.7230 
+2026-06-05 14:51:06.296844: New best validation Dice for class 1 (other): 0.6116 at epoch 4. Saving checkpoint_best_class_1_other.pth 
+2026-06-05 14:51:09.229452: train_loss -0.2446 
+2026-06-05 14:51:09.266246: val_loss -0.0498 
+2026-06-05 14:51:09.298280: Pseudo dice [0.6116, 0.5975, 0.6108, 0.723] 
+2026-06-05 14:51:09.326558: Epoch time: 69.45 s 
+2026-06-05 14:51:12.093855: Yayy! New best EMA pseudo Dice: 0.6185 
+2026-06-05 14:51:16.438821:  
+2026-06-05 14:51:16.440694: Epoch 5 
+2026-06-05 14:51:16.442744: Current learning rate: 0.00095 
+2026-06-05 14:52:23.981273: Per-class validation Dice: 1_other=0.5716 | 2_non-invasive_epithelium=0.6968 | 3_invasive_epithelium=0.5521 | 4_necrosis=0.8565 
+2026-06-05 14:52:24.056508: New best validation Dice for class 2 (non-invasive epithelium): 0.6968 at epoch 5. Saving checkpoint_best_class_2_non-invasive_epithelium.pth 
+2026-06-05 14:52:27.636918: New best validation Dice for class 4 (necrosis): 0.8565 at epoch 5. Saving checkpoint_best_class_4_necrosis.pth 
+2026-06-05 14:52:30.456067: train_loss -0.1967 
+2026-06-05 14:52:30.509216: val_loss -0.1883 
+2026-06-05 14:52:30.549305: Pseudo dice [0.5716, 0.6968, 0.5521, 0.8565] 
+2026-06-05 14:52:30.584532: Epoch time: 74.02 s 
+2026-06-05 14:52:34.007985: Yayy! New best EMA pseudo Dice: 0.6236 
+2026-06-05 14:52:38.792142:  
+2026-06-05 14:52:38.813972: Epoch 6 
+2026-06-05 14:52:38.828270: Current learning rate: 0.00095 
+2026-06-05 14:53:55.709900: Per-class validation Dice: 1_other=0.5527 | 2_non-invasive_epithelium=0.7650 | 3_invasive_epithelium=0.5788 | 4_necrosis=0.8536 
+2026-06-05 14:53:55.797269: New best validation Dice for class 2 (non-invasive epithelium): 0.7650 at epoch 6. Saving checkpoint_best_class_2_non-invasive_epithelium.pth 
+2026-06-05 14:53:59.375018: train_loss -0.1715 
+2026-06-05 14:53:59.855995: val_loss -0.1594 
+2026-06-05 14:53:59.900697: Pseudo dice [0.5527, 0.765, 0.5788, 0.8536] 
+2026-06-05 14:53:59.939323: Epoch time: 80.58 s 
+2026-06-05 14:54:02.768466: Yayy! New best EMA pseudo Dice: 0.63 
+2026-06-05 14:54:09.844852:  
+2026-06-05 14:54:09.863243: Epoch 7 
+2026-06-05 14:54:09.879009: Current learning rate: 0.00094 
+2026-06-05 14:55:12.771220: Per-class validation Dice: 1_other=0.5416 | 2_non-invasive_epithelium=0.7119 | 3_invasive_epithelium=0.6626 | 4_necrosis=0.8331 
+2026-06-05 14:55:12.773725: New best validation Dice for class 3 (invasive epithelium): 0.6626 at epoch 7. Saving checkpoint_best_class_3_invasive_epithelium.pth 
+2026-06-05 14:55:16.263013: train_loss -0.2548 
+2026-06-05 14:55:16.304098: val_loss -0.2087 
+2026-06-05 14:55:16.338670: Pseudo dice [0.5416, 0.7119, 0.6626, 0.8331] 
+2026-06-05 14:55:16.369396: Epoch time: 66.42 s 
+2026-06-05 14:55:19.569052: Yayy! New best EMA pseudo Dice: 0.6357 
+2026-06-05 14:55:23.896787:  
+2026-06-05 14:55:23.912099: Epoch 8 
+2026-06-05 14:55:23.931580: Current learning rate: 0.00093 
+2026-06-05 14:56:27.289936: Per-class validation Dice: 1_other=0.5046 | 2_non-invasive_epithelium=0.6907 | 3_invasive_epithelium=0.4227 | 4_necrosis=0.7345 
+2026-06-05 14:56:27.293307: train_loss -0.2363 
+2026-06-05 14:56:27.295168: val_loss 0.0355 
+2026-06-05 14:56:27.297075: Pseudo dice [0.5046, 0.6907, 0.4227, 0.7345] 
+2026-06-05 14:56:27.298469: Epoch time: 63.4 s 
+2026-06-05 14:56:31.385426:  
+2026-06-05 14:56:31.398645: Epoch 9 
+2026-06-05 14:56:31.409968: Current learning rate: 0.00092 
+2026-06-05 14:57:33.992716: Per-class validation Dice: 1_other=0.6496 | 2_non-invasive_epithelium=0.7028 | 3_invasive_epithelium=0.6818 | 4_necrosis=0.6396 
+2026-06-05 14:57:33.995872: New best validation Dice for class 1 (other): 0.6496 at epoch 9. Saving checkpoint_best_class_1_other.pth 
+2026-06-05 14:57:36.966121: New best validation Dice for class 3 (invasive epithelium): 0.6818 at epoch 9. Saving checkpoint_best_class_3_invasive_epithelium.pth 
+2026-06-05 14:57:39.767845: train_loss -0.2345 
+2026-06-05 14:57:39.807878: val_loss -0.1482 
+2026-06-05 14:57:39.845874: Pseudo dice [0.6496, 0.7028, 0.6818, 0.6396] 
+2026-06-05 14:57:39.877259: Epoch time: 68.38 s 
+2026-06-05 14:57:44.143447:  
+2026-06-05 14:57:44.164066: Epoch 10 
+2026-06-05 14:57:44.182411: Current learning rate: 0.00091 
+2026-06-05 14:58:50.560747: Per-class validation Dice: 1_other=0.6019 | 2_non-invasive_epithelium=0.7075 | 3_invasive_epithelium=0.6435 | 4_necrosis=0.7462 
+2026-06-05 14:58:50.568873: train_loss -0.2529 
+2026-06-05 14:58:50.573677: val_loss -0.1698 
+2026-06-05 14:58:50.579118: Pseudo dice [0.6019, 0.7075, 0.6435, 0.7462] 
+2026-06-05 14:58:50.583071: Epoch time: 66.43 s 
+2026-06-05 14:58:53.503573: Yayy! New best EMA pseudo Dice: 0.6387 
+2026-06-05 14:58:57.624158:  
+2026-06-05 14:58:57.634733: Epoch 11 
+2026-06-05 14:58:57.647124: Current learning rate: 0.0009 
+2026-06-05 15:00:05.789067: Per-class validation Dice: 1_other=0.6288 | 2_non-invasive_epithelium=0.7152 | 3_invasive_epithelium=0.6359 | 4_necrosis=0.8277 
+2026-06-05 15:00:05.919823: train_loss -0.2726 
+2026-06-05 15:00:06.007216: val_loss -0.1466 
+2026-06-05 15:00:06.098531: Pseudo dice [0.6288, 0.7152, 0.6359, 0.8277] 
+2026-06-05 15:00:06.156150: Epoch time: 68.3 s 
+2026-06-05 15:00:09.184175: Yayy! New best EMA pseudo Dice: 0.645 
+2026-06-05 15:00:13.965720:  
+2026-06-05 15:00:13.982783: Epoch 12 
+2026-06-05 15:00:13.997799: Current learning rate: 0.00089 
+2026-06-05 15:01:17.655058: Per-class validation Dice: 1_other=0.5259 | 2_non-invasive_epithelium=0.7419 | 3_invasive_epithelium=0.6478 | 4_necrosis=0.7504 
+2026-06-05 15:01:17.662984: train_loss -0.2645 
+2026-06-05 15:01:17.667653: val_loss -0.1173 
+2026-06-05 15:01:17.672452: Pseudo dice [0.5259, 0.7419, 0.6478, 0.7504] 
+2026-06-05 15:01:17.676292: Epoch time: 63.7 s 
+2026-06-05 15:01:21.838069: Yayy! New best EMA pseudo Dice: 0.6472 
+2026-06-05 15:01:27.261419:  
+2026-06-05 15:01:27.313303: Epoch 13 
+2026-06-05 15:01:27.360606: Current learning rate: 0.00088 
+2026-06-05 15:02:30.056204: Per-class validation Dice: 1_other=0.4940 | 2_non-invasive_epithelium=0.7360 | 3_invasive_epithelium=0.6604 | 4_necrosis=0.5468 
+2026-06-05 15:02:30.059342: train_loss -0.2127 
+2026-06-05 15:02:30.061052: val_loss -0.0552 
+2026-06-05 15:02:30.062418: Pseudo dice [0.494, 0.736, 0.6604, 0.5468] 
+2026-06-05 15:02:30.063895: Epoch time: 62.8 s 
+2026-06-05 15:02:33.825682:  
+2026-06-05 15:02:33.836644: Epoch 14 
+2026-06-05 15:02:33.846066: Current learning rate: 0.00087 
+2026-06-05 15:03:39.417001: Per-class validation Dice: 1_other=0.6322 | 2_non-invasive_epithelium=0.6594 | 3_invasive_epithelium=0.5176 | 4_necrosis=0.8085 
+2026-06-05 15:03:39.419687: train_loss -0.2634 
+2026-06-05 15:03:39.421547: val_loss -0.118 
+2026-06-05 15:03:39.422719: Pseudo dice [0.6322, 0.6594, 0.5176, 0.8085] 
+2026-06-05 15:03:39.424166: Epoch time: 65.6 s 
+2026-06-05 15:03:44.050425:  
+2026-06-05 15:03:44.062324: Epoch 15 
+2026-06-05 15:03:44.072617: Current learning rate: 0.00086 
+2026-06-05 15:04:48.477241: Per-class validation Dice: 1_other=0.5992 | 2_non-invasive_epithelium=0.6996 | 3_invasive_epithelium=0.5735 | 4_necrosis=0.7179 
+2026-06-05 15:04:48.505076: train_loss -0.2491 
+2026-06-05 15:04:48.525703: val_loss -0.0965 
+2026-06-05 15:04:48.546291: Pseudo dice [0.5992, 0.6996, 0.5735, 0.7179] 
+2026-06-05 15:04:48.564411: Epoch time: 64.46 s 
+2026-06-05 15:04:52.638686:  
+2026-06-05 15:04:52.659995: Epoch 16 
+2026-06-05 15:04:52.677943: Current learning rate: 0.00085 
+2026-06-05 15:05:57.430185: Per-class validation Dice: 1_other=0.5632 | 2_non-invasive_epithelium=0.6197 | 3_invasive_epithelium=0.5762 | 4_necrosis=0.6534 
+2026-06-05 15:05:57.435779: train_loss -0.2725 
+2026-06-05 15:05:57.437153: val_loss -0.1256 
+2026-06-05 15:05:57.438473: Pseudo dice [0.5632, 0.6197, 0.5762, 0.6534] 
+2026-06-05 15:05:57.439749: Epoch time: 64.8 s 
+2026-06-05 15:06:01.483591:  
+2026-06-05 15:06:01.539540: Epoch 17 
+2026-06-05 15:06:01.592946: Current learning rate: 0.00085 
+2026-06-05 15:07:06.766542: Per-class validation Dice: 1_other=0.5750 | 2_non-invasive_epithelium=0.6773 | 3_invasive_epithelium=0.5899 | 4_necrosis=0.6655 
+2026-06-05 15:07:06.771343: train_loss -0.2639 
+2026-06-05 15:07:06.774224: val_loss -0.0657 
+2026-06-05 15:07:06.776180: Pseudo dice [0.575, 0.6773, 0.5899, 0.6655] 
+2026-06-05 15:07:06.778187: Epoch time: 65.29 s 
+2026-06-05 15:07:11.424177:  
+2026-06-05 15:07:11.443160: Epoch 18 
+2026-06-05 15:07:11.459700: Current learning rate: 0.00084 
+2026-06-05 15:08:14.985891: Per-class validation Dice: 1_other=0.5598 | 2_non-invasive_epithelium=0.6087 | 3_invasive_epithelium=0.5074 | 4_necrosis=0.7389 
+2026-06-05 15:08:14.992198: train_loss -0.1613 
+2026-06-05 15:08:14.995293: val_loss -0.0715 
+2026-06-05 15:08:14.998171: Pseudo dice [0.5598, 0.6087, 0.5074, 0.7389] 
+2026-06-05 15:08:15.000678: Epoch time: 63.57 s 
+2026-06-05 15:08:19.186506:  
+2026-06-05 15:08:19.208233: Epoch 19 
+2026-06-05 15:08:19.230762: Current learning rate: 0.00083 
+2026-06-05 15:09:23.818663: Per-class validation Dice: 1_other=0.5763 | 2_non-invasive_epithelium=0.7226 | 3_invasive_epithelium=0.5475 | 4_necrosis=0.6818 
+2026-06-05 15:09:23.871246: train_loss -0.2237 
+2026-06-05 15:09:23.920687: val_loss -0.0768 
+2026-06-05 15:09:23.975795: Pseudo dice [0.5763, 0.7226, 0.5475, 0.6818] 
+2026-06-05 15:09:24.026451: Epoch time: 64.69 s 
+2026-06-05 15:09:30.861469:  
+2026-06-05 15:09:30.869978: Epoch 20 
+2026-06-05 15:09:30.877043: Current learning rate: 0.00082 
+2026-06-05 15:10:36.159391: Per-class validation Dice: 1_other=0.5704 | 2_non-invasive_epithelium=0.7170 | 3_invasive_epithelium=0.6777 | 4_necrosis=0.5420 
+2026-06-05 15:10:36.164516: train_loss -0.2999 
+2026-06-05 15:10:36.166464: val_loss -0.0875 
+2026-06-05 15:10:36.168003: Pseudo dice [0.5704, 0.717, 0.6777, 0.542] 
+2026-06-05 15:10:36.171543: Epoch time: 65.3 s 
+2026-06-05 15:10:44.854526:  
+2026-06-05 15:10:44.894792: Epoch 21 
+2026-06-05 15:10:45.036353: Current learning rate: 0.00081 
+2026-06-05 15:11:49.651314: Per-class validation Dice: 1_other=0.6179 | 2_non-invasive_epithelium=0.6548 | 3_invasive_epithelium=0.5977 | 4_necrosis=0.7945 
+2026-06-05 15:11:49.654783: train_loss -0.3205 
+2026-06-05 15:11:49.656094: val_loss -0.222 
+2026-06-05 15:11:49.657632: Pseudo dice [0.6179, 0.6548, 0.5977, 0.7945] 
+2026-06-05 15:11:49.658725: Epoch time: 64.8 s 
+2026-06-05 15:11:53.301874:  
+2026-06-05 15:11:53.313136: Epoch 22 
+2026-06-05 15:11:53.323519: Current learning rate: 0.0008 
+2026-06-05 15:12:55.886986: Per-class validation Dice: 1_other=0.5108 | 2_non-invasive_epithelium=0.6761 | 3_invasive_epithelium=0.4379 | 4_necrosis=0.7881 
+2026-06-05 15:12:55.906627: train_loss -0.2537 
+2026-06-05 15:12:55.923007: val_loss -0.1287 
+2026-06-05 15:12:55.935036: Pseudo dice [0.5108, 0.6761, 0.4379, 0.7881] 
+2026-06-05 15:12:55.947737: Epoch time: 62.61 s 
+2026-06-05 15:13:00.285989:  
+2026-06-05 15:13:00.303902: Epoch 23 
+2026-06-05 15:13:00.320038: Current learning rate: 0.00079 
+2026-06-05 15:14:06.922345: Per-class validation Dice: 1_other=0.5847 | 2_non-invasive_epithelium=0.6577 | 3_invasive_epithelium=0.4568 | 4_necrosis=0.7604 
+2026-06-05 15:14:06.976625: train_loss -0.3001 
+2026-06-05 15:14:07.013838: val_loss -0.1007 
+2026-06-05 15:14:07.047960: Pseudo dice [0.5847, 0.6577, 0.4568, 0.7604] 
+2026-06-05 15:14:07.099599: Epoch time: 66.69 s 
+2026-06-05 15:14:12.071816:  
+2026-06-05 15:14:12.088376: Epoch 24 
+2026-06-05 15:14:12.103286: Current learning rate: 0.00078 
+2026-06-05 15:15:17.154441: Per-class validation Dice: 1_other=0.6630 | 2_non-invasive_epithelium=0.6340 | 3_invasive_epithelium=0.5529 | 4_necrosis=0.7163 
+2026-06-05 15:15:17.156729: New best validation Dice for class 1 (other): 0.6630 at epoch 24. Saving checkpoint_best_class_1_other.pth 
+2026-06-05 15:15:19.734619: train_loss -0.2256 
+2026-06-05 15:15:19.777903: val_loss -0.0539 
+2026-06-05 15:15:19.816381: Pseudo dice [0.663, 0.634, 0.5529, 0.7163] 
+2026-06-05 15:15:19.848569: Epoch time: 67.66 s 
+2026-06-05 15:15:24.136663:  
+2026-06-05 15:15:24.152621: Epoch 25 
+2026-06-05 15:15:24.166698: Current learning rate: 0.00077 
+2026-06-05 15:16:29.560031: Per-class validation Dice: 1_other=0.5124 | 2_non-invasive_epithelium=0.6402 | 3_invasive_epithelium=0.4778 | 4_necrosis=0.8368 
+2026-06-05 15:16:29.564188: train_loss -0.3074 
+2026-06-05 15:16:29.565709: val_loss -0.0567 
+2026-06-05 15:16:29.567436: Pseudo dice [0.5124, 0.6402, 0.4778, 0.8368] 
+2026-06-05 15:16:29.569462: Epoch time: 65.43 s 
+2026-06-05 15:16:33.864142:  
+2026-06-05 15:16:33.884800: Epoch 26 
+2026-06-05 15:16:33.903337: Current learning rate: 0.00076 
+2026-06-05 15:17:38.605928: Per-class validation Dice: 1_other=0.5937 | 2_non-invasive_epithelium=0.8001 | 3_invasive_epithelium=0.6227 | 4_necrosis=0.7323 
+2026-06-05 15:17:38.611159: New best validation Dice for class 2 (non-invasive epithelium): 0.8001 at epoch 26. Saving checkpoint_best_class_2_non-invasive_epithelium.pth 
+2026-06-05 15:17:41.220702: train_loss -0.3045 
+2026-06-05 15:17:41.258285: val_loss -0.2655 
+2026-06-05 15:17:41.292075: Pseudo dice [0.5937, 0.8001, 0.6227, 0.7323] 
+2026-06-05 15:17:41.321877: Epoch time: 67.36 s 
+2026-06-05 15:17:45.715197:  
+2026-06-05 15:17:45.735744: Epoch 27 
+2026-06-05 15:17:45.753380: Current learning rate: 0.00075 
+2026-06-05 15:18:52.294737: Per-class validation Dice: 1_other=0.5134 | 2_non-invasive_epithelium=0.6541 | 3_invasive_epithelium=0.6282 | 4_necrosis=0.7638 
+2026-06-05 15:18:52.331027: train_loss -0.2987 
+2026-06-05 15:18:52.360814: val_loss -0.0229 
+2026-06-05 15:18:52.388007: Pseudo dice [0.5134, 0.6541, 0.6282, 0.7638] 
+2026-06-05 15:18:52.413503: Epoch time: 66.62 s 
+2026-06-05 15:18:56.582646:  
+2026-06-05 15:18:56.604225: Epoch 28 
+2026-06-05 15:18:56.629510: Current learning rate: 0.00074 
+2026-06-05 15:19:59.256395: Per-class validation Dice: 1_other=0.5841 | 2_non-invasive_epithelium=0.7793 | 3_invasive_epithelium=0.6511 | 4_necrosis=0.8355 
+2026-06-05 15:19:59.260592: train_loss -0.3139 
+2026-06-05 15:19:59.262078: val_loss -0.2792 
+2026-06-05 15:19:59.263916: Pseudo dice [0.5841, 0.7793, 0.6511, 0.8355] 
+2026-06-05 15:19:59.266284: Epoch time: 62.68 s 
+2026-06-05 15:20:03.146351:  
+2026-06-05 15:20:03.153492: Epoch 29 
+2026-06-05 15:20:03.159782: Current learning rate: 0.00073 
+2026-06-05 15:21:07.266990: Per-class validation Dice: 1_other=0.5860 | 2_non-invasive_epithelium=0.7377 | 3_invasive_epithelium=0.6263 | 4_necrosis=0.8056 
+2026-06-05 15:21:07.271414: train_loss -0.2676 
+2026-06-05 15:21:07.273696: val_loss -0.194 
+2026-06-05 15:21:07.275366: Pseudo dice [0.586, 0.7377, 0.6263, 0.8056] 
+2026-06-05 15:21:07.277169: Epoch time: 64.13 s 
+2026-06-05 15:21:10.314607: Yayy! New best EMA pseudo Dice: 0.6493 
+2026-06-05 15:21:14.422140:  
+2026-06-05 15:21:14.438884: Epoch 30 
+2026-06-05 15:21:14.453992: Current learning rate: 0.00073 
+2026-06-05 15:22:17.192585: Per-class validation Dice: 1_other=0.5735 | 2_non-invasive_epithelium=0.7422 | 3_invasive_epithelium=0.6923 | 4_necrosis=0.7377 
+2026-06-05 15:22:17.197585: New best validation Dice for class 3 (invasive epithelium): 0.6923 at epoch 30. Saving checkpoint_best_class_3_invasive_epithelium.pth 
+2026-06-05 15:22:19.673107: train_loss -0.2177 
+2026-06-05 15:22:19.710584: val_loss -0.1838 
+2026-06-05 15:22:19.743009: Pseudo dice [0.5735, 0.7422, 0.6923, 0.7377] 
+2026-06-05 15:22:19.771552: Epoch time: 65.25 s 
+2026-06-05 15:22:22.494011: Yayy! New best EMA pseudo Dice: 0.653 
+2026-06-05 15:22:27.430454:  
+2026-06-05 15:22:27.459423: Epoch 31 
+2026-06-05 15:22:27.486040: Current learning rate: 0.00072 
+2026-06-05 15:23:36.129817: Per-class validation Dice: 1_other=0.5549 | 2_non-invasive_epithelium=0.6433 | 3_invasive_epithelium=0.4779 | 4_necrosis=0.7816 
+2026-06-05 15:23:36.224900: train_loss -0.2384 
+2026-06-05 15:23:36.308875: val_loss -0.0698 
+2026-06-05 15:23:36.380832: Pseudo dice [0.5549, 0.6433, 0.4779, 0.7816] 
+2026-06-05 15:23:36.443555: Epoch time: 68.8 s 
+2026-06-05 15:23:40.875352:  
+2026-06-05 15:23:40.896126: Epoch 32 
+2026-06-05 15:23:40.908813: Current learning rate: 0.00071 
+2026-06-05 15:24:58.198931: Per-class validation Dice: 1_other=0.5806 | 2_non-invasive_epithelium=0.6537 | 3_invasive_epithelium=0.5688 | 4_necrosis=0.8070 
+2026-06-05 15:24:58.265773: train_loss -0.2972 
+2026-06-05 15:24:58.639665: val_loss -0.0203 
+2026-06-05 15:24:58.706570: Pseudo dice [0.5806, 0.6537, 0.5688, 0.807] 
+2026-06-05 15:24:58.757782: Epoch time: 77.39 s 
+2026-06-05 15:25:03.528292:  
+2026-06-05 15:25:03.592886: Epoch 33 
+2026-06-05 15:25:03.649506: Current learning rate: 0.0007 
+2026-06-05 15:26:10.022531: Per-class validation Dice: 1_other=0.5460 | 2_non-invasive_epithelium=0.6719 | 3_invasive_epithelium=0.6036 | 4_necrosis=0.8012 
+2026-06-05 15:26:10.031625: train_loss -0.342 
+2026-06-05 15:26:10.037263: val_loss -0.1432 
+2026-06-05 15:26:10.042133: Pseudo dice [0.546, 0.6719, 0.6036, 0.8012] 
+2026-06-05 15:26:10.048509: Epoch time: 66.5 s 
+2026-06-05 15:26:14.059516:  
+2026-06-05 15:26:14.069946: Epoch 34 
+2026-06-05 15:26:14.079204: Current learning rate: 0.00069 
+2026-06-05 15:27:25.774899: Per-class validation Dice: 1_other=0.5857 | 2_non-invasive_epithelium=0.5860 | 3_invasive_epithelium=0.5833 | 4_necrosis=0.7646 
+2026-06-05 15:27:25.779163: train_loss -0.3062 
+2026-06-05 15:27:25.781228: val_loss -0.098 
+2026-06-05 15:27:25.782976: Pseudo dice [0.5857, 0.586, 0.5833, 0.7646] 
+2026-06-05 15:27:25.784970: Epoch time: 71.72 s 
+2026-06-05 15:27:30.176455:  
+2026-06-05 15:27:30.199967: Epoch 35 
+2026-06-05 15:27:30.213541: Current learning rate: 0.00068 
+2026-06-05 15:28:38.918192: Per-class validation Dice: 1_other=0.5494 | 2_non-invasive_epithelium=0.6897 | 3_invasive_epithelium=0.5470 | 4_necrosis=0.7619 
+2026-06-05 15:28:38.924440: train_loss -0.2864 
+2026-06-05 15:28:38.929968: val_loss -0.1162 
+2026-06-05 15:28:38.932856: Pseudo dice [0.5494, 0.6897, 0.547, 0.7619] 
+2026-06-05 15:28:38.936790: Epoch time: 68.75 s 
+2026-06-05 15:28:43.935395:  
+2026-06-05 15:28:43.947128: Epoch 36 
+2026-06-05 15:28:43.963222: Current learning rate: 0.00067 
+2026-06-05 15:29:52.762049: Per-class validation Dice: 1_other=0.5719 | 2_non-invasive_epithelium=0.6607 | 3_invasive_epithelium=0.6145 | 4_necrosis=0.5461 
+2026-06-05 15:29:52.767011: train_loss -0.281 
+2026-06-05 15:29:52.768961: val_loss -0.08 
+2026-06-05 15:29:52.775806: Pseudo dice [0.5719, 0.6607, 0.6145, 0.5461] 
+2026-06-05 15:29:52.787374: Epoch time: 68.83 s 
+2026-06-05 15:29:57.135347:  
+2026-06-05 15:29:57.152853: Epoch 37 
+2026-06-05 15:29:57.169559: Current learning rate: 0.00066 
+2026-06-05 15:31:10.076054: Per-class validation Dice: 1_other=0.6761 | 2_non-invasive_epithelium=0.6963 | 3_invasive_epithelium=0.6493 | 4_necrosis=0.6905 
+2026-06-05 15:31:10.115994: New best validation Dice for class 1 (other): 0.6761 at epoch 37. Saving checkpoint_best_class_1_other.pth 
+2026-06-05 15:31:16.378832: train_loss -0.2848 
+2026-06-05 15:31:18.786045: val_loss -0.1941 
+2026-06-05 15:31:19.062905: Pseudo dice [0.6761, 0.6963, 0.6493, 0.6905] 
+2026-06-05 15:31:19.247175: Epoch time: 79.24 s 
+2026-06-05 15:31:23.572780:  
+2026-06-05 15:31:23.590532: Epoch 38 
+2026-06-05 15:31:23.596929: Current learning rate: 0.00065 
+2026-06-05 15:32:35.982860: Per-class validation Dice: 1_other=0.6071 | 2_non-invasive_epithelium=0.7131 | 3_invasive_epithelium=0.4759 | 4_necrosis=0.8622 
+2026-06-05 15:32:35.985628: New best validation Dice for class 4 (necrosis): 0.8622 at epoch 38. Saving checkpoint_best_class_4_necrosis.pth 
+2026-06-05 15:32:38.943873: train_loss -0.2934 
+2026-06-05 15:32:38.964692: val_loss -0.1651 
+2026-06-05 15:32:38.995380: Pseudo dice [0.6071, 0.7131, 0.4759, 0.8622] 
+2026-06-05 15:32:39.022358: Epoch time: 75.37 s 
+2026-06-05 15:32:43.864086:  
+2026-06-05 15:32:43.876998: Epoch 39 
+2026-06-05 15:32:43.887856: Current learning rate: 0.00064 
+2026-06-05 15:33:54.873728: Per-class validation Dice: 1_other=0.5465 | 2_non-invasive_epithelium=0.7331 | 3_invasive_epithelium=0.5824 | 4_necrosis=0.7634 
+2026-06-05 15:33:54.877022: train_loss -0.2814 
+2026-06-05 15:33:54.879781: val_loss -0.108 
+2026-06-05 15:33:54.881362: Pseudo dice [0.5465, 0.7331, 0.5824, 0.7634] 
+2026-06-05 15:33:54.882519: Epoch time: 71.01 s 
+2026-06-05 15:33:59.026649:  
+2026-06-05 15:33:59.048121: Epoch 40 
+2026-06-05 15:33:59.064711: Current learning rate: 0.00063 
+2026-06-05 15:35:06.630631: Per-class validation Dice: 1_other=0.6247 | 2_non-invasive_epithelium=0.6951 | 3_invasive_epithelium=0.6041 | 4_necrosis=0.7605 
+2026-06-05 15:35:06.636133: train_loss -0.3266 
+2026-06-05 15:35:06.639528: val_loss -0.1924 
+2026-06-05 15:35:06.642375: Pseudo dice [0.6247, 0.6951, 0.6041, 0.7605] 
+2026-06-05 15:35:06.645084: Epoch time: 67.61 s 
+2026-06-05 15:35:10.660830:  
+2026-06-05 15:35:10.675929: Epoch 41 
+2026-06-05 15:35:10.685843: Current learning rate: 0.00062 
+2026-06-05 15:36:20.236218: Per-class validation Dice: 1_other=0.5486 | 2_non-invasive_epithelium=0.6202 | 3_invasive_epithelium=0.3321 | 4_necrosis=0.7869 
+2026-06-05 15:36:20.250861: train_loss -0.283 
+2026-06-05 15:36:20.259999: val_loss 0.0735 
+2026-06-05 15:36:20.268375: Pseudo dice [0.5486, 0.6202, 0.3321, 0.7869] 
+2026-06-05 15:36:20.274014: Epoch time: 69.59 s 
+2026-06-05 15:36:24.746798:  
+2026-06-05 15:36:24.766137: Epoch 42 
+2026-06-05 15:36:24.782350: Current learning rate: 0.00061 
+2026-06-05 15:37:35.167614: Per-class validation Dice: 1_other=0.6237 | 2_non-invasive_epithelium=0.6705 | 3_invasive_epithelium=0.5785 | 4_necrosis=0.6850 
+2026-06-05 15:37:35.251084: train_loss -0.3026 
+2026-06-05 15:37:35.327398: val_loss -0.0065 
+2026-06-05 15:37:35.389311: Pseudo dice [0.6237, 0.6705, 0.5785, 0.685] 
+2026-06-05 15:37:35.443822: Epoch time: 70.51 s 
+2026-06-05 15:37:39.445498:  
+2026-06-05 15:37:39.455824: Epoch 43 
+2026-06-05 15:37:39.464899: Current learning rate: 0.0006 
+2026-06-05 15:38:51.508008: Per-class validation Dice: 1_other=0.6280 | 2_non-invasive_epithelium=0.7884 | 3_invasive_epithelium=0.7253 | 4_necrosis=0.7434 
+2026-06-05 15:38:51.524654: New best validation Dice for class 3 (invasive epithelium): 0.7253 at epoch 43. Saving checkpoint_best_class_3_invasive_epithelium.pth 
+2026-06-05 15:38:53.881945: train_loss -0.2861 
+2026-06-05 15:38:53.954645: val_loss -0.2582 
+2026-06-05 15:38:54.009542: Pseudo dice [0.628, 0.7884, 0.7253, 0.7434] 
+2026-06-05 15:38:54.056500: Epoch time: 74.44 s 
+2026-06-05 15:38:59.629440:  
+2026-06-05 15:38:59.634531: Epoch 44 
+2026-06-05 15:38:59.638419: Current learning rate: 0.00059 
+2026-06-05 15:40:08.725867: Per-class validation Dice: 1_other=0.6129 | 2_non-invasive_epithelium=0.6624 | 3_invasive_epithelium=0.5446 | 4_necrosis=0.7046 
+2026-06-05 15:40:08.730032: train_loss -0.3045 
+2026-06-05 15:40:08.731675: val_loss 0.0213 
+2026-06-05 15:40:08.732822: Pseudo dice [0.6129, 0.6624, 0.5446, 0.7046] 
+2026-06-05 15:40:08.734116: Epoch time: 69.1 s 
+2026-06-05 15:40:12.621638:  
+2026-06-05 15:40:12.655186: Epoch 45 
+2026-06-05 15:40:12.709467: Current learning rate: 0.00058 
+2026-06-05 15:41:22.098087: Per-class validation Dice: 1_other=0.5671 | 2_non-invasive_epithelium=0.7754 | 3_invasive_epithelium=0.6413 | 4_necrosis=0.7702 
+2026-06-05 15:41:22.104340: train_loss -0.3184 
+2026-06-05 15:41:22.106198: val_loss -0.2294 
+2026-06-05 15:41:22.108159: Pseudo dice [0.5671, 0.7754, 0.6413, 0.7702] 
+2026-06-05 15:41:22.109773: Epoch time: 69.48 s 
+2026-06-05 15:41:26.137913:  
+2026-06-05 15:41:26.156569: Epoch 46 
+2026-06-05 15:41:26.172283: Current learning rate: 0.00057 
+2026-06-05 15:42:35.723392: Per-class validation Dice: 1_other=0.5986 | 2_non-invasive_epithelium=0.7518 | 3_invasive_epithelium=0.5673 | 4_necrosis=0.7308 
+2026-06-05 15:42:35.726500: train_loss -0.3402 
+2026-06-05 15:42:35.728894: val_loss -0.1214 
+2026-06-05 15:42:35.731231: Pseudo dice [0.5986, 0.7518, 0.5673, 0.7308] 
+2026-06-05 15:42:35.732784: Epoch time: 69.59 s 
+2026-06-05 15:42:38.412334: Yayy! New best EMA pseudo Dice: 0.6534 
+2026-06-05 15:42:42.501373:  
+2026-06-05 15:42:42.509025: Epoch 47 
+2026-06-05 15:42:42.515875: Current learning rate: 0.00056 
+2026-06-05 15:43:52.607557: Per-class validation Dice: 1_other=0.6093 | 2_non-invasive_epithelium=0.6973 | 3_invasive_epithelium=0.6672 | 4_necrosis=0.7264 
+2026-06-05 15:43:52.612076: train_loss -0.2837 
+2026-06-05 15:43:52.618642: val_loss -0.1494 
+2026-06-05 15:43:52.622674: Pseudo dice [0.6093, 0.6973, 0.6672, 0.7264] 
+2026-06-05 15:43:52.624264: Epoch time: 70.11 s 
+2026-06-05 15:43:55.434719: Yayy! New best EMA pseudo Dice: 0.6556 
+2026-06-05 15:43:59.340408:  
+2026-06-05 15:43:59.358858: Epoch 48 
+2026-06-05 15:43:59.376386: Current learning rate: 0.00056 
+2026-06-05 15:45:05.907746: Per-class validation Dice: 1_other=0.5906 | 2_non-invasive_epithelium=0.6954 | 3_invasive_epithelium=0.5651 | 4_necrosis=0.7821 
+2026-06-05 15:45:05.911973: train_loss -0.299 
+2026-06-05 15:45:05.917352: val_loss -0.1698 
+2026-06-05 15:45:05.919658: Pseudo dice [0.5906, 0.6954, 0.5651, 0.7821] 
+2026-06-05 15:45:05.921581: Epoch time: 66.57 s 
+2026-06-05 15:45:08.211761: Yayy! New best EMA pseudo Dice: 0.6559 
+2026-06-05 15:45:12.466665:  
+2026-06-05 15:45:12.478225: Epoch 49 
+2026-06-05 15:45:12.493373: Current learning rate: 0.00055 
+2026-06-05 15:46:21.675569: Per-class validation Dice: 1_other=0.5781 | 2_non-invasive_epithelium=0.7400 | 3_invasive_epithelium=0.6575 | 4_necrosis=0.8153 
+2026-06-05 15:46:21.680588: train_loss -0.2891 
+2026-06-05 15:46:21.682399: val_loss -0.2209 
+2026-06-05 15:46:21.684309: Pseudo dice [0.5781, 0.74, 0.6575, 0.8153] 
+2026-06-05 15:46:21.686443: Epoch time: 69.22 s 
+2026-06-05 15:46:23.971812: Yayy! New best EMA pseudo Dice: 0.6601 
+2026-06-05 15:46:28.792395:  
+2026-06-05 15:46:28.804665: Epoch 50 
+2026-06-05 15:46:28.820266: Current learning rate: 0.00054 
+2026-06-05 15:47:36.521284: Per-class validation Dice: 1_other=0.5733 | 2_non-invasive_epithelium=0.7182 | 3_invasive_epithelium=0.5301 | 4_necrosis=0.6976 
+2026-06-05 15:47:36.523576: train_loss -0.2951 
+2026-06-05 15:47:36.525379: val_loss -0.1124 
+2026-06-05 15:47:36.527001: Pseudo dice [0.5733, 0.7182, 0.5301, 0.6976] 
+2026-06-05 15:47:36.528499: Epoch time: 67.73 s 
+2026-06-05 15:47:40.778341:  
+2026-06-05 15:47:40.791650: Epoch 51 
+2026-06-05 15:47:40.805214: Current learning rate: 0.00053 
+2026-06-05 15:48:51.309562: Per-class validation Dice: 1_other=0.6051 | 2_non-invasive_epithelium=0.6929 | 3_invasive_epithelium=0.6332 | 4_necrosis=0.7795 
+2026-06-05 15:48:51.314297: train_loss -0.2674 
+2026-06-05 15:48:51.316714: val_loss -0.2032 
+2026-06-05 15:48:51.319535: Pseudo dice [0.6051, 0.6929, 0.6332, 0.7795] 
+2026-06-05 15:48:51.321513: Epoch time: 70.54 s 
+2026-06-05 15:48:55.332663:  
+2026-06-05 15:48:55.350502: Epoch 52 
+2026-06-05 15:48:55.365349: Current learning rate: 0.00052 
+2026-06-05 15:50:04.826138: Per-class validation Dice: 1_other=0.5455 | 2_non-invasive_epithelium=0.6165 | 3_invasive_epithelium=0.4676 | 4_necrosis=0.7780 
+2026-06-05 15:50:04.831277: train_loss -0.3007 
+2026-06-05 15:50:04.833308: val_loss 0.1005 
+2026-06-05 15:50:04.835184: Pseudo dice [0.5455, 0.6165, 0.4676, 0.778] 
+2026-06-05 15:50:04.837031: Epoch time: 69.5 s 
+2026-06-05 15:50:09.020570:  
+2026-06-05 15:50:09.035100: Epoch 53 
+2026-06-05 15:50:09.049704: Current learning rate: 0.00051 
+2026-06-05 15:51:18.925716: Per-class validation Dice: 1_other=0.5585 | 2_non-invasive_epithelium=0.6727 | 3_invasive_epithelium=0.5540 | 4_necrosis=0.7476 
+2026-06-05 15:51:19.009048: train_loss -0.2858 
+2026-06-05 15:51:19.083879: val_loss -0.0025 
+2026-06-05 15:51:19.149023: Pseudo dice [0.5585, 0.6727, 0.554, 0.7476] 
+2026-06-05 15:51:19.207510: Epoch time: 69.99 s 
+2026-06-05 15:51:25.080990:  
+2026-06-05 15:51:25.134906: Epoch 54 
+2026-06-05 15:51:25.184356: Current learning rate: 0.0005 
+2026-06-05 15:52:35.036442: Per-class validation Dice: 1_other=0.5832 | 2_non-invasive_epithelium=0.6750 | 3_invasive_epithelium=0.5647 | 4_necrosis=0.5276 
+2026-06-05 15:52:35.041628: train_loss -0.2816 
+2026-06-05 15:52:35.043586: val_loss -0.1412 
+2026-06-05 15:52:35.045369: Pseudo dice [0.5832, 0.675, 0.5647, 0.5276] 
+2026-06-05 15:52:35.047244: Epoch time: 69.96 s 
+2026-06-05 15:52:39.577792:  
+2026-06-05 15:52:39.585090: Epoch 55 
+2026-06-05 15:52:39.592189: Current learning rate: 0.00049 
+2026-06-05 15:53:48.459283: Per-class validation Dice: 1_other=0.4742 | 2_non-invasive_epithelium=0.7140 | 3_invasive_epithelium=0.4812 | 4_necrosis=0.6292 
+2026-06-05 15:53:48.469640: train_loss -0.3186 
+2026-06-05 15:53:48.481801: val_loss -0.141 
+2026-06-05 15:53:48.485860: Pseudo dice [0.4742, 0.714, 0.4812, 0.6292] 
+2026-06-05 15:53:48.491089: Epoch time: 68.89 s 
+2026-06-05 15:53:54.627084:  
+2026-06-05 15:53:54.651761: Epoch 56 
+2026-06-05 15:53:54.673258: Current learning rate: 0.00048 
+2026-06-05 15:55:03.117835: Per-class validation Dice: 1_other=0.5544 | 2_non-invasive_epithelium=0.6384 | 3_invasive_epithelium=0.5669 | 4_necrosis=0.6543 
+2026-06-05 15:55:03.120836: train_loss -0.3359 
+2026-06-05 15:55:03.123375: val_loss -0.0938 
+2026-06-05 15:55:03.125063: Pseudo dice [0.5544, 0.6384, 0.5669, 0.6543] 
+2026-06-05 15:55:03.126672: Epoch time: 68.5 s 
+2026-06-05 15:55:07.380045:  
+2026-06-05 15:55:07.403847: Epoch 57 
+2026-06-05 15:55:07.425813: Current learning rate: 0.00047 
+2026-06-05 15:56:16.449441: Per-class validation Dice: 1_other=0.5624 | 2_non-invasive_epithelium=0.7720 | 3_invasive_epithelium=0.6606 | 4_necrosis=0.4695 
+2026-06-05 15:56:16.454251: train_loss -0.3504 
+2026-06-05 15:56:16.459030: val_loss -0.0776 
+2026-06-05 15:56:16.460387: Pseudo dice [0.5624, 0.772, 0.6606, 0.4695] 
+2026-06-05 15:56:16.463844: Epoch time: 69.08 s 
+2026-06-05 15:56:21.230128:  
+2026-06-05 15:56:21.249789: Epoch 58 
+2026-06-05 15:56:21.266451: Current learning rate: 0.00046 
+2026-06-05 15:57:30.510706: Per-class validation Dice: 1_other=0.5892 | 2_non-invasive_epithelium=0.6748 | 3_invasive_epithelium=0.6224 | 4_necrosis=0.6777 
+2026-06-05 15:57:30.517004: train_loss -0.3142 
+2026-06-05 15:57:30.520653: val_loss -0.1853 
+2026-06-05 15:57:30.523224: Pseudo dice [0.5892, 0.6748, 0.6224, 0.6777] 
+2026-06-05 15:57:30.526242: Epoch time: 69.29 s 
+2026-06-05 15:57:34.997089:  
+2026-06-05 15:57:35.013069: Epoch 59 
+2026-06-05 15:57:35.026843: Current learning rate: 0.00045 
+2026-06-05 15:58:46.540651: Per-class validation Dice: 1_other=0.5248 | 2_non-invasive_epithelium=0.6493 | 3_invasive_epithelium=0.5069 | 4_necrosis=0.7823 
+2026-06-05 15:58:46.560146: train_loss -0.2797 
+2026-06-05 15:58:46.644317: val_loss -0.1593 
+2026-06-05 15:58:46.717812: Pseudo dice [0.5248, 0.6493, 0.5069, 0.7823] 
+2026-06-05 15:58:46.782201: Epoch time: 71.56 s 
+2026-06-05 15:58:51.099349:  
+2026-06-05 15:58:51.115191: Epoch 60 
+2026-06-05 15:58:51.128742: Current learning rate: 0.00044 
+2026-06-05 15:59:58.134074: Per-class validation Dice: 1_other=0.6858 | 2_non-invasive_epithelium=0.6396 | 3_invasive_epithelium=0.5089 | 4_necrosis=0.7449 
+2026-06-05 15:59:58.165764: New best validation Dice for class 1 (other): 0.6858 at epoch 60. Saving checkpoint_best_class_1_other.pth 
+2026-06-05 16:00:01.204752: train_loss -0.3005 
+2026-06-05 16:00:01.220065: val_loss -0.0125 
+2026-06-05 16:00:01.237401: Pseudo dice [0.6858, 0.6396, 0.5089, 0.7449] 
+2026-06-05 16:00:01.253322: Epoch time: 70.11 s 
+2026-06-05 16:00:07.571075:  
+2026-06-05 16:00:07.620306: Epoch 61 
+2026-06-05 16:00:07.662992: Current learning rate: 0.00043 
+2026-06-05 16:01:15.763774: Per-class validation Dice: 1_other=0.5242 | 2_non-invasive_epithelium=0.7056 | 3_invasive_epithelium=0.5767 | 4_necrosis=0.7125 
+2026-06-05 16:01:15.769415: train_loss -0.3203 
+2026-06-05 16:01:15.771348: val_loss -0.1796 
+2026-06-05 16:01:15.772958: Pseudo dice [0.5242, 0.7056, 0.5767, 0.7125] 
+2026-06-05 16:01:15.774628: Epoch time: 68.2 s 
+2026-06-05 16:01:19.923278:  
+2026-06-05 16:01:19.929584: Epoch 62 
+2026-06-05 16:01:19.935780: Current learning rate: 0.00042 
+2026-06-05 16:02:30.507180: Per-class validation Dice: 1_other=0.6200 | 2_non-invasive_epithelium=0.7268 | 3_invasive_epithelium=0.7056 | 4_necrosis=0.7167 
+2026-06-05 16:02:30.512968: train_loss -0.3436 
+2026-06-05 16:02:30.515631: val_loss -0.2047 
+2026-06-05 16:02:30.517962: Pseudo dice [0.62, 0.7268, 0.7056, 0.7167] 
+2026-06-05 16:02:30.520494: Epoch time: 70.59 s 
+2026-06-05 16:02:34.710951:  
+2026-06-05 16:02:34.717477: Epoch 63 
+2026-06-05 16:02:34.723299: Current learning rate: 0.00041 
+2026-06-05 16:03:45.574347: Per-class validation Dice: 1_other=0.5917 | 2_non-invasive_epithelium=0.6676 | 3_invasive_epithelium=0.6441 | 4_necrosis=0.7135 
+2026-06-05 16:03:45.578962: train_loss -0.2657 
+2026-06-05 16:03:45.581255: val_loss -0.1763 
+2026-06-05 16:03:45.582864: Pseudo dice [0.5917, 0.6676, 0.6441, 0.7135] 
+2026-06-05 16:03:45.584715: Epoch time: 70.87 s 
+2026-06-05 16:03:49.658502:  
+2026-06-05 16:03:49.674619: Epoch 64 
+2026-06-05 16:03:49.689385: Current learning rate: 0.0004 
+2026-06-05 16:04:58.594742: Per-class validation Dice: 1_other=0.5890 | 2_non-invasive_epithelium=0.6978 | 3_invasive_epithelium=0.6433 | 4_necrosis=0.8480 
+2026-06-05 16:04:58.597176: train_loss -0.274 
+2026-06-05 16:04:58.598883: val_loss -0.2471 
+2026-06-05 16:04:58.600337: Pseudo dice [0.589, 0.6978, 0.6433, 0.848] 
+2026-06-05 16:04:58.602274: Epoch time: 68.94 s 
+2026-06-05 16:05:02.928415:  
+2026-06-05 16:05:02.946233: Epoch 65 
+2026-06-05 16:05:02.965425: Current learning rate: 0.00039 
+2026-06-05 16:06:12.786032: Per-class validation Dice: 1_other=0.6331 | 2_non-invasive_epithelium=0.6773 | 3_invasive_epithelium=0.4426 | 4_necrosis=0.7912 
+2026-06-05 16:06:12.796844: train_loss -0.319 
+2026-06-05 16:06:12.799213: val_loss -0.1084 
+2026-06-05 16:06:12.801255: Pseudo dice [0.6331, 0.6773, 0.4426, 0.7912] 
+2026-06-05 16:06:12.803415: Epoch time: 69.87 s 
+2026-06-05 16:06:17.243700:  
+2026-06-05 16:06:17.254084: Epoch 66 
+2026-06-05 16:06:17.263551: Current learning rate: 0.00038 
+2026-06-05 16:07:26.030601: Per-class validation Dice: 1_other=0.6071 | 2_non-invasive_epithelium=0.6856 | 3_invasive_epithelium=0.5695 | 4_necrosis=0.8228 
+2026-06-05 16:07:26.034057: train_loss -0.3251 
+2026-06-05 16:07:26.036418: val_loss -0.1349 
+2026-06-05 16:07:26.037933: Pseudo dice [0.6071, 0.6856, 0.5695, 0.8228] 
+2026-06-05 16:07:26.039376: Epoch time: 68.79 s 
+2026-06-05 16:07:30.273498:  
+2026-06-05 16:07:30.279815: Epoch 67 
+2026-06-05 16:07:30.285566: Current learning rate: 0.00037 
+2026-06-05 16:08:39.661655: Per-class validation Dice: 1_other=0.5601 | 2_non-invasive_epithelium=0.6852 | 3_invasive_epithelium=0.6148 | 4_necrosis=0.6887 
+2026-06-05 16:08:39.743208: train_loss -0.3203 
+2026-06-05 16:08:39.810188: val_loss -0.1436 
+2026-06-05 16:08:39.869888: Pseudo dice [0.5601, 0.6852, 0.6148, 0.6887] 
+2026-06-05 16:08:39.922535: Epoch time: 69.47 s 
+2026-06-05 16:08:46.163645:  
+2026-06-05 16:08:46.195581: Epoch 68 
+2026-06-05 16:08:46.232351: Current learning rate: 0.00036 
+2026-06-05 16:09:53.630562: Per-class validation Dice: 1_other=0.5478 | 2_non-invasive_epithelium=0.7080 | 3_invasive_epithelium=0.5058 | 4_necrosis=0.7468 
+2026-06-05 16:09:53.634712: train_loss -0.3079 
+2026-06-05 16:09:53.636761: val_loss -0.1361 
+2026-06-05 16:09:53.639030: Pseudo dice [0.5478, 0.708, 0.5058, 0.7468] 
+2026-06-05 16:09:53.641041: Epoch time: 67.47 s 
+2026-06-05 16:09:57.752233:  
+2026-06-05 16:09:57.768672: Epoch 69 
+2026-06-05 16:09:57.783182: Current learning rate: 0.00035 
+2026-06-05 16:11:07.076096: Per-class validation Dice: 1_other=0.5522 | 2_non-invasive_epithelium=0.7091 | 3_invasive_epithelium=0.5661 | 4_necrosis=0.8378 
+2026-06-05 16:11:07.080269: train_loss -0.3558 
+2026-06-05 16:11:07.082057: val_loss -0.2332 
+2026-06-05 16:11:07.083776: Pseudo dice [0.5522, 0.7091, 0.5661, 0.8378] 
+2026-06-05 16:11:07.086389: Epoch time: 69.33 s 
+2026-06-05 16:11:11.562084:  
+2026-06-05 16:11:11.571877: Epoch 70 
+2026-06-05 16:11:11.580289: Current learning rate: 0.00034 
+2026-06-05 16:12:19.229198: Per-class validation Dice: 1_other=0.5290 | 2_non-invasive_epithelium=0.7080 | 3_invasive_epithelium=0.5337 | 4_necrosis=0.6527 
+2026-06-05 16:12:19.233860: train_loss -0.3025 
+2026-06-05 16:12:19.237935: val_loss -0.1223 
+2026-06-05 16:12:19.242368: Pseudo dice [0.529, 0.708, 0.5337, 0.6527] 
+2026-06-05 16:12:19.245246: Epoch time: 67.67 s 
+2026-06-05 16:12:23.794653:  
+2026-06-05 16:12:23.813052: Epoch 71 
+2026-06-05 16:12:23.829350: Current learning rate: 0.00033 
+2026-06-05 16:13:31.563861: Per-class validation Dice: 1_other=0.5612 | 2_non-invasive_epithelium=0.7230 | 3_invasive_epithelium=0.6582 | 4_necrosis=0.8285 
+2026-06-05 16:13:31.568287: train_loss -0.3397 
+2026-06-05 16:13:31.570316: val_loss -0.2772 
+2026-06-05 16:13:31.572036: Pseudo dice [0.5612, 0.723, 0.6582, 0.8285] 
+2026-06-05 16:13:31.573291: Epoch time: 67.78 s 
+2026-06-05 16:13:35.686306:  
+2026-06-05 16:13:35.696998: Epoch 72 
+2026-06-05 16:13:35.706078: Current learning rate: 0.00032 
+2026-06-05 16:14:45.567316: Per-class validation Dice: 1_other=0.5602 | 2_non-invasive_epithelium=0.7188 | 3_invasive_epithelium=0.6616 | 4_necrosis=0.6753 
+2026-06-05 16:14:45.574047: train_loss -0.3216 
+2026-06-05 16:14:45.577228: val_loss -0.1711 
+2026-06-05 16:14:45.581524: Pseudo dice [0.5602, 0.7188, 0.6616, 0.6753] 
+2026-06-05 16:14:45.585151: Epoch time: 69.89 s 
+2026-06-05 16:14:49.820203:  
+2026-06-05 16:14:49.836544: Epoch 73 
+2026-06-05 16:14:49.850360: Current learning rate: 0.00031 
+2026-06-05 16:16:00.219109: Per-class validation Dice: 1_other=0.6030 | 2_non-invasive_epithelium=0.7538 | 3_invasive_epithelium=0.7093 | 4_necrosis=0.7408 
+2026-06-05 16:16:00.228818: train_loss -0.3376 
+2026-06-05 16:16:00.234039: val_loss -0.1948 
+2026-06-05 16:16:00.238779: Pseudo dice [0.603, 0.7538, 0.7093, 0.7408] 
+2026-06-05 16:16:00.244840: Epoch time: 70.41 s 
+2026-06-05 16:16:05.267137:  
+2026-06-05 16:16:05.276937: Epoch 74 
+2026-06-05 16:16:05.285646: Current learning rate: 0.0003 
+2026-06-05 16:17:16.045318: Per-class validation Dice: 1_other=0.6354 | 2_non-invasive_epithelium=0.6446 | 3_invasive_epithelium=0.6028 | 4_necrosis=0.6779 
+2026-06-05 16:17:16.117738: train_loss -0.3135 
+2026-06-05 16:17:16.180010: val_loss -0.1658 
+2026-06-05 16:17:16.233888: Pseudo dice [0.6354, 0.6446, 0.6028, 0.6779] 
+2026-06-05 16:17:16.281412: Epoch time: 70.85 s 
+2026-06-05 16:17:20.953783:  
+2026-06-05 16:17:20.970610: Epoch 75 
+2026-06-05 16:17:20.987464: Current learning rate: 0.00029 
+2026-06-05 16:18:29.122317: Per-class validation Dice: 1_other=0.5143 | 2_non-invasive_epithelium=0.7594 | 3_invasive_epithelium=0.7002 | 4_necrosis=0.7588 
+2026-06-05 16:18:29.160053: train_loss -0.3333 
+2026-06-05 16:18:29.191810: val_loss -0.2556 
+2026-06-05 16:18:29.218885: Pseudo dice [0.5143, 0.7594, 0.7002, 0.7588] 
+2026-06-05 16:18:29.243400: Epoch time: 68.21 s 
+2026-06-05 16:18:33.214307:  
+2026-06-05 16:18:33.249432: Epoch 76 
+2026-06-05 16:18:33.286132: Current learning rate: 0.00028 
+2026-06-05 16:19:40.981583: Per-class validation Dice: 1_other=0.6007 | 2_non-invasive_epithelium=0.6731 | 3_invasive_epithelium=0.5248 | 4_necrosis=0.7046 
+2026-06-05 16:19:40.985369: train_loss -0.2692 
+2026-06-05 16:19:40.987153: val_loss -0.0718 
+2026-06-05 16:19:40.988674: Pseudo dice [0.6007, 0.6731, 0.5248, 0.7046] 
+2026-06-05 16:19:40.990203: Epoch time: 67.77 s 
+2026-06-05 16:19:45.662199:  
+2026-06-05 16:19:45.676543: Epoch 77 
+2026-06-05 16:19:45.689443: Current learning rate: 0.00027 
+2026-06-05 16:20:54.096014: Per-class validation Dice: 1_other=0.6149 | 2_non-invasive_epithelium=0.6541 | 3_invasive_epithelium=0.5675 | 4_necrosis=0.7054 
+2026-06-05 16:20:54.101839: train_loss -0.3554 
+2026-06-05 16:20:54.103857: val_loss -0.0336 
+2026-06-05 16:20:54.107329: Pseudo dice [0.6149, 0.6541, 0.5675, 0.7054] 
+2026-06-05 16:20:54.110411: Epoch time: 68.44 s 
+2026-06-05 16:20:58.409470:  
+2026-06-05 16:20:58.420976: Epoch 78 
+2026-06-05 16:20:58.432769: Current learning rate: 0.00026 
+2026-06-05 16:22:09.217760: Per-class validation Dice: 1_other=0.5187 | 2_non-invasive_epithelium=0.7549 | 3_invasive_epithelium=0.6316 | 4_necrosis=0.5820 
+2026-06-05 16:22:09.223200: train_loss -0.3305 
+2026-06-05 16:22:09.232270: val_loss -0.0831 
+2026-06-05 16:22:09.234385: Pseudo dice [0.5187, 0.7549, 0.6316, 0.582] 
+2026-06-05 16:22:09.236618: Epoch time: 70.82 s 
+2026-06-05 16:22:13.668123:  
+2026-06-05 16:22:13.683274: Epoch 79 
+2026-06-05 16:22:13.696993: Current learning rate: 0.00025 
+2026-06-05 16:23:22.413842: Per-class validation Dice: 1_other=0.6327 | 2_non-invasive_epithelium=0.7311 | 3_invasive_epithelium=0.5725 | 4_necrosis=0.8249 
+2026-06-05 16:23:22.419237: train_loss -0.3396 
+2026-06-05 16:23:22.421414: val_loss -0.2274 
+2026-06-05 16:23:22.422994: Pseudo dice [0.6327, 0.7311, 0.5725, 0.8249] 
+2026-06-05 16:23:22.424349: Epoch time: 68.75 s 
+2026-06-05 16:23:26.636838:  
+2026-06-05 16:23:26.651308: Epoch 80 
+2026-06-05 16:23:26.669789: Current learning rate: 0.00023 
+2026-06-05 16:24:34.602537: Per-class validation Dice: 1_other=0.5943 | 2_non-invasive_epithelium=0.6915 | 3_invasive_epithelium=0.6090 | 4_necrosis=0.7887 
+2026-06-05 16:24:34.607432: train_loss -0.3625 
+2026-06-05 16:24:34.609251: val_loss -0.0838 
+2026-06-05 16:24:34.610865: Pseudo dice [0.5943, 0.6915, 0.609, 0.7887] 
+2026-06-05 16:24:34.612353: Epoch time: 67.97 s 
+2026-06-05 16:24:38.757862:  
+2026-06-05 16:24:38.772253: Epoch 81 
+2026-06-05 16:24:38.784819: Current learning rate: 0.00022 
+2026-06-05 16:25:45.894711: Per-class validation Dice: 1_other=0.4845 | 2_non-invasive_epithelium=0.6872 | 3_invasive_epithelium=0.5774 | 4_necrosis=0.6516 
+2026-06-05 16:25:45.904165: train_loss -0.3945 
+2026-06-05 16:25:45.911303: val_loss -0.0554 
+2026-06-05 16:25:45.916968: Pseudo dice [0.4845, 0.6872, 0.5774, 0.6516] 
+2026-06-05 16:25:45.921292: Epoch time: 67.15 s 
+2026-06-05 16:25:50.452751:  
+2026-06-05 16:25:50.462053: Epoch 82 
+2026-06-05 16:25:50.469466: Current learning rate: 0.00021 
+2026-06-05 16:26:59.382898: Per-class validation Dice: 1_other=0.5908 | 2_non-invasive_epithelium=0.6982 | 3_invasive_epithelium=0.7073 | 4_necrosis=0.5868 
+2026-06-05 16:26:59.390896: train_loss -0.3159 
+2026-06-05 16:26:59.395333: val_loss -0.1479 
+2026-06-05 16:26:59.400028: Pseudo dice [0.5908, 0.6982, 0.7073, 0.5868] 
+2026-06-05 16:26:59.404169: Epoch time: 68.94 s 
+2026-06-05 16:27:03.602620:  
+2026-06-05 16:27:03.615746: Epoch 83 
+2026-06-05 16:27:03.625254: Current learning rate: 0.0002 
+2026-06-05 16:28:11.040689: Per-class validation Dice: 1_other=0.6570 | 2_non-invasive_epithelium=0.6790 | 3_invasive_epithelium=0.6738 | 4_necrosis=0.7722 
+2026-06-05 16:28:11.052242: train_loss -0.3621 
+2026-06-05 16:28:11.060513: val_loss -0.2274 
+2026-06-05 16:28:11.067179: Pseudo dice [0.657, 0.679, 0.6738, 0.7722] 
+2026-06-05 16:28:11.074732: Epoch time: 67.45 s 
+2026-06-05 16:28:16.829633:  
+2026-06-05 16:28:16.864440: Epoch 84 
+2026-06-05 16:28:16.900401: Current learning rate: 0.00019 
+2026-06-05 16:29:25.373635: Per-class validation Dice: 1_other=0.5765 | 2_non-invasive_epithelium=0.7255 | 3_invasive_epithelium=0.6675 | 4_necrosis=0.6760 
+2026-06-05 16:29:25.377174: train_loss -0.3563 
+2026-06-05 16:29:25.382638: val_loss -0.2335 
+2026-06-05 16:29:25.385086: Pseudo dice [0.5765, 0.7255, 0.6675, 0.676] 
+2026-06-05 16:29:25.386317: Epoch time: 68.55 s 
+2026-06-05 16:29:29.983256:  
+2026-06-05 16:29:29.998902: Epoch 85 
+2026-06-05 16:29:30.012944: Current learning rate: 0.00018 
+2026-06-05 16:30:38.081180: Per-class validation Dice: 1_other=0.6348 | 2_non-invasive_epithelium=0.6743 | 3_invasive_epithelium=0.5386 | 4_necrosis=0.7525 
+2026-06-05 16:30:38.086273: train_loss -0.367 
+2026-06-05 16:30:38.088653: val_loss -0.2381 
+2026-06-05 16:30:38.090656: Pseudo dice [0.6348, 0.6743, 0.5386, 0.7525] 
+2026-06-05 16:30:38.093114: Epoch time: 68.1 s 
+2026-06-05 16:30:42.509671:  
+2026-06-05 16:30:42.512452: Epoch 86 
+2026-06-05 16:30:42.515330: Current learning rate: 0.00017 
+2026-06-05 16:31:51.076786: Per-class validation Dice: 1_other=0.5819 | 2_non-invasive_epithelium=0.7025 | 3_invasive_epithelium=0.6106 | 4_necrosis=0.7175 
+2026-06-05 16:31:51.109820: train_loss -0.3924 
+2026-06-05 16:31:51.137844: val_loss -0.0583 
+2026-06-05 16:31:51.161316: Pseudo dice [0.5819, 0.7025, 0.6106, 0.7175] 
+2026-06-05 16:31:51.181726: Epoch time: 68.6 s 
+2026-06-05 16:31:57.893519:  
+2026-06-05 16:31:57.933214: Epoch 87 
+2026-06-05 16:31:58.008012: Current learning rate: 0.00016 
+2026-06-05 16:33:08.070179: Per-class validation Dice: 1_other=0.5779 | 2_non-invasive_epithelium=0.6830 | 3_invasive_epithelium=0.6614 | 4_necrosis=0.7567 
+2026-06-05 16:33:08.122122: train_loss -0.3465 
+2026-06-05 16:33:08.336615: val_loss -0.1383 
+2026-06-05 16:33:08.401707: Pseudo dice [0.5779, 0.683, 0.6614, 0.7567] 
+2026-06-05 16:33:08.453428: Epoch time: 70.23 s 
+2026-06-05 16:33:12.857220:  
+2026-06-05 16:33:12.903238: Epoch 88 
+2026-06-05 16:33:12.956962: Current learning rate: 0.00015 
+2026-06-05 16:34:19.845185: Per-class validation Dice: 1_other=0.5828 | 2_non-invasive_epithelium=0.7031 | 3_invasive_epithelium=0.6320 | 4_necrosis=0.7353 
+2026-06-05 16:34:19.850271: train_loss -0.3795 
+2026-06-05 16:34:19.852709: val_loss -0.1076 
+2026-06-05 16:34:19.854079: Pseudo dice [0.5828, 0.7031, 0.632, 0.7353] 
+2026-06-05 16:34:19.855197: Epoch time: 66.99 s 
+2026-06-05 16:34:24.286855:  
+2026-06-05 16:34:24.302378: Epoch 89 
+2026-06-05 16:34:24.316214: Current learning rate: 0.00014 
+2026-06-05 16:35:33.839220: Per-class validation Dice: 1_other=0.5794 | 2_non-invasive_epithelium=0.7149 | 3_invasive_epithelium=0.6446 | 4_necrosis=0.7470 
+2026-06-05 16:35:33.843721: train_loss -0.3299 
+2026-06-05 16:35:33.845433: val_loss -0.0824 
+2026-06-05 16:35:33.847000: Pseudo dice [0.5794, 0.7149, 0.6446, 0.747] 
+2026-06-05 16:35:33.848734: Epoch time: 69.56 s 
+2026-06-05 16:35:38.310465:  
+2026-06-05 16:35:38.326467: Epoch 90 
+2026-06-05 16:35:38.340403: Current learning rate: 0.00013 
+2026-06-05 16:36:46.342659: Per-class validation Dice: 1_other=0.5463 | 2_non-invasive_epithelium=0.6962 | 3_invasive_epithelium=0.6718 | 4_necrosis=0.7033 
+2026-06-05 16:36:46.346441: train_loss -0.335 
+2026-06-05 16:36:46.350937: val_loss -0.1407 
+2026-06-05 16:36:46.352362: Pseudo dice [0.5463, 0.6962, 0.6718, 0.7033] 
+2026-06-05 16:36:46.354171: Epoch time: 68.04 s 
+2026-06-05 16:36:50.658496:  
+2026-06-05 16:36:50.661849: Epoch 91 
+2026-06-05 16:36:50.664514: Current learning rate: 0.00011 
+2026-06-05 16:37:57.823390: Per-class validation Dice: 1_other=0.5790 | 2_non-invasive_epithelium=0.7687 | 3_invasive_epithelium=0.6840 | 4_necrosis=0.7400 
+2026-06-05 16:37:57.946819: train_loss -0.3618 
+2026-06-05 16:37:58.070084: val_loss -0.2098 
+2026-06-05 16:37:58.164284: Pseudo dice [0.579, 0.7687, 0.684, 0.74] 
+2026-06-05 16:37:58.268425: Epoch time: 67.29 s 
+2026-06-05 16:38:05.431789: Yayy! New best EMA pseudo Dice: 0.6607 
+2026-06-05 16:38:15.540878:  
+2026-06-05 16:38:15.565456: Epoch 92 
+2026-06-05 16:38:15.598514: Current learning rate: 0.0001 
+2026-06-05 16:39:24.572210: Per-class validation Dice: 1_other=0.5514 | 2_non-invasive_epithelium=0.7086 | 3_invasive_epithelium=0.6532 | 4_necrosis=0.4500 
+2026-06-05 16:39:24.578649: train_loss -0.3607 
+2026-06-05 16:39:24.581251: val_loss -0.1174 
+2026-06-05 16:39:24.584031: Pseudo dice [0.5514, 0.7086, 0.6532, 0.45] 
+2026-06-05 16:39:24.587095: Epoch time: 69.04 s 
+2026-06-05 16:39:28.813840:  
+2026-06-05 16:39:28.829355: Epoch 93 
+2026-06-05 16:39:28.843003: Current learning rate: 9e-05 
+2026-06-05 16:40:37.115495: Per-class validation Dice: 1_other=0.5648 | 2_non-invasive_epithelium=0.6790 | 3_invasive_epithelium=0.6659 | 4_necrosis=0.6915 
+2026-06-05 16:40:37.119435: train_loss -0.3542 
+2026-06-05 16:40:37.121142: val_loss -0.0941 
+2026-06-05 16:40:37.124179: Pseudo dice [0.5648, 0.679, 0.6659, 0.6915] 
+2026-06-05 16:40:37.127174: Epoch time: 68.31 s 
+2026-06-05 16:40:41.460199:  
+2026-06-05 16:40:41.468499: Epoch 94 
+2026-06-05 16:40:41.475519: Current learning rate: 8e-05 
+2026-06-05 16:41:51.254483: Per-class validation Dice: 1_other=0.5700 | 2_non-invasive_epithelium=0.7429 | 3_invasive_epithelium=0.6637 | 4_necrosis=0.7237 
+2026-06-05 16:41:51.264537: train_loss -0.3711 
+2026-06-05 16:41:51.273074: val_loss -0.0698 
+2026-06-05 16:41:51.281305: Pseudo dice [0.57, 0.7429, 0.6637, 0.7237] 
+2026-06-05 16:41:51.290277: Epoch time: 69.81 s 
+2026-06-05 16:41:55.645639:  
+2026-06-05 16:41:55.660223: Epoch 95 
+2026-06-05 16:41:55.677178: Current learning rate: 7e-05 
+2026-06-05 16:43:05.700006: Per-class validation Dice: 1_other=0.4867 | 2_non-invasive_epithelium=0.6876 | 3_invasive_epithelium=0.5820 | 4_necrosis=0.6656 
+2026-06-05 16:43:05.709654: train_loss -0.3527 
+2026-06-05 16:43:05.720182: val_loss 0.0446 
+2026-06-05 16:43:05.725131: Pseudo dice [0.4867, 0.6876, 0.582, 0.6656] 
+2026-06-05 16:43:05.729769: Epoch time: 70.07 s 
+2026-06-05 16:43:10.003798:  
+2026-06-05 16:43:10.010863: Epoch 96 
+2026-06-05 16:43:10.017111: Current learning rate: 6e-05 
+2026-06-05 16:44:16.263473: Per-class validation Dice: 1_other=0.5430 | 2_non-invasive_epithelium=0.7334 | 3_invasive_epithelium=0.5847 | 4_necrosis=0.6589 
+2026-06-05 16:44:16.269202: train_loss -0.3652 
+2026-06-05 16:44:16.271656: val_loss 0.0038 
+2026-06-05 16:44:16.273426: Pseudo dice [0.543, 0.7334, 0.5847, 0.6589] 
+2026-06-05 16:44:16.275777: Epoch time: 66.27 s 
+2026-06-05 16:44:20.890681:  
+2026-06-05 16:44:20.936127: Epoch 97 
+2026-06-05 16:44:20.987813: Current learning rate: 4e-05 
+2026-06-05 16:45:30.934737: Per-class validation Dice: 1_other=0.5812 | 2_non-invasive_epithelium=0.6802 | 3_invasive_epithelium=0.5585 | 4_necrosis=0.8102 
+2026-06-05 16:45:30.939103: train_loss -0.3598 
+2026-06-05 16:45:30.940542: val_loss -0.1527 
+2026-06-05 16:45:30.941865: Pseudo dice [0.5812, 0.6802, 0.5585, 0.8102] 
+2026-06-05 16:45:30.943086: Epoch time: 70.05 s 
+2026-06-05 16:45:35.390982:  
+2026-06-05 16:45:35.399011: Epoch 98 
+2026-06-05 16:45:35.406494: Current learning rate: 3e-05 
+2026-06-05 16:46:45.701346: Per-class validation Dice: 1_other=0.5757 | 2_non-invasive_epithelium=0.7569 | 3_invasive_epithelium=0.6157 | 4_necrosis=0.7745 
+2026-06-05 16:46:45.708376: train_loss -0.3791 
+2026-06-05 16:46:45.713612: val_loss -0.2339 
+2026-06-05 16:46:45.718378: Pseudo dice [0.5757, 0.7569, 0.6157, 0.7745] 
+2026-06-05 16:46:45.722561: Epoch time: 70.32 s 
+2026-06-05 16:46:49.676429:  
+2026-06-05 16:46:49.684793: Epoch 99 
+2026-06-05 16:46:49.691690: Current learning rate: 2e-05 
+2026-06-05 16:48:00.955939: Per-class validation Dice: 1_other=0.5633 | 2_non-invasive_epithelium=0.7371 | 3_invasive_epithelium=0.6140 | 4_necrosis=0.5903 
+2026-06-05 16:48:00.960757: train_loss -0.3339 
+2026-06-05 16:48:00.962631: val_loss -0.1235 
+2026-06-05 16:48:00.964521: Pseudo dice [0.5633, 0.7371, 0.614, 0.5903] 
+2026-06-05 16:48:00.966363: Epoch time: 71.29 s 
+2026-06-05 16:48:06.765166: Training done. 

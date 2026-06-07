@@ -1,0 +1,14 @@
+timestamp=2026-06-06T10:37:08+02:00
+fold=1
+role=intermediate
+result_dir=/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_1
+
+2026-06-06 04:26:07.1497665000 877805976 checkpoint_best_class_2_non-invasive_epithelium.pth
+2026-06-06 04:33:23.2003693540 877804480 checkpoint_best_class_3_invasive_epithelium.pth
+2026-06-06 07:24:48.4839648280 877839256 checkpoint_best.pth
+2026-06-06 09:03:16.4722001160 877894494 checkpoint_best_class_4_necrosis.pth
+2026-06-06 10:19:47.1345517760 877920620 checkpoint_best_class_1_other.pth
+2026-06-06 10:36:42.8526296280 46140 class_metrics.csv
+2026-06-06 10:36:42.8556297350 145323 class_metrics.jsonl
+2026-06-06 10:36:52.0439594310 877914916 checkpoint_latest.pth
+2026-06-06 10:36:55.7940939680 257121 training_log_2026_6_5_22_47_12.txt

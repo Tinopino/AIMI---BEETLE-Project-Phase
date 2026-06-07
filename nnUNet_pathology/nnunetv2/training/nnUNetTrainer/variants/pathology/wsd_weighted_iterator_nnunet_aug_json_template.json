@@ -2,7 +2,7 @@
     "wholeslidedata": {
         "default": {
             "yaml_source": "",
-            "image_backend": "asap",
+            "image_backend": "openslide",
             "labels": "",
             "annotation_parser": {
                 "*object": "wholeslidedata.annotation.parser.WholeSlideAnnotationParser",
@@ -16,7 +16,7 @@
                 "shape": ""
             },
             "dataset": {
-                "copy_path": "/home/user/data",
+                "copy_path": "/scratch/tijnveldwijk/wsd_cache/images",
                 "spacing": 0.5
             },
             "label_sampler_name": "WeightedLabelSampler",

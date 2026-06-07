@@ -259,7 +259,7 @@ class nnUNetTrainer_custom_dataloader_test(nnUNetTrainer):
         if self.time or subset:
             print('Still timing everything, only copying SOME training and val files')
             fold_split_dict = {'training': fold_split_dict['training'][-10:], 'validation': fold_split_dict['validation'][-5:]}
-        copy_path = '/home/user' #'C:\\Users\\joeyspronck\\Documents\\Github\\nnUNet_v2\\data\\nnUNet_wsd'
+        copy_path = '/scratch/tijnveldwijk/wsd_cache/images' #'C:\\Users\\joeyspronck\\Documents\\Github\\nnUNet_v2\\data\\nnUNet_wsd'
         labels = self.dataset_json['labels']
         if self.label_sampling_strategy == 'weighted': 
             label_sample_weights = self.dataset_json['label_sample_weights']

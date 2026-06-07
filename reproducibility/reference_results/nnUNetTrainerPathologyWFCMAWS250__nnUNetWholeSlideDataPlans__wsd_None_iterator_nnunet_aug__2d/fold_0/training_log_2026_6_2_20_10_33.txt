@@ -1,0 +1,21 @@
+
+#######################################################################
+Please cite the following paper when using nnU-Net:
+Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H. (2021). nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nature methods, 18(2), 203-211.
+#######################################################################
+ 
+2026-06-02 20:10:33.636554: Using confusion-focused label sampling weights: {'other': 0.15, 'non-invasive epithelium': 0.3, 'invasive epithelium': 0.35, 'necrosis': 0.2} 
+2026-06-02 20:10:35.249203: Using Dice + AlphaWeightedFocal loss with focal_alpha={1: 0.859, 2: 1.05, 3: 1.718, 4: 1.336} 
+
+This is the configuration used by this training:
+Configuration name: 2d
+ {'data_identifier': 'nnUNetWholeSlideDataPlans_2d', 'preprocessor_name': 'DefaultPreprocessor', 'batch_size': 17, 'patch_size': [512, 512], 'median_image_size_in_voxels': [1024, 1024], 'spacing': [1, 1], 'normalization_schemes': ['RGBTo01Normalization', 'RGBTo01Normalization', 'RGBTo01Normalization'], 'use_mask_for_norm': [False, False, False], 'UNet_class_name': 'PlainConvUNet', 'UNet_base_num_features': 32, 'n_conv_per_stage_encoder': [2, 2, 2, 2, 2, 2, 2, 2], 'n_conv_per_stage_decoder': [2, 2, 2, 2, 2, 2, 2], 'num_pool_per_axis': [7, 7], 'pool_op_kernel_sizes': [[1, 1], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2]], 'conv_kernel_sizes': [[3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3]], 'unet_max_num_features': 512, 'batch_dice': True} 
+ 
+These are the global plan.json settings:
+ {'dataset_name': 'Dataset301_BEETLE', 'plans_name': 'nnUNetWholeSlideDataPlans', 'image_reader_writer': 'NaturalImage2DIO', 'transpose_forward': [0, 1, 2], 'transpose_backward': [0, 1, 2], 'experiment_planner_used': 'PathologyExperimentPlanner', 'label_manager': 'LabelManager'} 
+ 
+2026-06-02 20:11:10.510401: Unable to plot network architecture: 
+2026-06-02 20:11:10.514701: No module named 'hiddenlayer' 
+2026-06-02 20:11:10.647318:  
+2026-06-02 20:11:10.653392: Epoch 0 
+2026-06-02 20:11:10.654732: Current learning rate: 0.01 

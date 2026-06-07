@@ -271,7 +271,7 @@ class nnUNetTrainer_WSD_undefined_dataloader(nnUNetTrainer):
         if self.time or subset:
             print('Still timing everything, only copying SOME training and val files')
             fold_split_dict = {'training': fold_split_dict['training'][-10:], 'validation': fold_split_dict['validation'][-5:]}
-        copy_path = '/home/user'
+        copy_path = '/scratch/tijnveldwijk/wsd_cache/images'
         labels = self.dataset_json['labels']
         sampling_labels = self.dataset_json['sampling_labels'] if 'sampling_labels' in self.dataset_json else labels # setting ['sampling_labels'] is optional
         if self.label_sampling_strategy == 'weighted': 
@@ -283,9 +283,8 @@ class nnUNetTrainer_WSD_undefined_dataloader(nnUNetTrainer):
 
         patch_size = list(self.configuration_manager.patch_size)
 
-        print('\n\n\nTEMP BATCH SIZE 8\n\n\n')
-        # batch_size = self.configuration_manager.batch_size
-        batch_size = 8
+        batch_size = int(getattr(self, "wsd_batch_size_override", 8))
+        print(f'\n\n\nWSD BATCH SIZE {batch_size}\n\n\n')
 
         ds_scales = self._get_deep_supervision_scales()
         ds_shapes = [[int(np.round(i * j)) for i, j in zip(patch_size, k)] for k in ds_scales]

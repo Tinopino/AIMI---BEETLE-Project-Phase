@@ -24,4 +24,16 @@ __pycache__/
 .venv/
 env/
 venv/
+.ipynb_checkpoints/# AIMI BEETLE generated files
+*.pth
+*.pt
+*.ckpt
+logs/
+beetle_report_bundle_*/
+beetle_report_bundle_*.zip
+beetle_report_bundle_*.tar.gz
+beetle_folds*_delta_*/
+beetle_folds*_delta_*.zip
+.pytest_cache/
 .ipynb_checkpoints/
+# AIMI BEETLE generated files

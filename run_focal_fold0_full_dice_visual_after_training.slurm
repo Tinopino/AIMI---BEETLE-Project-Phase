@@ -36,4 +36,4 @@ ls -lh "$MODEL_BASE/dataset.json"
 ls -lh "$CHECKPOINT"
 
 echo "Running full fold-0 Dice + visuals on checkpoint_best..."
-python compute_fold0_dice_full_tiffslide_hybrid_visual.py
+python visual_analysis.py
