@@ -51,20 +51,65 @@ def stage_config(stage: str) -> tuple[Path, str]:
 
 
 def read_cm(path: Path) -> list[list[int]]:
+    """Read a 5x5 confusion matrix with optional Excel metadata and labels."""
     if not path.is_file():
         raise FileNotFoundError(path)
 
-    with path.open(newline="") as f:
-        rows = [
-            [int(float(value)) for value in row]
-            for row in csv.reader(f)
-            if row
+    raw_lines = path.read_text().splitlines()
+    delimiter = ","
+    rows: list[list[int]] = []
+
+    for raw_line in raw_lines:
+        line = raw_line.strip()
+
+        if not line:
+            continue
+
+        if line.lower().startswith("sep="):
+            declared = line[4:].strip()
+            if declared:
+                delimiter = declared
+            continue
+
+        fields = [
+            value.strip()
+            for value in next(csv.reader([raw_line], delimiter=delimiter))
+            if value.strip()
         ]
 
+        if not fields:
+            continue
+
+        first = fields[0].lower()
+
+        # Skip headers such as: GT \ Pred,0,1,2,3,4
+        if "gt" in first and "pred" in first:
+            continue
+
+        numeric_values: list[int] = []
+
+        for value in fields:
+            try:
+                numeric_values.append(int(float(value)))
+            except ValueError:
+                continue
+
+        # Some files include a leading row label: 0,... through 4,...
+        if len(numeric_values) == 6:
+            numeric_values = numeric_values[-5:]
+
+        if len(numeric_values) == 5:
+            rows.append(numeric_values)
+
     if len(rows) != 5 or any(len(row) != 5 for row in rows):
-        raise ValueError(f"Expected a 5x5 confusion matrix: {path}")
+        raise ValueError(
+            f"Expected a 5x5 confusion matrix after parsing {path}, "
+            f"but found shape {len(rows)}x"
+            f"{len(rows[0]) if rows else 0}."
+        )
 
     return rows
+
 
 
 def add_cm(a: list[list[int]], b: list[list[int]]) -> list[list[int]]:
