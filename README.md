@@ -33,6 +33,7 @@ remains strongest overall on the multicentric external benchmark.
 ```text
 .
 ├── configure_data_paths.py
+├── configure_validation_inputs.py
 ├── experiments.py
 ├── train.py
 ├── validate.py
@@ -43,11 +44,12 @@ remains strongest overall on the multicentric external benchmark.
 └── outputs/
 ```
 
-The public interface consists of four files:
+The public interface consists of five files:
 
 | File | Purpose |
 |---|---|
 | `configure_data_paths.py` | Rewrite the committed pathology split paths for another filesystem while preserving fold membership. |
+| `configure_validation_inputs.py` | Generate held-out WSI validation CSV manifests from `splits.json` and raster masks. |
 | `experiments.py` | Experiment phases, trainer classes, checkpoint tags, and native inference geometry. |
 | `train.py` | Train or resume one registered experiment fold. |
 | `validate.py` | Held-out WSI validation, fold aggregation, external five-fold inference, submission checks, and ZIP creation. |
@@ -64,6 +66,7 @@ reproduces the project from a **prepared BEETLE nnU-Net dataset onward**:
 ```text
 configure paths
 → preserve the original five-fold WSI split
+→ generate held-out validation manifests
 → train or resume registered experiment folds
 → run context-1024 fine-tuning
 → run held-out WSI validation
@@ -94,10 +97,18 @@ The code expects a prepared BEETLE dataset with the following layout:
 │           ├── patient320_wsi1_roi1.png
 │           └── ...
 └── annotations/
-    └── jsons/
-        ├── patient1_wsi1.json
+    ├── jsons/
+    │   ├── patient1_wsi1.json
+    │   └── ...
+    └── masks/
+        ├── patient1_wsi1.tif
         └── ...
 ```
+
+The raster masks under `annotations/masks/` are required only for held-out WSI
+evaluation. Training uses the WSI and annotation JSON paths stored in
+`splits.json`. External challenge inference uses the 170 ROI PNG files under
+`images/evaluation/rois/`.
 
 The pathology nnU-Net pipeline also expects:
 
@@ -121,21 +132,6 @@ The pathology nnU-Net pipeline also expects:
                 └── checkpoint_best.pth
 ```
 
-For held-out WSI validation, provide:
-
-```text
-<VALIDATION_CSV_DIR>/
-├── fold0_validation_inference_inputs.csv
-├── fold1_validation_inference_inputs.csv
-├── fold2_validation_inference_inputs.csv
-├── fold3_validation_inference_inputs.csv
-└── fold4_validation_inference_inputs.csv
-```
-
-The validation CSV files list the held-out WSI inference inputs for each fold.
-External challenge inference uses the 170 ROI PNG files under
-`<BEETLE_DATA_ROOT>/images/evaluation/rois/`.
-
 ## Installation
 
 ```bash
@@ -155,7 +151,7 @@ source paths.env
 
 The defaults in `paths.env.example` match the original course-cluster layout.
 On another machine, adapt `BEETLE_DATA_ROOT`, `nnUNet_raw`,
-`nnUNet_preprocessed`, `nnUNet_results`, and `BEETLE_VALIDATION_CSV_DIR`.
+`nnUNet_preprocessed`, `nnUNet_results`, and `BEETLE_VENV`.
 
 ## Rewrite the committed split paths for another machine
 
@@ -190,6 +186,50 @@ python configure_data_paths.py \
 Use `--force` only after reviewing an existing destination file. Use
 `--skip-file-check` only when preparing paths before the external files are
 mounted.
+
+## Generate held-out WSI validation manifests
+
+The fold-specific validation CSV files are generated artifacts and are not
+committed to Git. Generate them from the adapted pathology split and the
+raster-mask directory:
+
+```bash
+python configure_validation_inputs.py
+```
+
+With the default environment template this writes:
+
+```text
+outputs/validation_inputs/
+├── fold0_validation_inference_inputs.csv
+├── fold1_validation_inference_inputs.csv
+├── fold2_validation_inference_inputs.csv
+├── fold3_validation_inference_inputs.csv
+└── fold4_validation_inference_inputs.csv
+```
+
+Each generated CSV contains:
+
+```text
+file_key,slide,wsi_path,mask_path
+```
+
+Preview generation without writing with:
+
+```bash
+python configure_validation_inputs.py --check-only
+```
+
+To use another mask directory or output location:
+
+```bash
+python configure_validation_inputs.py \
+    --mask-root /path/to/beetle-data/annotations/masks \
+    --output-dir /path/to/generated-validation-inputs
+```
+
+`validate.py wsi` automatically generates the requested fold manifest when it
+is missing, using the configured split file and mask root.
 
 ## List experiment phases
 
@@ -274,4 +314,5 @@ real context-1024 GPU ROI prediction.
 ## Files intentionally excluded from Git
 
 Generated checkpoints, predictions, ZIP submissions, logs, visual archives,
-raw WSIs, annotations, and preprocessed tensors are intentionally excluded.
+validation CSV manifests, raw WSIs, annotations, and preprocessed tensors are
+intentionally excluded.
