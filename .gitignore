@@ -52,3 +52,6 @@ package_source_audit.txt
 paper_experiment_inventory.txt
 paper_metric_log_hits.txt
 staged_reproducibility_review.txt
+
+# Legacy generated CV summaries
+cv_summaries/

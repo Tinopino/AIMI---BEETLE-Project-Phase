@@ -6,6 +6,7 @@ Running the pipeline creates local subfolders such as:
 
 ```text
 outputs/
+├── cv_summaries/
 ├── visuals/
 ├── external_predictions/
 └── submissions/

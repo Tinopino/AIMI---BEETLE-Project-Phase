@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
 import statistics
 import sys
 from pathlib import Path
@@ -17,14 +18,27 @@ LABELS = {
     4: "necrosis",
 }
 
-ROOT = Path(
-    "/vol/csedu-nobackup/course/IMC037_aimi/group14/"
-    "nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE"
+REPO_ROOT = Path(
+    os.environ.get(
+        "AIMI_REPO_ROOT",
+        str(Path(__file__).resolve().parents[1]),
+    )
 )
 
+OUTPUT_ROOT = Path(
+    os.environ.get(
+        "BEETLE_OUTPUT_ROOT",
+        str(REPO_ROOT / "outputs"),
+    )
+)
+
+ROOT = Path(os.environ["nnUNet_results"]) / "Dataset301_BEETLE"
+
 OUT = Path(
-    "/home/tijnveldwijk/AIMI---BEETLE-Project-Phase/"
-    "cv_summaries/cutmixema1000_context1024"
+    os.environ.get(
+        "BEETLE_CV_SUMMARY_ROOT",
+        str(OUTPUT_ROOT / "cv_summaries" / "cutmixema1000_context1024"),
+    )
 )
 
 

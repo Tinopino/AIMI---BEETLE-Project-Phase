@@ -219,7 +219,7 @@ def external_roi_folder() -> Path:
 
 def external_output_folder(experiment: Experiment) -> Path:
     base = Path(os.environ.get(
-        "BEETLE_INFERENCE_OUTPUT_ROOT",
+        "BEETLE_EXTERNAL_PREDICTION_ROOT",
         str(output_root() / "external_predictions"),
     ))
     return base / experiment.name
@@ -227,7 +227,7 @@ def external_output_folder(experiment: Experiment) -> Path:
 
 def external_zip_path(experiment: Experiment) -> Path:
     base = Path(os.environ.get(
-        "BEETLE_INFERENCE_OUTPUT_ROOT",
+        "BEETLE_SUBMISSION_ROOT",
         str(output_root() / "submissions"),
     ))
     return base / f"{experiment.name}.zip"

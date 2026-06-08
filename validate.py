@@ -270,7 +270,7 @@ def main() -> None:
 
     # Only model-running commands need nnU-Net environment variables.
     # This keeps --help and check-submission usable on any machine.
-    if args.command in {"wsi", "external"}:
+    if args.command in {"wsi", "external", "aggregate"}:
         require_environment()
 
     if args.command == "wsi":
