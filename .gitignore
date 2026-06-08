@@ -24,4 +24,50 @@ __pycache__/
 .venv/
 env/
 venv/
+.ipynb_checkpoints/# AIMI BEETLE generated files
+*.pth
+*.pt
+*.ckpt
+logs/
+beetle_report_bundle_*/
+beetle_report_bundle_*.zip
+beetle_report_bundle_*.tar.gz
+beetle_folds*_delta_*/
+beetle_folds*_delta_*.zip
+.pytest_cache/
 .ipynb_checkpoints/
+# AIMI BEETLE generated files
+
+# BEETLE reproducibility exclusions
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.zip
+inference_outputs/
+logs/
+beetle_report_bundle_*/
+beetle_folds*_delta_*/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+final_github_commit_audit.txt
+package_source_audit.txt
+paper_experiment_inventory.txt
+paper_metric_log_hits.txt
+queued_*.txt
+
+# Local reproducibility-audit helpers
+README_BEETLE_FINAL.md
+audit_final_github_commit.sh
+create_final_repro_branch.sh
+final_repro_staging_verification.txt
+inspect_final_package_sources.sh
+prepare_final_repro_commit_minimal.sh
+staged_reproducibility_review.txt
+verify_final_repro_staging.sh
+
+# Local source-code backups
+*.bak
+*.bak_*
+*.before_*.bak

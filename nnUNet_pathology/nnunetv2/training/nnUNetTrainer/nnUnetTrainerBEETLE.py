@@ -1,0 +1,1213 @@
+import csv
+import json
+import os
+from os.path import join
+
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+
+from nnunetv2.training.loss.dice import MemoryEfficientSoftDiceLoss
+from nnunetv2.training.loss.deep_supervision import DeepSupervisionWrapper
+from nnunetv2.utilities.collate_outputs import collate_outputs
+
+from nnunetv2.training.nnUNetTrainer.variants.pathology.nnUNetTrainer_WSD_wei_i0_nnunet_aug_json import (
+    nnUNetTrainer_WSD_wei_i0_nnunet_aug_json,
+)
+
+
+def softmax_helper_dim1(x: torch.Tensor) -> torch.Tensor:
+    return torch.softmax(x, dim=1)
+
+
+class FocalLoss(nn.Module):
+    """
+    Multiclass Focal loss for nnU-Net pathology training.
+
+    For the official BEETLE-style dataset.json:
+        label 0 = unannotated
+
+    Therefore label 0 must be ignored during loss computation.
+    """
+
+    def __init__(self, gamma: float = 2.0, ignore_index: int = -100):
+        super().__init__()
+        self.gamma = gamma
+        self.ignore_index = ignore_index
+
+    def forward(self, logit: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        # nnU-Net targets are usually (B, 1, H, W).
+        # CrossEntropy expects (B, H, W).
+        if len(target.shape) == len(logit.shape):
+            target = target.squeeze(1)
+
+        target = target.long()
+
+        ce_loss = F.cross_entropy(
+            logit,
+            target,
+            reduction="none",
+            ignore_index=self.ignore_index,
+        )
+
+        pt = torch.exp(-ce_loss)
+        focal_loss = ((1.0 - pt) ** self.gamma) * ce_loss
+
+        # Exclude ignored pixels from the mean.
+        if self.ignore_index != -100:
+            valid_mask = target != self.ignore_index
+            focal_loss = focal_loss[valid_mask]
+
+            # Avoid NaN if an entire patch is unannotated.
+            if focal_loss.numel() == 0:
+                return logit.sum() * 0.0
+
+        return focal_loss.mean()
+
+
+class DC_and_Focal_loss(nn.Module):
+    """
+    Dice + Focal loss.
+
+    This is equivalent in spirit to Dice + CE, but CE is replaced by Focal.
+    Label 0 is ignored for BEETLE, because it means unannotated.
+    """
+
+    def __init__(
+        self,
+        soft_dice_kwargs: dict,
+        focal_kwargs: dict,
+        weight_focal: float = 1.0,
+        weight_dice: float = 1.0,
+        ignore_label=None,
+    ):
+        super().__init__()
+        self.weight_dice = weight_dice
+        self.weight_focal = weight_focal
+        self.ignore_label = ignore_label
+
+        self.dc = MemoryEfficientSoftDiceLoss(**soft_dice_kwargs)
+        self.focal = FocalLoss(**focal_kwargs)
+
+    def forward(self, net_output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        if self.ignore_label is not None:
+            target_for_dice = target.clone()
+
+            # Mask all unannotated pixels.
+            loss_mask = target_for_dice != self.ignore_label
+
+            # Dice needs ignored labels replaced by a valid class id.
+            # The loss_mask prevents those pixels from contributing.
+            target_for_dice[target_for_dice == self.ignore_label] = 0
+
+            try:
+                dc_loss = self.dc(net_output, target_for_dice, loss_mask=loss_mask)
+            except TypeError:
+                # Fallback for nnU-Net versions where MemoryEfficientSoftDiceLoss
+                # does not accept loss_mask.
+                dc_loss = self.dc(net_output, target_for_dice)
+        else:
+            dc_loss = self.dc(net_output, target)
+
+        focal_loss = self.focal(net_output, target)
+
+        return self.weight_dice * dc_loss + self.weight_focal * focal_loss
+
+
+class nnUNetTrainerPathologyFocal(nnUNetTrainer_WSD_wei_i0_nnunet_aug_json):
+    """
+    BEETLE trainer variant.
+
+    Keeps:
+    - pathology WSD dataloader
+    - weighted label sampling via label_sample_weights
+    - nnU-Net pathology augmentation setup
+
+    Changes:
+    - uses Dice + Focal loss
+    - ignores label 0 as unannotated
+    - trains for 250 epochs
+    """
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+
+        # Official BEETLE-style dataset.json uses label 0 = unannotated.
+        # The parent WSD trainer normally sets this already, but we enforce it here.
+        self.ignore0 = True
+
+        self.num_epochs = 250
+
+    def _build_loss(self):
+        # This Dice + Focal setup is for normal multiclass softmax training.
+        if getattr(self.label_manager, "has_regions", False):
+            self.print_to_log_file(
+                "WARNING: nnUNetTrainerPathologyFocal does not support region-based training. "
+                "Falling back to parent _build_loss()."
+            )
+            return super()._build_loss()
+
+        # Critical for BEETLE:
+        # label 0 = unannotated, so ignore it in both Dice and Focal.
+        if getattr(self, "ignore0", False):
+            ignore_label = 0
+        else:
+            ignore_label = (
+                self.label_manager.ignore_label
+                if getattr(self.label_manager, "has_ignore_label", False)
+                else None
+            )
+
+        focal_ignore_index = ignore_label if ignore_label is not None else -100
+
+        dice_kwargs = {
+            "apply_nonlin": softmax_helper_dim1,
+            "batch_dice": self.configuration_manager.batch_dice,
+            "smooth": 1e-5,
+            "do_bg": False,
+            "ddp": self.is_ddp,
+        }
+
+        focal_kwargs = {
+            "gamma": 2.0,
+            "ignore_index": focal_ignore_index,
+        }
+
+        loss = DC_and_Focal_loss(
+            soft_dice_kwargs=dice_kwargs,
+            focal_kwargs=focal_kwargs,
+            weight_focal=1.0,
+            weight_dice=1.0,
+            ignore_label=ignore_label,
+        )
+
+        # Same deep supervision weighting style as nnU-Net.
+        deep_supervision_scales = self._get_deep_supervision_scales()
+
+        weights = np.array(
+            [1 / (2 ** i) for i in range(len(deep_supervision_scales))],
+            dtype=np.float32,
+        )
+
+        # Ignore lowest-resolution output.
+        if self.is_ddp and not self._do_i_compile():
+            weights[-1] = 1e-6
+        else:
+            weights[-1] = 0.0
+
+        weights = weights / weights.sum()
+
+        return DeepSupervisionWrapper(loss, weights)
+
+
+# =============================================================================
+# NEW TRAINER SUBCLASS: FOCAL LOSS + PER-CLASS VALIDATION METRICS/CHECKPOINTS
+# =============================================================================
+
+class nnUNetTrainerPathologyFocalClassMetrics(nnUNetTrainerPathologyFocal):
+    """
+    Same training setup as nnUNetTrainerPathologyFocal, but with extra logging
+    and checkpointing for class-specific validation Dice.
+
+    This subclass DOES NOT change:
+    - the network architecture
+    - the loss
+    - the patch sampling strategy
+    - the augmentations
+    - the number of epochs
+    - the normal nnU-Net checkpoint behavior
+
+    It only adds:
+    - class_metrics.csv
+    - class_metrics.jsonl
+    - checkpoint_best_class_<label>_<class_name>.pth
+
+    Why this is useful:
+    The standard nnU-Net "best" checkpoint is selected using the overall/mean
+    foreground validation score. For BEETLE, we may also care about choosing
+    the checkpoint that performs best for a specific class, for example:
+        - invasive epithelium
+        - non-invasive epithelium
+        - necrosis
+
+    Important:
+    These metrics are computed from the normal nnU-Net validation loop. They are
+    good for checkpoint selection during training, but final model choice should
+    still be confirmed with the full WSI/fold validation inference script.
+    """
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+
+        # Best Dice seen so far per foreground class label.
+        # Example:
+        #   self.best_class_dice[3] = best invasive epithelium Dice so far
+        self.best_class_dice = {}
+
+        # Paths are initialized lazily because self.output_folder is safest to
+        # use after nnU-Net has fully initialized the trainer.
+        self.class_metric_csv = None
+        self.class_metric_jsonl = None
+
+    # -------------------------------------------------------------------------
+    # Small utility helpers
+    # -------------------------------------------------------------------------
+
+    def _is_rank0(self) -> bool:
+        """
+        In DDP/multi-GPU training, only rank 0 should write files/checkpoints.
+        For our single-GPU csedu jobs this will simply return True.
+        """
+        return (not getattr(self, "is_ddp", False)) or int(getattr(self, "local_rank", 0)) == 0
+
+    def _sanitize_name(self, s: str) -> str:
+        """
+        Make a class name safe for filenames and CSV headers.
+        """
+        s = str(s)
+        for ch in [" ", "/", "\\", ":", ";", ",", "(", ")", "[", "]", "{", "}"]:
+            s = s.replace(ch, "_")
+        while "__" in s:
+            s = s.replace("__", "_")
+        return s.strip("_")
+
+    def _get_dataset_label_name_map(self) -> dict:
+        """
+        Read label names from dataset.json.
+
+        Expected nnU-Net format:
+            "labels": {
+                "unannotated": 0,
+                "other": 1,
+                "non-invasive epithelium": 2,
+                "invasive epithelium": 3,
+                "necrosis": 4
+            }
+
+        Returns:
+            {
+                0: "unannotated",
+                1: "other",
+                2: "non-invasive epithelium",
+                3: "invasive epithelium",
+                4: "necrosis"
+            }
+        """
+        label_name_map = {}
+        labels = self.dataset_json.get("labels", {})
+
+        for name, value in labels.items():
+            if isinstance(value, int):
+                label_name_map[int(value)] = str(name)
+            elif isinstance(value, (list, tuple)) and len(value) == 1:
+                # Defensive fallback for variants that store labels as lists.
+                label_name_map[int(value[0])] = str(name)
+
+        return label_name_map
+
+    def _get_foreground_labels_for_dice(self, n_dice_values: int) -> list:
+        """
+        nnU-Net validation Dice arrays normally exclude background/ignore label.
+
+        For BEETLE, the model heads/classes are:
+            0 = unannotated / ignored
+            1 = other
+            2 = non-invasive epithelium
+            3 = invasive epithelium
+            4 = necrosis
+
+        Therefore, for 4 Dice values, we map:
+            dice[0] -> label 1 = other
+            dice[1] -> label 2 = non-invasive epithelium
+            dice[2] -> label 3 = invasive epithelium
+            dice[3] -> label 4 = necrosis
+
+        This helper is intentionally defensive. If dataset.json contains the
+        expected labels, we use those. Otherwise we fall back to [1, 2, 3, ...].
+        """
+        label_name_map = self._get_dataset_label_name_map()
+        foreground_labels = sorted(label for label in label_name_map.keys() if label != 0)
+
+        if len(foreground_labels) == n_dice_values:
+            return foreground_labels
+
+        # Fallback for unexpected dataset.json variants.
+        return list(range(1, n_dice_values + 1))
+
+    def _dice_is_valid(self, dice_value) -> bool:
+        """
+        Check whether a Dice value can be used for logging/checkpoint selection.
+        """
+        if dice_value is None:
+            return False
+        try:
+            return not np.isnan(float(dice_value))
+        except (TypeError, ValueError):
+            return False
+
+    # -------------------------------------------------------------------------
+    # Metric file initialization and writing
+    # -------------------------------------------------------------------------
+
+    def _init_class_metric_files_if_needed(self, foreground_labels: list) -> None:
+        """
+        Create the metric output paths and write the CSV header once.
+
+        Files are written in the fold output folder:
+            fold_0/class_metrics.csv
+            fold_0/class_metrics.jsonl
+        """
+        if self.class_metric_csv is not None:
+            return
+
+        self.class_metric_csv = join(self.output_folder, "class_metrics.csv")
+        self.class_metric_jsonl = join(self.output_folder, "class_metrics.jsonl")
+
+        label_name_map = self._get_dataset_label_name_map()
+
+        header = ["epoch", "mean_fg_dice"]
+        for label in foreground_labels:
+            class_name = label_name_map.get(label, f"class_{label}")
+            header.append(f"dice_{label}_{self._sanitize_name(class_name)}")
+
+        if self._is_rank0() and not os.path.isfile(self.class_metric_csv):
+            with open(self.class_metric_csv, "w", newline="") as f:
+                # Makes Excel open comma-separated CSVs correctly in many
+                # European/Dutch locale setups.
+                f.write("sep=,\n")
+                writer = csv.writer(f)
+                writer.writerow(header)
+
+    def _write_class_metrics(self, dice_per_class: list, foreground_labels: list) -> None:
+        """
+        Append per-class validation Dice to CSV and JSONL.
+        Also prints a readable line into the normal nnU-Net training log.
+        """
+        if not self._is_rank0():
+            return
+
+        self._init_class_metric_files_if_needed(foreground_labels)
+
+        label_name_map = self._get_dataset_label_name_map()
+
+        valid_dice = [float(d) for d in dice_per_class if self._dice_is_valid(d)]
+        mean_fg_dice = float(np.mean(valid_dice)) if len(valid_dice) > 0 else float("nan")
+
+        csv_row = [int(self.current_epoch), mean_fg_dice]
+        for dice_value in dice_per_class:
+            if self._dice_is_valid(dice_value):
+                csv_row.append(float(dice_value))
+            else:
+                csv_row.append("")
+
+        with open(self.class_metric_csv, "a", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(csv_row)
+
+        json_row = {
+            "epoch": int(self.current_epoch),
+            "mean_fg_dice": mean_fg_dice,
+            "dice_per_class": {},
+        }
+
+        for label, dice_value in zip(foreground_labels, dice_per_class):
+            class_name = label_name_map.get(label, f"class_{label}")
+            json_row["dice_per_class"][str(label)] = {
+                "name": class_name,
+                "dice": float(dice_value) if self._dice_is_valid(dice_value) else None,
+            }
+
+        with open(self.class_metric_jsonl, "a") as f:
+            f.write(json.dumps(json_row) + "\n")
+
+        log_parts = []
+        for label, dice_value in zip(foreground_labels, dice_per_class):
+            class_name = label_name_map.get(label, f"class_{label}")
+            short_name = self._sanitize_name(class_name)
+            if self._dice_is_valid(dice_value):
+                log_parts.append(f"{label}_{short_name}={float(dice_value):.4f}")
+            else:
+                log_parts.append(f"{label}_{short_name}=nan")
+
+        self.print_to_log_file(
+            "Per-class validation Dice: " + " | ".join(log_parts),
+            also_print_to_console=True,
+        )
+
+    # -------------------------------------------------------------------------
+    # Class-specific checkpointing
+    # -------------------------------------------------------------------------
+
+    def _save_best_class_checkpoints(self, dice_per_class: list, foreground_labels: list) -> None:
+        """
+        Save one checkpoint per class whenever that class reaches a new best Dice.
+
+        Example saved files:
+            checkpoint_best_class_1_other.pth
+            checkpoint_best_class_2_non-invasive_epithelium.pth
+            checkpoint_best_class_3_invasive_epithelium.pth
+            checkpoint_best_class_4_necrosis.pth
+        """
+        if not self._is_rank0():
+            return
+
+        label_name_map = self._get_dataset_label_name_map()
+
+        for label, dice_value in zip(foreground_labels, dice_per_class):
+            if not self._dice_is_valid(dice_value):
+                continue
+
+            dice_value = float(dice_value)
+            previous_best = self.best_class_dice.get(label, -np.inf)
+
+            if dice_value <= previous_best:
+                continue
+
+            self.best_class_dice[label] = dice_value
+
+            class_name = label_name_map.get(label, f"class_{label}")
+            class_name_safe = self._sanitize_name(class_name)
+
+            checkpoint_name = f"checkpoint_best_class_{label}_{class_name_safe}.pth"
+            checkpoint_path = join(self.output_folder, checkpoint_name)
+
+            self.print_to_log_file(
+                f"New best validation Dice for class {label} ({class_name}): "
+                f"{dice_value:.4f} at epoch {self.current_epoch}. "
+                f"Saving {checkpoint_name}",
+                also_print_to_console=True,
+            )
+
+            self.save_checkpoint(checkpoint_path)
+
+    # -------------------------------------------------------------------------
+    # Hook into the nnU-Net validation epoch
+    # -------------------------------------------------------------------------
+
+    def on_validation_epoch_end(self, val_outputs: list):
+        """
+        Called by nnU-Net at the end of each validation epoch.
+
+        val_outputs contains per-batch validation statistics. We collate them,
+        compute per-class Dice, write class metric files, save class-specific
+        best checkpoints, and then call the parent method so the normal nnU-Net
+        logging/checkpointing still happens.
+        """
+        outputs_collated = collate_outputs(val_outputs)
+
+        # nnU-Net validation outputs are hard TP/FP/FN counts per foreground class.
+        # Shape after summing over validation batches: (number_of_foreground_classes,)
+        tp = np.sum(outputs_collated["tp_hard"], axis=0)
+        fp = np.sum(outputs_collated["fp_hard"], axis=0)
+        fn = np.sum(outputs_collated["fn_hard"], axis=0)
+
+        dice_per_class = []
+        for tp_c, fp_c, fn_c in zip(tp, fp, fn):
+            denom = 2 * tp_c + fp_c + fn_c
+            if denom == 0:
+                dice_per_class.append(np.nan)
+            else:
+                dice_per_class.append(float(2 * tp_c / denom))
+
+        foreground_labels = self._get_foreground_labels_for_dice(len(dice_per_class))
+
+        self._write_class_metrics(dice_per_class, foreground_labels)
+        self._save_best_class_checkpoints(dice_per_class, foreground_labels)
+
+        # Keep the original parent behavior:
+        # - normal validation logging
+        # - normal checkpoint_latest.pth
+        # - normal checkpoint_best.pth based on nnU-Net's standard criterion
+        return super().on_validation_epoch_end(val_outputs)
+
+
+# =============================================================================
+# NEW IMBALANCE-AWARE LOSS: ALPHA-WEIGHTED FOCAL LOSS
+# =============================================================================
+
+class AlphaWeightedFocalLoss(nn.Module):
+    """
+    Multiclass Focal loss with explicit per-class alpha weights.
+
+    This is the imbalance-aware variant.
+
+    For BEETLE:
+        0 = unannotated / ignored
+        1 = other
+        2 = non-invasive epithelium
+        3 = invasive epithelium
+        4 = necrosis
+
+    The loss weight is selected by the ground-truth label of each pixel.
+    Therefore, increasing alpha[3] specifically makes mistakes on invasive
+    epithelium pixels more costly. This directly targets the dominant error:
+        invasive epithelium -> non-invasive epithelium
+
+    Important:
+    - label 0 remains ignored
+    - alpha does not change the model output classes
+    - alpha does not change the patch sampler
+    """
+
+    def __init__(
+        self,
+        gamma: float = 2.0,
+        ignore_index: int = -100,
+        alpha: dict | None = None,
+    ):
+        super().__init__()
+        self.gamma = gamma
+        self.ignore_index = ignore_index
+        self.alpha = alpha
+
+    def forward(self, logit: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        # nnU-Net targets are usually (B, 1, H, W).
+        # CrossEntropy expects (B, H, W).
+        if len(target.shape) == len(logit.shape):
+            target = target.squeeze(1)
+
+        target = target.long()
+
+        ce_loss = F.cross_entropy(
+            logit,
+            target,
+            reduction="none",
+            ignore_index=self.ignore_index,
+        )
+
+        pt = torch.exp(-ce_loss)
+        focal_loss = ((1.0 - pt) ** self.gamma) * ce_loss
+
+        # Apply class alpha weights based on GT label.
+        if self.alpha is not None:
+            alpha_tensor = torch.ones(
+                logit.shape[1],
+                dtype=logit.dtype,
+                device=logit.device,
+            )
+
+            for label, weight in self.alpha.items():
+                label = int(label)
+                if 0 <= label < logit.shape[1]:
+                    alpha_tensor[label] = float(weight)
+
+            safe_target = target.clone()
+            safe_target[safe_target == self.ignore_index] = 0
+            pixel_alpha = alpha_tensor[safe_target]
+            focal_loss = focal_loss * pixel_alpha
+
+        # Exclude ignored pixels from the mean.
+        if self.ignore_index != -100:
+            valid_mask = target != self.ignore_index
+            focal_loss = focal_loss[valid_mask]
+
+            # Avoid NaN if an entire patch is unannotated.
+            if focal_loss.numel() == 0:
+                return logit.sum() * 0.0
+
+        return focal_loss.mean()
+
+
+class DC_and_AlphaWeightedFocal_loss(nn.Module):
+    """
+    Dice + alpha-weighted Focal loss.
+
+    Compared with DC_and_Focal_loss, this adds per-class alpha weights to the
+    focal component. Dice is kept unchanged.
+
+    This is deliberately conservative:
+    - Dice still optimizes overlap.
+    - Alpha-weighted Focal increases the penalty on difficult/underperforming
+      ground-truth classes.
+    - Label 0 remains ignored.
+    """
+
+    def __init__(
+        self,
+        soft_dice_kwargs: dict,
+        focal_kwargs: dict,
+        weight_focal: float = 1.0,
+        weight_dice: float = 1.0,
+        ignore_label=None,
+    ):
+        super().__init__()
+        self.weight_dice = weight_dice
+        self.weight_focal = weight_focal
+        self.ignore_label = ignore_label
+
+        self.dc = MemoryEfficientSoftDiceLoss(**soft_dice_kwargs)
+        self.focal = AlphaWeightedFocalLoss(**focal_kwargs)
+
+    def forward(self, net_output: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        if self.ignore_label is not None:
+            target_for_dice = target.clone()
+
+            # Mask all unannotated pixels.
+            loss_mask = target_for_dice != self.ignore_label
+
+            # Dice needs ignored labels replaced by a valid class id.
+            # The loss_mask prevents those pixels from contributing.
+            target_for_dice[target_for_dice == self.ignore_label] = 0
+
+            try:
+                dc_loss = self.dc(net_output, target_for_dice, loss_mask=loss_mask)
+            except TypeError:
+                # Fallback for nnU-Net versions where MemoryEfficientSoftDiceLoss
+                # does not accept loss_mask.
+                dc_loss = self.dc(net_output, target_for_dice)
+        else:
+            dc_loss = self.dc(net_output, target)
+
+        focal_loss = self.focal(net_output, target)
+
+        return self.weight_dice * dc_loss + self.weight_focal * focal_loss
+
+
+# =============================================================================
+# NEW TRAINER SUBCLASS: CLASS METRICS + ALPHA-WEIGHTED FOCAL LOSS
+# =============================================================================
+
+class nnUNetTrainerPathologyFocalClassMetricsAlpha(nnUNetTrainerPathologyFocalClassMetrics):
+    """
+    Class-metric trainer + class-imbalance-aware alpha-weighted Focal loss.
+
+    This is the recommended next experiment after inspecting the confusion matrix.
+
+    Why these weights:
+    Your largest errors are:
+        1. invasive epithelium -> non-invasive epithelium
+        2. non-invasive epithelium -> invasive epithelium
+        3. other -> non-invasive epithelium
+        4. necrosis -> other
+
+    A plain sampling strategy already samples annotation classes equally, but the
+    pixel-wise loss inside a patch can still be dominated by common/easy tissue.
+    These alpha weights make mistakes on invasive epithelium and necrosis more
+    costly, while not completely ignoring "other".
+
+    Conservative default alpha:
+        label 0 ignored:       not used
+        label 1 other:         0.75
+        label 2 non-invasive:  1.00
+        label 3 invasive:      2.00
+        label 4 necrosis:      2.00
+
+    Why not set other to 0?
+    Because your confusion table already shows many absolute pixels where other
+    is predicted as non-invasive. Fully ignoring other would likely increase
+    false-positive epithelium in stroma/background. Downweighting it mildly is
+    safer than stopping it completely.
+    """
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+
+        # Conservative imbalance-aware class weights for the Focal component.
+        # These are GT-class weights, not prediction-class weights.
+        self.focal_alpha = {
+            1: 0.859,  # other
+            2: 1.050,  # non-invasive epithelium
+            3: 1.718,  # invasive epithelium
+            4: 1.336,  # necrosis
+        }
+
+    def _build_loss(self):
+        # This Dice + alpha-weighted Focal setup is for normal multiclass softmax training.
+        if getattr(self.label_manager, "has_regions", False):
+            self.print_to_log_file(
+                "WARNING: nnUNetTrainerPathologyFocalClassMetricsAlpha does not support "
+                "region-based training. Falling back to parent _build_loss()."
+            )
+            return super()._build_loss()
+
+        # Critical for BEETLE:
+        # label 0 = unannotated, so ignore it in both Dice and Focal.
+        if getattr(self, "ignore0", False):
+            ignore_label = 0
+        else:
+            ignore_label = (
+                self.label_manager.ignore_label
+                if getattr(self.label_manager, "has_ignore_label", False)
+                else None
+            )
+
+        focal_ignore_index = ignore_label if ignore_label is not None else -100
+
+        dice_kwargs = {
+            "apply_nonlin": softmax_helper_dim1,
+            "batch_dice": self.configuration_manager.batch_dice,
+            "smooth": 1e-5,
+            "do_bg": False,
+            "ddp": self.is_ddp,
+        }
+
+        focal_kwargs = {
+            "gamma": 2.0,
+            "ignore_index": focal_ignore_index,
+            "alpha": self.focal_alpha,
+        }
+
+        loss = DC_and_AlphaWeightedFocal_loss(
+            soft_dice_kwargs=dice_kwargs,
+            focal_kwargs=focal_kwargs,
+            weight_focal=1.0,
+            weight_dice=1.0,
+            ignore_label=ignore_label,
+        )
+
+        # Same deep supervision weighting style as nnU-Net.
+        deep_supervision_scales = self._get_deep_supervision_scales()
+
+        weights = np.array(
+            [1 / (2 ** i) for i in range(len(deep_supervision_scales))],
+            dtype=np.float32,
+        )
+
+        # Ignore lowest-resolution output.
+        if self.is_ddp and not self._do_i_compile():
+            weights[-1] = 1e-6
+        else:
+            weights[-1] = 0.0
+
+        weights = weights / weights.sum()
+
+        self.print_to_log_file(
+            "Using Dice + AlphaWeightedFocal loss with focal_alpha="
+            f"{self.focal_alpha}",
+            also_print_to_console=True,
+        )
+
+        return DeepSupervisionWrapper(loss, weights)
+
+
+# Append this block to the bottom of the existing trainer Python file
+# that already defines nnUNetTrainerPathologyFocalClassMetricsAlpha.
+
+# =============================================================================
+# LONG-RUN TRAINER: 1000 EPOCHS + BEST-SO-FAR MILESTONE ARCHIVES
+# =============================================================================
+
+class nnUNetTrainerPathologyFocalClassMetricsAlpha1000Milestones(
+    nnUNetTrainerPathologyFocalClassMetricsAlpha
+):
+    """
+    Uses the existing alpha-weighted focal-loss trainer unchanged, but:
+    - trains for 1000 epochs;
+    - preserves the normal live checkpoint_best.pth;
+    - preserves the normal live checkpoint_best_class_<label>_<name>.pth files;
+    - archives best-so-far copies after 250, 500, 750 and 1000 completed epochs.
+
+    The archived milestone directories contain the best checkpoints observed
+    up to that milestone, not merely the network state from the exact final
+    epoch in the interval.
+    """
+
+    MILESTONE_EPOCHS = (250, 500, 750, 1000)
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        super().__init__(
+            plans,
+            configuration,
+            fold,
+            dataset_json,
+            unpack_dataset,
+            device,
+        )
+
+        # Override the 250-epoch limit inherited from nnUNetTrainerPathologyFocal.
+        # This is set before initialize(), so the LR scheduler sees 1000 epochs.
+        self.num_epochs = 1000
+
+        # Keep a resumable latest checkpoint after every epoch.
+        self.save_every = 1
+
+    def _archive_best_so_far(
+        self,
+        completed_epoch: int,
+        include_final: bool = False,
+    ) -> None:
+        """
+        Copy the current best-so-far checkpoints into:
+            fold_X/milestone_best_checkpoints/epoch_0250/
+            fold_X/milestone_best_checkpoints/epoch_0500/
+            fold_X/milestone_best_checkpoints/epoch_0750/
+            fold_X/milestone_best_checkpoints/epoch_1000/
+        """
+        if not self._is_rank0():
+            return
+
+        import glob
+        import shutil
+
+        destination = join(
+            self.output_folder,
+            "milestone_best_checkpoints",
+            f"epoch_{completed_epoch:04d}",
+        )
+        os.makedirs(destination, exist_ok=True)
+
+        copied_files = []
+
+        # Copies:
+        #   checkpoint_best.pth
+        #   checkpoint_best_class_1_other.pth
+        #   checkpoint_best_class_2_non-invasive_epithelium.pth
+        #   checkpoint_best_class_3_invasive_epithelium.pth
+        #   checkpoint_best_class_4_necrosis.pth
+        for source in sorted(
+            glob.glob(join(self.output_folder, "checkpoint_best*.pth"))
+        ):
+            filename = os.path.basename(source)
+            shutil.copy2(source, join(destination, filename))
+            copied_files.append(filename)
+
+        # Optional but useful: exact resumable state at the milestone.
+        latest_path = join(self.output_folder, "checkpoint_latest.pth")
+        if os.path.isfile(latest_path):
+            shutil.copy2(latest_path, join(destination, "checkpoint_latest.pth"))
+            copied_files.append("checkpoint_latest.pth")
+
+        # At training end, include the standard final checkpoint as well.
+        if include_final:
+            final_path = join(self.output_folder, "checkpoint_final.pth")
+            if os.path.isfile(final_path):
+                shutil.copy2(final_path, join(destination, "checkpoint_final.pth"))
+                copied_files.append("checkpoint_final.pth")
+
+        manifest = {
+            "trainer_name": self.__class__.__name__,
+            "fold": int(self.fold),
+            "completed_epoch": int(completed_epoch),
+            "best_general_ema": (
+                None if self._best_ema is None else float(self._best_ema)
+            ),
+            "best_class_dice": {
+                str(label): float(value)
+                for label, value in sorted(self.best_class_dice.items())
+            },
+            "copied_files": sorted(set(copied_files)),
+        }
+
+        with open(join(destination, "manifest.json"), "w") as f:
+            json.dump(manifest, f, indent=4)
+
+        self.print_to_log_file(
+            f"Archived best-so-far checkpoints after epoch {completed_epoch}: "
+            f"{sorted(set(copied_files))}",
+            also_print_to_console=True,
+        )
+
+    def on_epoch_end(self):
+        """
+        Run the inherited logic first.
+
+        The pathology parent saves checkpoint_latest.pth, updates the normal
+        checkpoint_best.pth if the overall EMA improved, and increments
+        self.current_epoch. The per-class checkpoints were already updated in
+        on_validation_epoch_end().
+        """
+        super().on_epoch_end()
+
+        # After super().on_epoch_end(), self.current_epoch is the number of
+        # completed epochs: 250, 500, 750 or 1000.
+        if self.current_epoch in self.MILESTONE_EPOCHS:
+            self._archive_best_so_far(self.current_epoch)
+
+    def on_train_end(self):
+        """
+        Keep the normal final-checkpoint behavior and add checkpoint_final.pth
+        to the epoch-1000 archive.
+        """
+        super().on_train_end()
+
+        if self.current_epoch >= 1000:
+            self._archive_best_so_far(1000, include_final=True)
+
+class nnUNetTrainerPathologyWFCMAWS250(
+    nnUNetTrainerPathologyFocalClassMetricsAlpha
+):
+    """
+    Weighted focal loss with per-class metrics and moderately adjusted
+    weighted sampling for the dominant invasive/non-invasive confusion.
+
+    Only the patch-sampling weights are changed.
+    The plans, loss, augmentations, architecture and 250-epoch duration remain
+    identical to nnUNetTrainerPathologyFocalClassMetricsAlpha.
+    """
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        # Copy the dictionary so the shared dataset configuration is not
+        # modified globally for other trainer classes.
+        dataset_json = dict(dataset_json)
+
+        dataset_json["label_sample_weights"] = {
+    		"other": 0.15,
+    		"non-invasive epithelium": 0.30,
+    		"invasive epithelium": 0.35,
+    		"necrosis": 0.20,
+		}
+        super().__init__(
+            plans,
+            configuration,
+            fold,
+            dataset_json,
+            unpack_dataset,
+            device,
+        )
+
+        self.print_to_log_file(
+            "Using confusion-focused label sampling weights: "
+            f"{self.dataset_json['label_sample_weights']}",
+            also_print_to_console=True,
+        )
+
+
+
+
+
+
+# =============================================================================
+# TARGETED HARD-EXAMPLE OVERSAMPLING: WEIGHTED FOCAL + HARD 2<->3 MINING
+# =============================================================================
+
+class nnUNetTrainerPathologyWFCHardMining250(
+    nnUNetTrainerPathologyFocalClassMetricsAlpha
+):
+    """
+    Fresh 250-epoch weighted-focal run with confusion-aware hard-example sampling.
+
+    The weighted-focal loss, architecture, augmentations, and base WholeSlideData
+    label sampling remain unchanged. During TRAINING only, 25% of patch centers
+    are drawn from a manifest mined from class-2 <-> class-3 errors made by the
+    prior 250-epoch weighted-focal model. Validation remains unchanged.
+
+    Environment variables:
+        HARD_MINING_MANIFEST
+        HARD_MINING_FRACTION   default: 0.25
+        HARD_MINING_JITTER     default: 128
+    """
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        super().__init__(
+            plans,
+            configuration,
+            fold,
+            dataset_json,
+            unpack_dataset,
+            device,
+        )
+
+        self.hard_mining_manifest = os.environ.get(
+            "HARD_MINING_MANIFEST",
+            "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/"
+            "pathology/hard_mining/wf250_fold0_train_hard_confusions.csv",
+        )
+        self.hard_mining_fraction = float(
+            os.environ.get("HARD_MINING_FRACTION", "0.25")
+        )
+        self.hard_mining_jitter = int(
+            os.environ.get("HARD_MINING_JITTER", "128")
+        )
+
+        if not os.path.isfile(self.hard_mining_manifest):
+            raise FileNotFoundError(
+                "Hard-mining manifest does not exist: "
+                f"{self.hard_mining_manifest}"
+            )
+
+        self.print_to_log_file(
+            "Using weighted focal + targeted hard-example mining: "
+            f"manifest={self.hard_mining_manifest}, "
+            f"fraction={self.hard_mining_fraction}, "
+            f"jitter={self.hard_mining_jitter}",
+            also_print_to_console=True,
+        )
+
+    def modify_fill_template(self, fill_template):
+        """
+        Replace the default WholeSlideData BatchReferenceSampler.
+
+        The custom sampler itself checks dataset.mode and applies hard examples
+        only in training mode. The copied validation config therefore remains a
+        normal validation sampler.
+        """
+        super().modify_fill_template(fill_template)
+
+        fill_template["batch_reference_sampler"] = {
+            "*object": (
+                "nnunetv2.training.nnUNetTrainer.variants.pathology."
+                "hard_mining_batch_reference_sampler."
+                "HardMiningBatchReferenceSampler"
+            ),
+            "dataset": "${dataset}",
+            "batch_size": "${batch_shape.batch_size}",
+            "label_sampler": "${label_sampler}",
+            "annotation_sampler": "${annotation_sampler}",
+            "point_sampler": "${point_sampler}",
+            "manifest_path": self.hard_mining_manifest,
+            "hard_fraction": self.hard_mining_fraction,
+            "jitter": self.hard_mining_jitter,
+            "seed": "${seed}",
+        }
+
+
+# =============================================================================
+# LARGER-CONTEXT ABLATION:
+# WEIGHTED FOCAL + 1024x1024 PATCHES + LOW-LR FINE-TUNING INITIALIZATION
+# =============================================================================
+
+class nnUNetTrainerPathologyFocalClassMetricsAlphaContext1024FT100(
+    nnUNetTrainerPathologyFocalClassMetricsAlpha
+):
+    """
+    Larger-context ablation for BEETLE.
+
+    Keeps unchanged:
+    - network topology;
+    - Dice + alpha-weighted focal loss;
+    - class-specific validation metrics and checkpoints;
+    - normal 0.25 / 0.25 / 0.25 / 0.25 label-anchor sampling;
+    - pathology augmentations.
+
+    Changes:
+    - receives 1024x1024 training patches through configuration
+      `2d_context1024`;
+    - uses WSD batch size 2;
+    - uses initial learning rate 0.001;
+    - runs for 100 epochs.
+
+    The SLURM launcher initializes all network parameters from the completed
+    250-epoch weighted-focal checkpoint before training begins.
+    """
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        super().__init__(
+            plans,
+            configuration,
+            fold,
+            dataset_json,
+            unpack_dataset,
+            device,
+        )
+
+        expected_patch_size = [1024, 1024]
+        actual_patch_size = list(self.configuration_manager.patch_size)
+
+        if actual_patch_size != expected_patch_size:
+            raise RuntimeError(
+                "Context-1024 trainer requires configuration patch_size="
+                f"{expected_patch_size}, but received {actual_patch_size}. "
+                "Use configuration='2d_context1024'."
+            )
+
+        # The pathology WSD loader otherwise defaults to batch size 8.
+        self.wsd_batch_size_override = 2
+
+        # Low-LR fine-tuning schedule.
+        self.initial_lr = 1e-3
+        self.num_epochs = 100
+        self.save_every = 1
+
+        self.print_to_log_file(
+            "Using larger-context weighted-focal fine-tuning: "
+            "patch_size=[1024, 1024], WSD batch_size=2, "
+            "initial_lr=0.001, num_epochs=100",
+            also_print_to_console=True,
+        )
+
+
+class nnUNetTrainerPathologyFocalClassMetricsAlphaContext1024Pilot5(
+    nnUNetTrainerPathologyFocalClassMetricsAlphaContext1024FT100
+):
+    """
+    Five-epoch pilot to verify GPU memory usage and runtime before queueing the
+    full 100-epoch context experiment.
+    """
+
+    def __init__(
+        self,
+        plans: dict,
+        configuration: str,
+        fold: int,
+        dataset_json: dict,
+        unpack_dataset: bool = True,
+        device: torch.device = torch.device("cuda"),
+    ):
+        super().__init__(
+            plans,
+            configuration,
+            fold,
+            dataset_json,
+            unpack_dataset,
+            device,
+        )
+
+        self.num_epochs = 5
+
+        self.print_to_log_file(
+            "Running five-epoch Context1024 pilot.",
+            also_print_to_console=True,
+        )
+
+
+# =============================================================================
+# CUTMIX + STAIN JITTER + EMA + 1024x1024 CONTEXT FINE-TUNING
+# =============================================================================

@@ -1,0 +1,7 @@
+sep=,
+GT \ Pred,0_unannotated_or_ignored,1_other,2_non_invasive_epithelium,3_invasive_epithelium,4_necrosis
+0_unannotated_or_ignored,0.000000,0.000000,0.000000,0.000000,0.000000
+1_other,0.000000,0.982781,0.010787,0.003909,0.002523
+2_non-invasive epithelium,0.000000,0.028017,0.856012,0.094348,0.021623
+3_invasive epithelium,0.000000,0.051008,0.328580,0.607966,0.012446
+4_necrosis,0.000000,0.233523,0.031781,0.005284,0.729411

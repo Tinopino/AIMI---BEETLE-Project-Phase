@@ -1,0 +1,52 @@
+
+#######################################################################
+Please cite the following paper when using nnU-Net:
+Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H. (2021). nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nature methods, 18(2), 203-211.
+#######################################################################
+ 
+2026-06-01 11:17:58.610596: Using Dice + AlphaWeightedFocal loss with focal_alpha={1: 0.859, 2: 1.05, 3: 1.718, 4: 1.336} 
+
+This is the configuration used by this training:
+Configuration name: 2d
+ {'data_identifier': 'nnUNetWholeSlideDataPlans_2d', 'preprocessor_name': 'DefaultPreprocessor', 'batch_size': 17, 'patch_size': [512, 512], 'median_image_size_in_voxels': [1024, 1024], 'spacing': [1, 1], 'normalization_schemes': ['RGBTo01Normalization', 'RGBTo01Normalization', 'RGBTo01Normalization'], 'use_mask_for_norm': [False, False, False], 'UNet_class_name': 'PlainConvUNet', 'UNet_base_num_features': 32, 'n_conv_per_stage_encoder': [2, 2, 2, 2, 2, 2, 2, 2], 'n_conv_per_stage_decoder': [2, 2, 2, 2, 2, 2, 2], 'num_pool_per_axis': [7, 7], 'pool_op_kernel_sizes': [[1, 1], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2]], 'conv_kernel_sizes': [[3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3]], 'unet_max_num_features': 512, 'batch_dice': True} 
+ 
+These are the global plan.json settings:
+ {'dataset_name': 'Dataset301_BEETLE', 'plans_name': 'nnUNetWholeSlideDataPlans', 'image_reader_writer': 'NaturalImage2DIO', 'transpose_forward': [0, 1, 2], 'transpose_backward': [0, 1, 2], 'experiment_planner_used': 'PathologyExperimentPlanner', 'label_manager': 'LabelManager'} 
+ 
+2026-06-01 11:18:37.800527: Unable to plot network architecture: 
+2026-06-01 11:18:37.802637: No module named 'hiddenlayer' 
+2026-06-01 11:18:37.892915:  
+2026-06-01 11:18:37.898975: Epoch 0 
+2026-06-01 11:18:37.900792: Current learning rate: 0.01 
+2026-06-01 11:20:46.145712: Per-class validation Dice: 1_other=0.4343 | 2_non-invasive_epithelium=0.4407 | 3_invasive_epithelium=0.3709 | 4_necrosis=0.3368 
+2026-06-01 11:20:46.159400: New best validation Dice for class 1 (other): 0.4343 at epoch 0. Saving checkpoint_best_class_1_other.pth 
+2026-06-01 11:20:51.200984: New best validation Dice for class 2 (non-invasive epithelium): 0.4407 at epoch 0. Saving checkpoint_best_class_2_non-invasive_epithelium.pth 
+2026-06-01 11:20:54.283038: New best validation Dice for class 3 (invasive epithelium): 0.3709 at epoch 0. Saving checkpoint_best_class_3_invasive_epithelium.pth 
+2026-06-01 11:20:57.488175: New best validation Dice for class 4 (necrosis): 0.3368 at epoch 0. Saving checkpoint_best_class_4_necrosis.pth 
+2026-06-01 11:20:59.938191: train_loss 0.5554 
+2026-06-01 11:20:59.971809: val_loss 0.54 
+2026-06-01 11:21:00.001341: Pseudo dice [0.4343, 0.4407, 0.3709, 0.3368] 
+2026-06-01 11:21:00.027319: Epoch time: 142.05 s 
+2026-06-01 11:21:02.779408: Yayy! New best EMA pseudo Dice: 0.3957 
+2026-06-01 11:21:06.407714:  
+2026-06-01 11:21:06.422245: Epoch 1 
+2026-06-01 11:21:06.441731: Current learning rate: 0.00999 
+2026-06-01 11:22:22.221849: Per-class validation Dice: 1_other=0.5133 | 2_non-invasive_epithelium=0.4347 | 3_invasive_epithelium=0.0583 | 4_necrosis=0.2287 
+2026-06-01 11:22:22.225937: New best validation Dice for class 1 (other): 0.5133 at epoch 1. Saving checkpoint_best_class_1_other.pth 
+2026-06-01 11:22:27.075463: train_loss 0.402 
+2026-06-01 11:22:27.118439: val_loss 0.4121 
+2026-06-01 11:22:27.156002: Pseudo dice [0.5133, 0.4347, 0.0583, 0.2287] 
+2026-06-01 11:22:27.189812: Epoch time: 80.67 s 
+2026-06-01 11:22:31.541638:  
+2026-06-01 11:22:31.566768: Epoch 2 
+2026-06-01 11:22:31.587960: Current learning rate: 0.00998 
+2026-06-01 11:23:42.165207: Per-class validation Dice: 1_other=0.5116 | 2_non-invasive_epithelium=0.4449 | 3_invasive_epithelium=0.1528 | 4_necrosis=0.4078 
+2026-06-01 11:23:42.169669: New best validation Dice for class 2 (non-invasive epithelium): 0.4449 at epoch 2. Saving checkpoint_best_class_2_non-invasive_epithelium.pth 
+2026-06-01 11:23:46.066774: New best validation Dice for class 4 (necrosis): 0.4078 at epoch 2. Saving checkpoint_best_class_4_necrosis.pth 
+2026-06-01 11:23:48.960377: train_loss 0.3712 
+2026-06-01 11:23:49.012470: val_loss 0.3978 
+2026-06-01 11:23:49.053697: Pseudo dice [0.5116, 0.4449, 0.1528, 0.4078] 
+2026-06-01 11:23:49.090123: Epoch time: 77.42 s 
+2026-06-01 11:23:53.214822:  
+2026-06-01 11:23:53.239429: Epoch 3 
+2026-06-01 11:23:53.261292: Current learning rate: 0.00997 

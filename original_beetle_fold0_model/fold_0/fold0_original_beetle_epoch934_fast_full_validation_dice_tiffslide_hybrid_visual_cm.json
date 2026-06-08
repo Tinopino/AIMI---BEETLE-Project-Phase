@@ -1,0 +1,5966 @@
+{
+    "model_base_path": "/home/tijnveldwijk/AIMI---BEETLE-Project-Phase/original_beetle_fold0_model",
+    "csv_path": "/home/tijnveldwijk/fold0_validation_inference_inputs.csv",
+    "folds_to_use": [
+        0
+    ],
+    "checkpoint_name": "checkpoint_best.pth",
+    "labels": {
+        "0": "unannotated_or_ignored",
+        "1": "other",
+        "2": "non-invasive epithelium",
+        "3": "invasive epithelium",
+        "4": "necrosis"
+    },
+    "classes": {
+        "1": "other",
+        "2": "non-invasive epithelium",
+        "3": "invasive epithelium",
+        "4": "necrosis"
+    },
+    "tp": {
+        "1": 2756128882,
+        "2": 475594907,
+        "3": 398512084,
+        "4": 110298632
+    },
+    "fp": {
+        "1": 94172744,
+        "2": 160947621,
+        "3": 68415259,
+        "4": 40782190
+    },
+    "fn": {
+        "1": 42086250,
+        "2": 96810764,
+        "3": 189893607,
+        "4": 35527193
+    },
+    "class_dices": {
+        "other": 0.9758770311149354,
+        "non-invasive epithelium": 0.7867912080821918,
+        "invasive epithelium": 0.7552347385346795,
+        "necrosis": 0.7429852656683702
+    },
+    "class_dices_from_confusion_matrix": {
+        "other": 0.9758770311149354,
+        "non-invasive epithelium": 0.7867912080821918,
+        "invasive epithelium": 0.7552347385346795,
+        "necrosis": 0.7429852656683702
+    },
+    "macro_mean_dice": 0.8152220608500442,
+    "micro_overall_dice": 0.9112470350483272,
+    "confusion_matrix_rows_gt_cols_pred": [
+        [
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        [
+            0,
+            2756128882,
+            12919190,
+            15023853,
+            14143207
+        ],
+        [
+            0,
+            27364494,
+            475594907,
+            52509271,
+            16936999
+        ],
+        [
+            0,
+            35876186,
+            144315437,
+            398512084,
+            9701984
+        ],
+        [
+            0,
+            30932064,
+            3712994,
+            882135,
+            110298632
+        ]
+    ],
+    "confusion_matrix_csv": "/home/tijnveldwijk/AIMI---BEETLE-Project-Phase/original_beetle_fold0_model/fold_0/fold0_original_beetle_epoch934_fast_confusion_matrix_rows_gt_cols_pred.csv",
+    "confusion_matrix_row_normalized_csv": "/home/tijnveldwijk/AIMI---BEETLE-Project-Phase/original_beetle_fold0_model/fold_0/fold0_original_beetle_epoch934_fast_confusion_matrix_row_normalized.csv",
+    "processed_annotated_tiles": 5992,
+    "skipped_empty_tiles": 177506,
+    "save_visuals": false,
+    "visual_output_dir": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/validation_visuals/PathologyFocal_fold0_hybrid_analysis/original_beetle_epoch934_fast",
+    "vis_top_k_per_slide": 2,
+    "vis_low_k_per_slide": 1,
+    "vis_top_k_per_class_fn": 10,
+    "vis_top_k_per_class_fp": 10,
+    "vis_top_k_per_confusion": 10,
+    "min_gt_pixels_for_fn": 500,
+    "min_fp_pixels": 500,
+    "min_confusion_pixels": 500,
+    "vis_top_k_large_area": 30,
+    "vis_top_k_absolute_error": 30,
+    "min_valid_pixels_large_area": 100000,
+    "confusion_pairs_gt_pred": [
+        [
+            2,
+            3
+        ],
+        [
+            3,
+            2
+        ],
+        [
+            1,
+            2
+        ],
+        [
+            4,
+            2
+        ],
+        [
+            3,
+            1
+        ],
+        [
+            4,
+            1
+        ],
+        [
+            1,
+            4
+        ]
+    ],
+    "visualization_colors_rgb": {
+        "0": [
+            0,
+            0,
+            0
+        ],
+        "1": [
+            0,
+            190,
+            210
+        ],
+        "2": [
+            255,
+            230,
+            0
+        ],
+        "3": [
+            240,
+            0,
+            130
+        ],
+        "4": [
+            35,
+            55,
+            140
+        ]
+    },
+    "per_slide_results": [
+        {
+            "slide": "patient3_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient3_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient3_wsi1.tif",
+            "slide_valid_tiles": 56,
+            "slide_skipped_empty_tiles": 2152,
+            "slide_tp": {
+                "1": 42255477,
+                "2": 0,
+                "3": 9231078,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 267886,
+                "2": 141172,
+                "3": 1300121,
+                "4": 886
+            },
+            "slide_fn": {
+                "1": 1346572,
+                "2": 0,
+                "3": 363493,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9812545686283626,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.9173391129879751,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    42255477,
+                    45575,
+                    1300121,
+                    876
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    267886,
+                    95597,
+                    9231078,
+                    10
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient4_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient4_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient4_wsi1.tif",
+            "slide_valid_tiles": 46,
+            "slide_skipped_empty_tiles": 2162,
+            "slide_tp": {
+                "1": 29885350,
+                "2": 0,
+                "3": 8966861,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 857312,
+                "2": 427941,
+                "3": 725112,
+                "4": 18027
+            },
+            "slide_fn": {
+                "1": 838366,
+                "2": 0,
+                "3": 1190026,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9724129181647893,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.9035139549576147,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    29885350,
+                    103235,
+                    725112,
+                    10019
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    857312,
+                    324706,
+                    8966861,
+                    8008
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient30_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient30_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient30_wsi1.tif",
+            "slide_valid_tiles": 32,
+            "slide_skipped_empty_tiles": 1872,
+            "slide_tp": {
+                "1": 23259616,
+                "2": 2870357,
+                "3": 6285,
+                "4": 55749
+            },
+            "slide_fp": {
+                "1": 264370,
+                "2": 166361,
+                "3": 26963,
+                "4": 91104
+            },
+            "slide_fn": {
+                "1": 251917,
+                "2": 254431,
+                "3": 34523,
+                "4": 7927
+            },
+            "slide_class_dices": {
+                "other": 0.989023465436833,
+                "non-invasive epithelium": 0.9317063068671847,
+                "invasive epithelium": 0.16973641568542724,
+                "necrosis": 0.5296087474884695
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    23259616,
+                    158434,
+                    9054,
+                    84429
+                ],
+                [
+                    0,
+                    229847,
+                    2870357,
+                    17909,
+                    6675
+                ],
+                [
+                    0,
+                    34523,
+                    0,
+                    6285,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    7927,
+                    0,
+                    55749
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient30_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient30_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient30_wsi2.tif",
+            "slide_valid_tiles": 14,
+            "slide_skipped_empty_tiles": 1890,
+            "slide_tp": {
+                "1": 1881010,
+                "2": 2946013,
+                "3": 4542,
+                "4": 59485
+            },
+            "slide_fp": {
+                "1": 744193,
+                "2": 70198,
+                "3": 96965,
+                "4": 8446
+            },
+            "slide_fn": {
+                "1": 32590,
+                "2": 824621,
+                "3": 24824,
+                "4": 37767
+            },
+            "slide_class_dices": {
+                "other": 0.8288573000414426,
+                "non-invasive epithelium": 0.8681539065648324,
+                "invasive epithelium": 0.06941080283939392,
+                "necrosis": 0.7202315008203023
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1881010,
+                    32234,
+                    356,
+                    0
+                ],
+                [
+                    0,
+                    719566,
+                    2946013,
+                    96609,
+                    8446
+                ],
+                [
+                    0,
+                    24627,
+                    197,
+                    4542,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    37767,
+                    0,
+                    59485
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient30_wsi3",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient30_wsi3.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient30_wsi3.tif",
+            "slide_valid_tiles": 27,
+            "slide_skipped_empty_tiles": 1877,
+            "slide_tp": {
+                "1": 9925124,
+                "2": 2985982,
+                "3": 9462,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 304680,
+                "2": 53921,
+                "3": 148368,
+                "4": 1469
+            },
+            "slide_fn": {
+                "1": 187639,
+                "2": 259606,
+                "3": 61193,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9757985803856515,
+                "non-invasive epithelium": 0.9501189326339025,
+                "invasive epithelium": 0.08282381775608902,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    9925124,
+                    49314,
+                    138325,
+                    0
+                ],
+                [
+                    0,
+                    248094,
+                    2985982,
+                    10043,
+                    1469
+                ],
+                [
+                    0,
+                    56586,
+                    4607,
+                    9462,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient30_wsi4",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient30_wsi4.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient30_wsi4.tif",
+            "slide_valid_tiles": 12,
+            "slide_skipped_empty_tiles": 1892,
+            "slide_tp": {
+                "1": 5543774,
+                "2": 1504964,
+                "3": 0,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 259916,
+                "2": 86126,
+                "3": 1054,
+                "4": 1989
+            },
+            "slide_fn": {
+                "1": 86697,
+                "2": 260973,
+                "3": 1415,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.96968618860623,
+                "non-invasive epithelium": 0.8966052402914841,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    5543774,
+                    86126,
+                    143,
+                    428
+                ],
+                [
+                    0,
+                    258501,
+                    1504964,
+                    911,
+                    1561
+                ],
+                [
+                    0,
+                    1415,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient30_wsi5",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient30_wsi5.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient30_wsi5.tif",
+            "slide_valid_tiles": 27,
+            "slide_skipped_empty_tiles": 1877,
+            "slide_tp": {
+                "1": 10642928,
+                "2": 2071204,
+                "3": 17882,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 428034,
+                "2": 80554,
+                "3": 85799,
+                "4": 5321
+            },
+            "slide_fn": {
+                "1": 91091,
+                "2": 471434,
+                "3": 35495,
+                "4": 1688
+            },
+            "slide_class_dices": {
+                "other": 0.976192366322172,
+                "non-invasive epithelium": 0.8824155439805249,
+                "invasive epithelium": 0.22771205541901718,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    10642928,
+                    78866,
+                    12225,
+                    0
+                ],
+                [
+                    0,
+                    392539,
+                    2071204,
+                    73574,
+                    5321
+                ],
+                [
+                    0,
+                    35495,
+                    0,
+                    17882,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1688,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient33_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient33_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient33_wsi1.tif",
+            "slide_valid_tiles": 60,
+            "slide_skipped_empty_tiles": 1844,
+            "slide_tp": {
+                "1": 47343191,
+                "2": 10326972,
+                "3": 13510,
+                "4": 1752607
+            },
+            "slide_fp": {
+                "1": 1911168,
+                "2": 204332,
+                "3": 1208964,
+                "4": 655965
+            },
+            "slide_fn": {
+                "1": 377494,
+                "2": 3517742,
+                "3": 6961,
+                "4": 78232
+            },
+            "slide_class_dices": {
+                "other": 0.9763994744874774,
+                "non-invasive epithelium": 0.8473059053369586,
+                "invasive epithelium": 0.021738693184332372,
+                "necrosis": 0.8268162723548154
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    47343191,
+                    126421,
+                    21964,
+                    229109
+                ],
+                [
+                    0,
+                    1904207,
+                    10326972,
+                    1186679,
+                    426856
+                ],
+                [
+                    0,
+                    6961,
+                    0,
+                    13510,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    77911,
+                    321,
+                    1752607
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient39_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient39_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient39_wsi1.tif",
+            "slide_valid_tiles": 96,
+            "slide_skipped_empty_tiles": 1808,
+            "slide_tp": {
+                "1": 123647194,
+                "2": 2205593,
+                "3": 0,
+                "4": 719098
+            },
+            "slide_fp": {
+                "1": 668847,
+                "2": 349675,
+                "3": 237423,
+                "4": 448448
+            },
+            "slide_fn": {
+                "1": 783290,
+                "2": 855314,
+                "3": 0,
+                "4": 65789
+            },
+            "slide_class_dices": {
+                "other": 0.9941621817631422,
+                "non-invasive epithelium": 0.7854431174242256,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.7366173384694891
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    123647194,
+                    324293,
+                    106834,
+                    352163
+                ],
+                [
+                    0,
+                    628440,
+                    2205593,
+                    130589,
+                    96285
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    40407,
+                    25382,
+                    0,
+                    719098
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient39_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient39_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient39_wsi2.tif",
+            "slide_valid_tiles": 53,
+            "slide_skipped_empty_tiles": 1851,
+            "slide_tp": {
+                "1": 41865172,
+                "2": 4810049,
+                "3": 19747,
+                "4": 2867130
+            },
+            "slide_fp": {
+                "1": 1420548,
+                "2": 977152,
+                "3": 172384,
+                "4": 331275
+            },
+            "slide_fn": {
+                "1": 979902,
+                "2": 1723526,
+                "3": 128965,
+                "4": 68966
+            },
+            "slide_class_dices": {
+                "other": 0.972130176809934,
+                "non-invasive epithelium": 0.7808029299453216,
+                "invasive epithelium": 0.11587153029400633,
+                "necrosis": 0.9347557364486533
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    41865172,
+                    903002,
+                    48820,
+                    28080
+                ],
+                [
+                    0,
+                    1296767,
+                    4810049,
+                    123564,
+                    303195
+                ],
+                [
+                    0,
+                    112060,
+                    16905,
+                    19747,
+                    0
+                ],
+                [
+                    0,
+                    11721,
+                    57245,
+                    0,
+                    2867130
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient39_wsi3",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient39_wsi3.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient39_wsi3.tif",
+            "slide_valid_tiles": 85,
+            "slide_skipped_empty_tiles": 1819,
+            "slide_tp": {
+                "1": 114972381,
+                "2": 3991851,
+                "3": 0,
+                "4": 2009100
+            },
+            "slide_fp": {
+                "1": 1897224,
+                "2": 259854,
+                "3": 613567,
+                "4": 177143
+            },
+            "slide_fn": {
+                "1": 586498,
+                "2": 2294865,
+                "3": 0,
+                "4": 66425
+            },
+            "slide_class_dices": {
+                "other": 0.9893140377751636,
+                "non-invasive epithelium": 0.7575804762402262,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.9428481325121405
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    114972381,
+                    193976,
+                    364879,
+                    27643
+                ],
+                [
+                    0,
+                    1896741,
+                    3991851,
+                    248624,
+                    149500
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    483,
+                    65878,
+                    64,
+                    2009100
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient42_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient42_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient42_wsi1.tif",
+            "slide_valid_tiles": 121,
+            "slide_skipped_empty_tiles": 1783,
+            "slide_tp": {
+                "1": 86272695,
+                "2": 17751470,
+                "3": 9703300,
+                "4": 9125005
+            },
+            "slide_fp": {
+                "1": 2677636,
+                "2": 7762312,
+                "3": 2874041,
+                "4": 1506375
+            },
+            "slide_fn": {
+                "1": 4698605,
+                "2": 3881468,
+                "3": 5836438,
+                "4": 403853
+            },
+            "slide_class_dices": {
+                "other": 0.9590030339375926,
+                "non-invasive epithelium": 0.7530309637658781,
+                "invasive epithelium": 0.6902068312288058,
+                "necrosis": 0.9052477455871305
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    86272695,
+                    1937234,
+                    2263956,
+                    497415
+                ],
+                [
+                    0,
+                    2370092,
+                    17751470,
+                    609663,
+                    901713
+                ],
+                [
+                    0,
+                    285408,
+                    5443783,
+                    9703300,
+                    107247
+                ],
+                [
+                    0,
+                    22136,
+                    381295,
+                    422,
+                    9125005
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient45_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient45_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient45_wsi1.tif",
+            "slide_valid_tiles": 41,
+            "slide_skipped_empty_tiles": 1863,
+            "slide_tp": {
+                "1": 11851017,
+                "2": 6967241,
+                "3": 805872,
+                "4": 4501298
+            },
+            "slide_fp": {
+                "1": 121917,
+                "2": 179308,
+                "3": 39455,
+                "4": 422391
+            },
+            "slide_fn": {
+                "1": 102039,
+                "2": 440964,
+                "3": 63964,
+                "4": 156104
+            },
+            "slide_class_dices": {
+                "other": 0.9906396349743521,
+                "non-invasive epithelium": 0.9573835462969693,
+                "invasive epithelium": 0.939703106935026,
+                "necrosis": 0.9396211767532529
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    11851017,
+                    18146,
+                    29443,
+                    54450
+                ],
+                [
+                    0,
+                    63106,
+                    6967241,
+                    10012,
+                    367846
+                ],
+                [
+                    0,
+                    43056,
+                    20813,
+                    805872,
+                    95
+                ],
+                [
+                    0,
+                    15755,
+                    140349,
+                    0,
+                    4501298
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient49_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient49_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient49_wsi1.tif",
+            "slide_valid_tiles": 121,
+            "slide_skipped_empty_tiles": 1783,
+            "slide_tp": {
+                "1": 75976711,
+                "2": 14444009,
+                "3": 59140132,
+                "4": 5643699
+            },
+            "slide_fp": {
+                "1": 3882235,
+                "2": 1770104,
+                "3": 5596975,
+                "4": 1115640
+            },
+            "slide_fn": {
+                "1": 4422901,
+                "2": 3753871,
+                "3": 3998594,
+                "4": 189588
+            },
+            "slide_class_dices": {
+                "other": 0.9481766458924459,
+                "non-invasive epithelium": 0.8394752957203031,
+                "invasive epithelium": 0.9249618260551233,
+                "necrosis": 0.8963498161543113
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    75976711,
+                    224265,
+                    4043214,
+                    155422
+                ],
+                [
+                    0,
+                    1365353,
+                    14444009,
+                    1545836,
+                    842682
+                ],
+                [
+                    0,
+                    2506606,
+                    1374452,
+                    59140132,
+                    117536
+                ],
+                [
+                    0,
+                    10276,
+                    171387,
+                    7925,
+                    5643699
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient61_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient61_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient61_wsi1.tif",
+            "slide_valid_tiles": 38,
+            "slide_skipped_empty_tiles": 2266,
+            "slide_tp": {
+                "1": 0,
+                "2": 15291870,
+                "3": 0,
+                "4": 111042
+            },
+            "slide_fp": {
+                "1": 266878,
+                "2": 119065,
+                "3": 50851,
+                "4": 5785
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 323514,
+                "3": 0,
+                "4": 119065
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.9857353687364588,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.6401332818345853
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    266878,
+                    15291870,
+                    50851,
+                    5785
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    119065,
+                    0,
+                    111042
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient61_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient61_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient61_wsi2.tif",
+            "slide_valid_tiles": 33,
+            "slide_skipped_empty_tiles": 2271,
+            "slide_tp": {
+                "1": 0,
+                "2": 14602222,
+                "3": 0,
+                "4": 206066
+            },
+            "slide_fp": {
+                "1": 108399,
+                "2": 12267,
+                "3": 11910,
+                "4": 110497
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 230806,
+                "3": 0,
+                "4": 12267
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.9917455519254815,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.7704899644042954
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    108399,
+                    14602222,
+                    11910,
+                    110497
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    12267,
+                    0,
+                    206066
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient65_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient65_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient65_wsi1.tif",
+            "slide_valid_tiles": 18,
+            "slide_skipped_empty_tiles": 2286,
+            "slide_tp": {
+                "1": 0,
+                "2": 2515254,
+                "3": 0,
+                "4": 245287
+            },
+            "slide_fp": {
+                "1": 254722,
+                "2": 72210,
+                "3": 2464477,
+                "4": 106558
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 2790712,
+                "3": 0,
+                "4": 107255
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.6373031749188882,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.6964552156697952
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    254722,
+                    2515254,
+                    2429432,
+                    106558
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    72210,
+                    35045,
+                    245287
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient68_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient68_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient68_wsi1.tif",
+            "slide_valid_tiles": 31,
+            "slide_skipped_empty_tiles": 2273,
+            "slide_tp": {
+                "1": 886639,
+                "2": 13031492,
+                "3": 0,
+                "4": 1217190
+            },
+            "slide_fp": {
+                "1": 343075,
+                "2": 215817,
+                "3": 9967,
+                "4": 308310
+            },
+            "slide_fn": {
+                "1": 92259,
+                "2": 628728,
+                "3": 0,
+                "4": 156182
+            },
+            "slide_class_dices": {
+                "other": 0.8028924953771871,
+                "non-invasive epithelium": 0.9686130599357525,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.8397680201126507
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    886639,
+                    62237,
+                    0,
+                    30022
+                ],
+                [
+                    0,
+                    340473,
+                    13031492,
+                    9967,
+                    278288
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2602,
+                    153580,
+                    0,
+                    1217190
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient68_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient68_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient68_wsi2.tif",
+            "slide_valid_tiles": 15,
+            "slide_skipped_empty_tiles": 2289,
+            "slide_tp": {
+                "1": 0,
+                "2": 7188497,
+                "3": 0,
+                "4": 29886
+            },
+            "slide_fp": {
+                "1": 20090,
+                "2": 7360,
+                "3": 0,
+                "4": 30657
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 50747,
+                "3": 0,
+                "4": 7360
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.9959746038493253,
+                "invasive epithelium": NaN,
+                "necrosis": 0.6112343924163249
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    20090,
+                    7188497,
+                    0,
+                    30657
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    7360,
+                    0,
+                    29886
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient73_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient73_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient73_wsi1.tif",
+            "slide_valid_tiles": 12,
+            "slide_skipped_empty_tiles": 2292,
+            "slide_tp": {
+                "1": 676586,
+                "2": 835391,
+                "3": 0,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 185264,
+                "2": 33746,
+                "3": 404580,
+                "4": 130263
+            },
+            "slide_fn": {
+                "1": 160473,
+                "2": 593380,
+                "3": 0,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.7964946915932519,
+                "non-invasive epithelium": 0.7270882907409696,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    676586,
+                    33746,
+                    0,
+                    126727
+                ],
+                [
+                    0,
+                    185264,
+                    835391,
+                    404580,
+                    3536
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient75_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient75_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient75_wsi1.tif",
+            "slide_valid_tiles": 99,
+            "slide_skipped_empty_tiles": 2205,
+            "slide_tp": {
+                "1": 1698,
+                "2": 55297935,
+                "3": 0,
+                "4": 53707
+            },
+            "slide_fp": {
+                "1": 2275037,
+                "2": 42547,
+                "3": 8334343,
+                "4": 87420
+            },
+            "slide_fn": {
+                "1": 1446,
+                "2": 10696800,
+                "3": 0,
+                "4": 41101
+            },
+            "slide_class_dices": {
+                "other": 0.0014895527350354996,
+                "non-invasive epithelium": 0.9114902724408529,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.45526945980884564
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1698,
+                    1446,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2275037,
+                    55297935,
+                    8334343,
+                    87420
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    41101,
+                    0,
+                    53707
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient77_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient77_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient77_wsi1.tif",
+            "slide_valid_tiles": 40,
+            "slide_skipped_empty_tiles": 2264,
+            "slide_tp": {
+                "1": 0,
+                "2": 6343336,
+                "3": 0,
+                "4": 787219
+            },
+            "slide_fp": {
+                "1": 146367,
+                "2": 47488,
+                "3": 29771,
+                "4": 124896
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 294127,
+                "3": 0,
+                "4": 54395
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.9737789780037851,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.8977658463764926
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    140212,
+                    6343336,
+                    29019,
+                    124896
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    6155,
+                    47488,
+                    752,
+                    787219
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient77_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient77_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient77_wsi2.tif",
+            "slide_valid_tiles": 71,
+            "slide_skipped_empty_tiles": 2233,
+            "slide_tp": {
+                "1": 3447337,
+                "2": 18100390,
+                "3": 0,
+                "4": 1987578
+            },
+            "slide_fp": {
+                "1": 4001614,
+                "2": 3521886,
+                "3": 246719,
+                "4": 4141596
+            },
+            "slide_fn": {
+                "1": 5810508,
+                "2": 5768461,
+                "3": 0,
+                "4": 332846
+            },
+            "slide_class_dices": {
+                "other": 0.41268678925630026,
+                "non-invasive epithelium": 0.7957767236674528,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.47045504413346056
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    3447337,
+                    3305188,
+                    252,
+                    2505068
+                ],
+                [
+                    0,
+                    3885466,
+                    18100390,
+                    246467,
+                    1636528
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    116148,
+                    216698,
+                    0,
+                    1987578
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient83_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient83_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient83_wsi1.tif",
+            "slide_valid_tiles": 31,
+            "slide_skipped_empty_tiles": 2049,
+            "slide_tp": {
+                "1": 758213,
+                "2": 5760321,
+                "3": 0,
+                "4": 4043872
+            },
+            "slide_fp": {
+                "1": 1471842,
+                "2": 112156,
+                "3": 953202,
+                "4": 2610546
+            },
+            "slide_fn": {
+                "1": 675004,
+                "2": 4281428,
+                "3": 0,
+                "4": 191314
+            },
+            "slide_class_dices": {
+                "other": 0.4139539733877255,
+                "non-invasive epithelium": 0.7239209748560816,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.7427032241025477
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    758213,
+                    5980,
+                    0,
+                    669024
+                ],
+                [
+                    0,
+                    1400930,
+                    5760321,
+                    938976,
+                    1941522
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    70912,
+                    106176,
+                    14226,
+                    4043872
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient87_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient87_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient87_wsi1.tif",
+            "slide_valid_tiles": 68,
+            "slide_skipped_empty_tiles": 2012,
+            "slide_tp": {
+                "1": 0,
+                "2": 46367239,
+                "3": 0,
+                "4": 878799
+            },
+            "slide_fp": {
+                "1": 1429712,
+                "2": 284412,
+                "3": 4753461,
+                "4": 317507
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 6482464,
+                "3": 0,
+                "4": 302628
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.931992121433845,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.7391906492444694
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1428827,
+                    46367239,
+                    4736130,
+                    317507
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    885,
+                    284412,
+                    17331,
+                    878799
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient89_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient89_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient89_wsi1.tif",
+            "slide_valid_tiles": 15,
+            "slide_skipped_empty_tiles": 2217,
+            "slide_tp": {
+                "1": 0,
+                "2": 6546844,
+                "3": 0,
+                "4": 33414
+            },
+            "slide_fp": {
+                "1": 5776,
+                "2": 9773,
+                "3": 0,
+                "4": 3823
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 9599,
+                "3": 0,
+                "4": 9773
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.9985226941690193,
+                "invasive epithelium": NaN,
+                "necrosis": 0.8309459862727544
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    5776,
+                    6546844,
+                    0,
+                    3823
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    9773,
+                    0,
+                    33414
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient89_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient89_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient89_wsi2.tif",
+            "slide_valid_tiles": 25,
+            "slide_skipped_empty_tiles": 2207,
+            "slide_tp": {
+                "1": 0,
+                "2": 10836670,
+                "3": 0,
+                "4": 166746
+            },
+            "slide_fp": {
+                "1": 539521,
+                "2": 94836,
+                "3": 543842,
+                "4": 30101
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 1049598,
+                "3": 0,
+                "4": 158702
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.9498446255099204,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.6385127179084616
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    475655,
+                    10836670,
+                    543842,
+                    30101
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    63866,
+                    94836,
+                    0,
+                    166746
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient92_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient92_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient92_wsi1.tif",
+            "slide_valid_tiles": 32,
+            "slide_skipped_empty_tiles": 2048,
+            "slide_tp": {
+                "1": 83012,
+                "2": 10189230,
+                "3": 0,
+                "4": 205722
+            },
+            "slide_fp": {
+                "1": 82297,
+                "2": 67171,
+                "3": 29459,
+                "4": 835615
+            },
+            "slide_fn": {
+                "1": 18442,
+                "2": 935739,
+                "3": 0,
+                "4": 60361
+            },
+            "slide_class_dices": {
+                "other": 0.6223651705821273,
+                "non-invasive epithelium": 0.9530942123914417,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.3146991785348243
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    83012,
+                    11038,
+                    0,
+                    7404
+                ],
+                [
+                    0,
+                    78069,
+                    10189230,
+                    29459,
+                    828211
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    4228,
+                    56133,
+                    0,
+                    205722
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient92_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient92_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient92_wsi2.tif",
+            "slide_valid_tiles": 15,
+            "slide_skipped_empty_tiles": 2065,
+            "slide_tp": {
+                "1": 6919,
+                "2": 10002149,
+                "3": 0,
+                "4": 143259
+            },
+            "slide_fp": {
+                "1": 13257,
+                "2": 77872,
+                "3": 0,
+                "4": 39881
+            },
+            "slide_fn": {
+                "1": 5644,
+                "2": 50653,
+                "3": 0,
+                "4": 74713
+            },
+            "slide_class_dices": {
+                "other": 0.42267631876355416,
+                "non-invasive epithelium": 0.9936161461311213,
+                "invasive epithelium": NaN,
+                "necrosis": 0.7143092203673786
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    6919,
+                    3236,
+                    0,
+                    2408
+                ],
+                [
+                    0,
+                    13180,
+                    10002149,
+                    0,
+                    37473
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    77,
+                    74636,
+                    0,
+                    143259
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient101_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient101_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient101_wsi1.tif",
+            "slide_valid_tiles": 11,
+            "slide_skipped_empty_tiles": 2128,
+            "slide_tp": {
+                "1": 0,
+                "2": 4752698,
+                "3": 0,
+                "4": 69379
+            },
+            "slide_fp": {
+                "1": 256779,
+                "2": 10638,
+                "3": 33199,
+                "4": 5244
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 295222,
+                "3": 0,
+                "4": 10638
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.9688256019412805,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.897296947749612
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    256779,
+                    4752698,
+                    33199,
+                    5244
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    10638,
+                    0,
+                    69379
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient101_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient101_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient101_wsi2.tif",
+            "slide_valid_tiles": 7,
+            "slide_skipped_empty_tiles": 2132,
+            "slide_tp": {
+                "1": 329864,
+                "2": 2947890,
+                "3": 0,
+                "4": 41794
+            },
+            "slide_fp": {
+                "1": 97750,
+                "2": 18544,
+                "3": 16842,
+                "4": 10732
+            },
+            "slide_fn": {
+                "1": 17164,
+                "2": 123175,
+                "3": 0,
+                "4": 3529
+            },
+            "slide_class_dices": {
+                "other": 0.8516553453078971,
+                "non-invasive epithelium": 0.9765268698181151,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.8542550256006705
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    329864,
+                    15015,
+                    2149,
+                    0
+                ],
+                [
+                    0,
+                    97750,
+                    2947890,
+                    14693,
+                    10732
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    3529,
+                    0,
+                    41794
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient109_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient109_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient109_wsi1.tif",
+            "slide_valid_tiles": 352,
+            "slide_skipped_empty_tiles": 1787,
+            "slide_tp": {
+                "1": 256640717,
+                "2": 15635147,
+                "3": 7084172,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 2203830,
+                "2": 2724,
+                "3": 10280432,
+                "4": 179163
+            },
+            "slide_fn": {
+                "1": 1048021,
+                "2": 10233871,
+                "3": 1384257,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9937044695967657,
+                "non-invasive epithelium": 0.7533759998249929,
+                "invasive epithelium": 0.5484584020776809,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    256640717,
+                    2704,
+                    888912,
+                    156405
+                ],
+                [
+                    0,
+                    821978,
+                    15635147,
+                    9391520,
+                    20373
+                ],
+                [
+                    0,
+                    1381852,
+                    20,
+                    7084172,
+                    2385
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient120_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient120_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient120_wsi1.tif",
+            "slide_valid_tiles": 274,
+            "slide_skipped_empty_tiles": 1865,
+            "slide_tp": {
+                "1": 154410587,
+                "2": 7755409,
+                "3": 2720630,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 1341694,
+                "2": 24445,
+                "3": 94978,
+                "4": 160899
+            },
+            "slide_fn": {
+                "1": 62026,
+                "2": 294948,
+                "3": 1265042,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9954751535832582,
+                "non-invasive epithelium": 0.979823831785944,
+                "invasive epithelium": 0.8000346993507105,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    154410587,
+                    6746,
+                    54766,
+                    514
+                ],
+                [
+                    0,
+                    94351,
+                    7755409,
+                    40212,
+                    160385
+                ],
+                [
+                    0,
+                    1247343,
+                    17699,
+                    2720630,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient124_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient124_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient124_wsi1.tif",
+            "slide_valid_tiles": 225,
+            "slide_skipped_empty_tiles": 1914,
+            "slide_tp": {
+                "1": 126005557,
+                "2": 4124845,
+                "3": 2925323,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 59129,
+                "2": 476533,
+                "3": 241298,
+                "4": 39360
+            },
+            "slide_fn": {
+                "1": 89736,
+                "2": 207096,
+                "3": 519488,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9994096406551494,
+                "non-invasive epithelium": 0.9234742428877778,
+                "invasive epithelium": 0.8849287113593545,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    126005557,
+                    12349,
+                    38480,
+                    38907
+                ],
+                [
+                    0,
+                    3825,
+                    4124845,
+                    202818,
+                    453
+                ],
+                [
+                    0,
+                    55304,
+                    464184,
+                    2925323,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient126_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient126_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient126_wsi1.tif",
+            "slide_valid_tiles": 44,
+            "slide_skipped_empty_tiles": 8500,
+            "slide_tp": {
+                "1": 4270356,
+                "2": 1085735,
+                "3": 502242,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 159394,
+                "2": 783427,
+                "3": 79025,
+                "4": 1740478
+            },
+            "slide_fn": {
+                "1": 2052544,
+                "2": 81068,
+                "3": 512792,
+                "4": 115920
+            },
+            "slide_class_dices": {
+                "other": 0.7942890357260768,
+                "non-invasive epithelium": 0.7152486935784833,
+                "invasive epithelium": 0.6292572641375279,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    4270356,
+                    316031,
+                    1175,
+                    1735338
+                ],
+                [
+                    0,
+                    3218,
+                    1085735,
+                    77850,
+                    0
+                ],
+                [
+                    0,
+                    156176,
+                    351476,
+                    502242,
+                    5140
+                ],
+                [
+                    0,
+                    0,
+                    115920,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient127_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient127_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient127_wsi1.tif",
+            "slide_valid_tiles": 16,
+            "slide_skipped_empty_tiles": 8528,
+            "slide_tp": {
+                "1": 345136,
+                "2": 0,
+                "3": 235654,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 100302,
+                "2": 58412,
+                "3": 51800,
+                "4": 32742
+            },
+            "slide_fn": {
+                "1": 114657,
+                "2": 0,
+                "3": 128599,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.7625368552336365,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.7231900225101158,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    345136,
+                    30115,
+                    51800,
+                    32742
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    100302,
+                    28297,
+                    235654,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient127_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient127_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient127_wsi2.tif",
+            "slide_valid_tiles": 15,
+            "slide_skipped_empty_tiles": 8529,
+            "slide_tp": {
+                "1": 1505687,
+                "2": 109009,
+                "3": 199968,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 181874,
+                "2": 0,
+                "3": 10105,
+                "4": 1811
+            },
+            "slide_fn": {
+                "1": 8310,
+                "2": 5000,
+                "3": 180480,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9405964221169818,
+                "non-invasive epithelium": 0.9775802849994171,
+                "invasive epithelium": 0.6772595724792175,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1505687,
+                    0,
+                    8310,
+                    0
+                ],
+                [
+                    0,
+                    1394,
+                    109009,
+                    1795,
+                    1811
+                ],
+                [
+                    0,
+                    180480,
+                    0,
+                    199968,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient131_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient131_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient131_wsi1.tif",
+            "slide_valid_tiles": 3,
+            "slide_skipped_empty_tiles": 8541,
+            "slide_tp": {
+                "1": 0,
+                "2": 0,
+                "3": 116075,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 37590,
+                "2": 0,
+                "3": 0,
+                "4": 0
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 0,
+                "3": 37590,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": NaN,
+                "invasive epithelium": 0.8606435827092755,
+                "necrosis": NaN
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    37590,
+                    0,
+                    116075,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient142_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient142_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient142_wsi1.tif",
+            "slide_valid_tiles": 58,
+            "slide_skipped_empty_tiles": 8486,
+            "slide_tp": {
+                "1": 3584084,
+                "2": 0,
+                "3": 2517284,
+                "4": 72503
+            },
+            "slide_fp": {
+                "1": 13054,
+                "2": 1436540,
+                "3": 44423,
+                "4": 220933
+            },
+            "slide_fn": {
+                "1": 130718,
+                "2": 0,
+                "3": 1583705,
+                "4": 527
+            },
+            "slide_class_dices": {
+                "other": 0.9803373660068326,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.7556352563586872,
+                "necrosis": 0.3956874580452211
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    3584084,
+                    3564,
+                    44423,
+                    82731
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    13054,
+                    1432449,
+                    2517284,
+                    138202
+                ],
+                [
+                    0,
+                    0,
+                    527,
+                    0,
+                    72503
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient145_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient145_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient145_wsi1.tif",
+            "slide_valid_tiles": 12,
+            "slide_skipped_empty_tiles": 8532,
+            "slide_tp": {
+                "1": 827520,
+                "2": 167106,
+                "3": 654400,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 3523,
+                "2": 163183,
+                "3": 181184,
+                "4": 91
+            },
+            "slide_fn": {
+                "1": 344446,
+                "2": 116,
+                "3": 3419,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.8262768664544193,
+                "non-invasive epithelium": 0.6717680614096975,
+                "invasive epithelium": 0.8763876863780239,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    827520,
+                    163183,
+                    181172,
+                    91
+                ],
+                [
+                    0,
+                    104,
+                    167106,
+                    12,
+                    0
+                ],
+                [
+                    0,
+                    3419,
+                    0,
+                    654400,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient148_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient148_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient148_wsi1.tif",
+            "slide_valid_tiles": 20,
+            "slide_skipped_empty_tiles": 8524,
+            "slide_tp": {
+                "1": 7484,
+                "2": 5065338,
+                "3": 0,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 332722,
+                "2": 20847,
+                "3": 23655,
+                "4": 15226
+            },
+            "slide_fn": {
+                "1": 21485,
+                "2": 370965,
+                "3": 0,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.04054445723572831,
+                "non-invasive epithelium": 0.9627643196171856,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    7484,
+                    20847,
+                    638,
+                    0
+                ],
+                [
+                    0,
+                    332722,
+                    5065338,
+                    23017,
+                    15226
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient152_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient152_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient152_wsi1.tif",
+            "slide_valid_tiles": 8,
+            "slide_skipped_empty_tiles": 24,
+            "slide_tp": {
+                "1": 83421,
+                "2": 0,
+                "3": 1462285,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 142827,
+                "2": 0,
+                "3": 393,
+                "4": 0
+            },
+            "slide_fn": {
+                "1": 393,
+                "2": 0,
+                "3": 142827,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.5380923815236952,
+                "non-invasive epithelium": NaN,
+                "invasive epithelium": 0.9533149270321633,
+                "necrosis": NaN
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    83421,
+                    0,
+                    393,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    142827,
+                    0,
+                    1462285,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient153_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient153_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient153_wsi1.tif",
+            "slide_valid_tiles": 30,
+            "slide_skipped_empty_tiles": 87,
+            "slide_tp": {
+                "1": 6731343,
+                "2": 0,
+                "3": 866679,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 7690,
+                "2": 0,
+                "3": 268607,
+                "4": 4110
+            },
+            "slide_fn": {
+                "1": 268607,
+                "2": 0,
+                "3": 11800,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9798895595110643,
+                "non-invasive epithelium": NaN,
+                "invasive epithelium": 0.8607548547124416,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    6731343,
+                    0,
+                    268607,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    7690,
+                    0,
+                    866679,
+                    4110
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient153_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient153_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient153_wsi2.tif",
+            "slide_valid_tiles": 33,
+            "slide_skipped_empty_tiles": 97,
+            "slide_tp": {
+                "1": 6150281,
+                "2": 0,
+                "3": 2340719,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 58800,
+                "2": 45910,
+                "3": 16185,
+                "4": 354600
+            },
+            "slide_fn": {
+                "1": 43189,
+                "2": 0,
+                "3": 432306,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.991776772375296,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.9125736438067661,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    6150281,
+                    0,
+                    16185,
+                    27004
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    58800,
+                    45910,
+                    2340719,
+                    327596
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient158_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient158_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient158_wsi1.tif",
+            "slide_valid_tiles": 20,
+            "slide_skipped_empty_tiles": 52,
+            "slide_tp": {
+                "1": 2294317,
+                "2": 0,
+                "3": 135507,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 57,
+                "2": 2794,
+                "3": 4255,
+                "4": 698820
+            },
+            "slide_fn": {
+                "1": 579898,
+                "2": 0,
+                "3": 126028,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.8877923936300604,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.6753451932110133,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2294317,
+                    0,
+                    4255,
+                    575643
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    57,
+                    2794,
+                    135507,
+                    123177
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient162_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient162_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient162_wsi1.tif",
+            "slide_valid_tiles": 38,
+            "slide_skipped_empty_tiles": 274,
+            "slide_tp": {
+                "1": 15404771,
+                "2": 693836,
+                "3": 3566747,
+                "4": 32016
+            },
+            "slide_fp": {
+                "1": 292501,
+                "2": 24347,
+                "3": 15631,
+                "4": 54620
+            },
+            "slide_fn": {
+                "1": 160,
+                "2": 306844,
+                "3": 75358,
+                "4": 4737
+            },
+            "slide_class_dices": {
+                "other": 0.9905903449990343,
+                "non-invasive epithelium": 0.8073197223978874,
+                "invasive epithelium": 0.9874054655537289,
+                "necrosis": 0.5189441522339917
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    15404771,
+                    0,
+                    160,
+                    0
+                ],
+                [
+                    0,
+                    292387,
+                    693836,
+                    10734,
+                    3723
+                ],
+                [
+                    0,
+                    114,
+                    24347,
+                    3566747,
+                    50897
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    4737,
+                    32016
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient166_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient166_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient166_wsi1.tif",
+            "slide_valid_tiles": 48,
+            "slide_skipped_empty_tiles": 414,
+            "slide_tp": {
+                "1": 3621252,
+                "2": 0,
+                "3": 3126530,
+                "4": 154253
+            },
+            "slide_fp": {
+                "1": 106472,
+                "2": 885475,
+                "3": 35534,
+                "4": 749212
+            },
+            "slide_fn": {
+                "1": 623681,
+                "2": 0,
+                "3": 1133386,
+                "4": 19626
+            },
+            "slide_class_dices": {
+                "other": 0.9084178586887659,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.84250563865707,
+                "necrosis": 0.2863579320996822
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    3621252,
+                    13361,
+                    18149,
+                    592171
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    105940,
+                    870405,
+                    3126530,
+                    157041
+                ],
+                [
+                    0,
+                    532,
+                    1709,
+                    17385,
+                    154253
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient173_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient173_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient173_wsi1.tif",
+            "slide_valid_tiles": 41,
+            "slide_skipped_empty_tiles": 829,
+            "slide_tp": {
+                "1": 1293303,
+                "2": 1273850,
+                "3": 1037243,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 76775,
+                "2": 40032,
+                "3": 117949,
+                "4": 2573289
+            },
+            "slide_fn": {
+                "1": 188329,
+                "2": 123711,
+                "3": 2496005,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.907036830533259,
+                "non-invasive epithelium": 0.939610384581199,
+                "invasive epithelium": 0.44246828369351,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1293303,
+                    749,
+                    24201,
+                    163379
+                ],
+                [
+                    0,
+                    26036,
+                    1273850,
+                    93748,
+                    3927
+                ],
+                [
+                    0,
+                    50739,
+                    39283,
+                    1037243,
+                    2405983
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient173_wsi2",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient173_wsi2.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient173_wsi2.tif",
+            "slide_valid_tiles": 20,
+            "slide_skipped_empty_tiles": 655,
+            "slide_tp": {
+                "1": 2850136,
+                "2": 0,
+                "3": 645909,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 33210,
+                "2": 19367,
+                "3": 5265,
+                "4": 462376
+            },
+            "slide_fn": {
+                "1": 144782,
+                "2": 0,
+                "3": 375436,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9697203119832658,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.7723786695397781,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2850136,
+                    0,
+                    5265,
+                    139517
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    33210,
+                    19367,
+                    645909,
+                    322859
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient176_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient176_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient176_wsi1.tif",
+            "slide_valid_tiles": 36,
+            "slide_skipped_empty_tiles": 96,
+            "slide_tp": {
+                "1": 11255753,
+                "2": 675150,
+                "3": 82817,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 111345,
+                "2": 5576,
+                "3": 13086,
+                "4": 140150
+            },
+            "slide_fn": {
+                "1": 150332,
+                "2": 13790,
+                "3": 106035,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.988509423561915,
+                "non-invasive epithelium": 0.9858607864983142,
+                "invasive epithelium": 0.5816719636178469,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    11255753,
+                    0,
+                    11478,
+                    138854
+                ],
+                [
+                    0,
+                    10886,
+                    675150,
+                    1608,
+                    1296
+                ],
+                [
+                    0,
+                    100459,
+                    5576,
+                    82817,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient181_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient181_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient181_wsi1.tif",
+            "slide_valid_tiles": 79,
+            "slide_skipped_empty_tiles": 449,
+            "slide_tp": {
+                "1": 9858595,
+                "2": 1897918,
+                "3": 3177099,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 233857,
+                "2": 405407,
+                "3": 112760,
+                "4": 1041137
+            },
+            "slide_fn": {
+                "1": 1016572,
+                "2": 139592,
+                "3": 636997,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.940363805733021,
+                "non-invasive epithelium": 0.8744483492231333,
+                "invasive epithelium": 0.8944592132129215,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    9858595,
+                    9116,
+                    86739,
+                    920717
+                ],
+                [
+                    0,
+                    104676,
+                    1897918,
+                    26021,
+                    8895
+                ],
+                [
+                    0,
+                    129181,
+                    396291,
+                    3177099,
+                    111525
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient182_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient182_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient182_wsi1.tif",
+            "slide_valid_tiles": 15,
+            "slide_skipped_empty_tiles": 725,
+            "slide_tp": {
+                "1": 1142366,
+                "2": 299559,
+                "3": 12866,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 837147,
+                "2": 38225,
+                "3": 119888,
+                "4": 3687
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 146143,
+                "3": 852804,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.7318451483865966,
+                "non-invasive epithelium": 0.7646824576316615,
+                "invasive epithelium": 0.025772617645409165,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1142366,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    26255,
+                    299559,
+                    119888,
+                    0
+                ],
+                [
+                    0,
+                    810892,
+                    38225,
+                    12866,
+                    3687
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient187_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient187_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient187_wsi1.tif",
+            "slide_valid_tiles": 38,
+            "slide_skipped_empty_tiles": 106,
+            "slide_tp": {
+                "1": 14742627,
+                "2": 0,
+                "3": 9325793,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 1542030,
+                "2": 326082,
+                "3": 109644,
+                "4": 404922
+            },
+            "slide_fn": {
+                "1": 493054,
+                "2": 0,
+                "3": 1889624,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9354358446283159,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.9031871514853574,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    14742627,
+                    10007,
+                    109644,
+                    373403
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1542030,
+                    316075,
+                    9325793,
+                    31519
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient193_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient193_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient193_wsi1.tif",
+            "slide_valid_tiles": 30,
+            "slide_skipped_empty_tiles": 87,
+            "slide_tp": {
+                "1": 8581848,
+                "2": 34541,
+                "3": 3606990,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 1294,
+                "2": 1302,
+                "3": 40147,
+                "4": 26811
+            },
+            "slide_fn": {
+                "1": 60497,
+                "2": 8364,
+                "3": 693,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9964128154983368,
+                "non-invasive epithelium": 0.8772540254990603,
+                "invasive epithelium": 0.9943706391061391,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    8581848,
+                    1302,
+                    39553,
+                    19642
+                ],
+                [
+                    0,
+                    601,
+                    34541,
+                    594,
+                    7169
+                ],
+                [
+                    0,
+                    693,
+                    0,
+                    3606990,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient195_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient195_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient195_wsi1.tif",
+            "slide_valid_tiles": 34,
+            "slide_skipped_empty_tiles": 186,
+            "slide_tp": {
+                "1": 2107850,
+                "2": 2086815,
+                "3": 1913082,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 1051464,
+                "2": 2646,
+                "3": 179968,
+                "4": 39188
+            },
+            "slide_fn": {
+                "1": 29538,
+                "2": 426131,
+                "3": 817597,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.7959103608245282,
+                "non-invasive epithelium": 0.9068363575841946,
+                "invasive epithelium": 0.7931963010359827,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2107850,
+                    1196,
+                    26942,
+                    1400
+                ],
+                [
+                    0,
+                    273041,
+                    2086815,
+                    153026,
+                    64
+                ],
+                [
+                    0,
+                    778423,
+                    1450,
+                    1913082,
+                    37724
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient212_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient212_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient212_wsi1.tif",
+            "slide_valid_tiles": 61,
+            "slide_skipped_empty_tiles": 134,
+            "slide_tp": {
+                "1": 16097595,
+                "2": 1878219,
+                "3": 3500029,
+                "4": 942571
+            },
+            "slide_fp": {
+                "1": 36685,
+                "2": 213377,
+                "3": 1042182,
+                "4": 32234
+            },
+            "slide_fn": {
+                "1": 691141,
+                "2": 633337,
+                "3": 0,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9778930946059133,
+                "non-invasive epithelium": 0.8160577795388899,
+                "invasive epithelium": 0.8704114773993316,
+                "necrosis": 0.9831884825928769
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    16097595,
+                    213377,
+                    454843,
+                    22921
+                ],
+                [
+                    0,
+                    36685,
+                    1878219,
+                    587339,
+                    9313
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    3500029,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    942571
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient219_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient219_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient219_wsi1.tif",
+            "slide_valid_tiles": 33,
+            "slide_skipped_empty_tiles": 630,
+            "slide_tp": {
+                "1": 1407174,
+                "2": 0,
+                "3": 1426286,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 194221,
+                "2": 612,
+                "3": 84031,
+                "4": 136870
+            },
+            "slide_fn": {
+                "1": 177383,
+                "2": 0,
+                "3": 238351,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.8833617078976708,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.898460891086926,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1407174,
+                    612,
+                    84031,
+                    92740
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    194221,
+                    0,
+                    1426286,
+                    44130
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient220_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient220_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient220_wsi1.tif",
+            "slide_valid_tiles": 21,
+            "slide_skipped_empty_tiles": 420,
+            "slide_tp": {
+                "1": 260569,
+                "2": 0,
+                "3": 2202824,
+                "4": 374964
+            },
+            "slide_fp": {
+                "1": 271343,
+                "2": 992,
+                "3": 25530,
+                "4": 678044
+            },
+            "slide_fn": {
+                "1": 273464,
+                "2": 0,
+                "3": 676915,
+                "4": 25530
+            },
+            "slide_class_dices": {
+                "other": 0.48889764481281867,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.8624839054418155,
+                "necrosis": 0.515945626493806
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    260569,
+                    0,
+                    0,
+                    273464
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    271343,
+                    992,
+                    2202824,
+                    404580
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    25530,
+                    374964
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient221_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient221_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient221_wsi1.tif",
+            "slide_valid_tiles": 37,
+            "slide_skipped_empty_tiles": 518,
+            "slide_tp": {
+                "1": 3546454,
+                "2": 1030261,
+                "3": 17858,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 878137,
+                "2": 4244,
+                "3": 116028,
+                "4": 26620
+            },
+            "slide_fn": {
+                "1": 38664,
+                "2": 330203,
+                "3": 656162,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.8855387879884276,
+                "non-invasive epithelium": 0.8603543511419146,
+                "invasive epithelium": 0.04420811332011397,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    3546454,
+                    0,
+                    13267,
+                    25397
+                ],
+                [
+                    0,
+                    226943,
+                    1030261,
+                    102761,
+                    499
+                ],
+                [
+                    0,
+                    651194,
+                    4244,
+                    17858,
+                    724
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient225_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient225_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient225_wsi1.tif",
+            "slide_valid_tiles": 57,
+            "slide_skipped_empty_tiles": 657,
+            "slide_tp": {
+                "1": 511423,
+                "2": 4943237,
+                "3": 2932390,
+                "4": 17468
+            },
+            "slide_fp": {
+                "1": 203817,
+                "2": 48864,
+                "3": 573658,
+                "4": 13667
+            },
+            "slide_fn": {
+                "1": 294461,
+                "2": 522331,
+                "3": 9506,
+                "4": 13708
+            },
+            "slide_class_dices": {
+                "other": 0.672427757368893,
+                "non-invasive epithelium": 0.9453802754705661,
+                "invasive epithelium": 0.9095581475273359,
+                "necrosis": 0.5606714705268733
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    511423,
+                    48864,
+                    234500,
+                    11097
+                ],
+                [
+                    0,
+                    195000,
+                    4943237,
+                    325450,
+                    1881
+                ],
+                [
+                    0,
+                    8817,
+                    0,
+                    2932390,
+                    689
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    13708,
+                    17468
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient231_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient231_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient231_wsi1.tif",
+            "slide_valid_tiles": 26,
+            "slide_skipped_empty_tiles": 492,
+            "slide_tp": {
+                "1": 528763,
+                "2": 460186,
+                "3": 1172349,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 37668,
+                "2": 18234,
+                "3": 97932,
+                "4": 123107
+            },
+            "slide_fn": {
+                "1": 163898,
+                "2": 109534,
+                "3": 3509,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.8399116188491389,
+                "non-invasive epithelium": 0.8781002537828916,
+                "invasive epithelium": 0.9585301571169913,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    528763,
+                    18234,
+                    23194,
+                    122470
+                ],
+                [
+                    0,
+                    34159,
+                    460186,
+                    74738,
+                    637
+                ],
+                [
+                    0,
+                    3509,
+                    0,
+                    1172349,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient234_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient234_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient234_wsi1.tif",
+            "slide_valid_tiles": 23,
+            "slide_skipped_empty_tiles": 506,
+            "slide_tp": {
+                "1": 1068722,
+                "2": 0,
+                "3": 206288,
+                "4": 103341
+            },
+            "slide_fp": {
+                "1": 100232,
+                "2": 0,
+                "3": 95896,
+                "4": 12831
+            },
+            "slide_fn": {
+                "1": 19643,
+                "2": 0,
+                "3": 100235,
+                "4": 89081
+            },
+            "slide_class_dices": {
+                "other": 0.9468949669940314,
+                "non-invasive epithelium": NaN,
+                "invasive epithelium": 0.6777907926145091,
+                "necrosis": 0.669753786528578
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1068722,
+                    0,
+                    6825,
+                    12818
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    100222,
+                    0,
+                    206288,
+                    13
+                ],
+                [
+                    0,
+                    10,
+                    0,
+                    89071,
+                    103341
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient241_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient241_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient241_wsi1.tif",
+            "slide_valid_tiles": 18,
+            "slide_skipped_empty_tiles": 2094,
+            "slide_tp": {
+                "1": 40551,
+                "2": 0,
+                "3": 367638,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 155618,
+                "2": 26181,
+                "3": 0,
+                "4": 305085
+            },
+            "slide_fn": {
+                "1": 209885,
+                "2": 0,
+                "3": 276999,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.18159671297903068,
+                "non-invasive epithelium": 0.0,
+                "invasive epithelium": 0.7263599318367044,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    40551,
+                    0,
+                    0,
+                    209885
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    155618,
+                    26181,
+                    367638,
+                    95200
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient247_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient247_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient247_wsi1.tif",
+            "slide_valid_tiles": 4,
+            "slide_skipped_empty_tiles": 908,
+            "slide_tp": {
+                "1": 90,
+                "2": 0,
+                "3": 118227,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 33016,
+                "2": 0,
+                "3": 3244,
+                "4": 0
+            },
+            "slide_fn": {
+                "1": 3244,
+                "2": 0,
+                "3": 33016,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.004939626783754116,
+                "non-invasive epithelium": NaN,
+                "invasive epithelium": 0.8670401959562032,
+                "necrosis": NaN
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    90,
+                    0,
+                    3244,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    33016,
+                    0,
+                    118227,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient253_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient253_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient253_wsi1.tif",
+            "slide_valid_tiles": 98,
+            "slide_skipped_empty_tiles": 2206,
+            "slide_tp": {
+                "1": 41140219,
+                "2": 8616350,
+                "3": 0,
+                "4": 9884
+            },
+            "slide_fp": {
+                "1": 588821,
+                "2": 5403,
+                "3": 546070,
+                "4": 457283
+            },
+            "slide_fn": {
+                "1": 408757,
+                "2": 1187606,
+                "3": 0,
+                "4": 1214
+            },
+            "slide_class_dices": {
+                "other": 0.988021112318526,
+                "non-invasive epithelium": 0.9352530206571699,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.04133273394457048
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    41140219,
+                    4189,
+                    272,
+                    404296
+                ],
+                [
+                    0,
+                    588821,
+                    8616350,
+                    545798,
+                    52987
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1214,
+                    0,
+                    9884
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient254_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient254_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient254_wsi1.tif",
+            "slide_valid_tiles": 145,
+            "slide_skipped_empty_tiles": 2159,
+            "slide_tp": {
+                "1": 63558377,
+                "2": 36392773,
+                "3": 0,
+                "4": 15965786
+            },
+            "slide_fp": {
+                "1": 836098,
+                "2": 1194968,
+                "3": 12529825,
+                "4": 6016498
+            },
+            "slide_fn": {
+                "1": 164778,
+                "2": 19235278,
+                "3": 0,
+                "4": 1177333
+            },
+            "slide_class_dices": {
+                "other": 0.9921878355071039,
+                "non-invasive epithelium": 0.7808284888036997,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.816134008894426
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    63558377,
+                    129921,
+                    23540,
+                    11317
+                ],
+                [
+                    0,
+                    734804,
+                    36392773,
+                    12495293,
+                    6005181
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    101294,
+                    1065047,
+                    10992,
+                    15965786
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient257_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient257_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient257_wsi1.tif",
+            "slide_valid_tiles": 96,
+            "slide_skipped_empty_tiles": 2208,
+            "slide_tp": {
+                "1": 75847952,
+                "2": 910330,
+                "3": 0,
+                "4": 6371
+            },
+            "slide_fp": {
+                "1": 42688,
+                "2": 27649,
+                "3": 356003,
+                "4": 1169
+            },
+            "slide_fn": {
+                "1": 36696,
+                "2": 390641,
+                "3": 0,
+                "4": 172
+            },
+            "slide_class_dices": {
+                "other": 0.9994769636016109,
+                "non-invasive epithelium": 0.8131758190223095,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.9047788113328126
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    75847952,
+                    27477,
+                    9219,
+                    0
+                ],
+                [
+                    0,
+                    42688,
+                    910330,
+                    346784,
+                    1169
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    172,
+                    0,
+                    6371
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient266_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient266_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient266_wsi1.tif",
+            "slide_valid_tiles": 245,
+            "slide_skipped_empty_tiles": 2059,
+            "slide_tp": {
+                "1": 66838058,
+                "2": 180878,
+                "3": 42619805,
+                "4": 11137418
+            },
+            "slide_fp": {
+                "1": 434812,
+                "2": 585257,
+                "3": 594618,
+                "4": 1212315
+            },
+            "slide_fn": {
+                "1": 509008,
+                "2": 11860,
+                "3": 1900743,
+                "4": 405391
+            },
+            "slide_class_dices": {
+                "other": 0.9929890027581056,
+                "non-invasive epithelium": 0.37727206835524624,
+                "invasive epithelium": 0.9715579663210921,
+                "necrosis": 0.9322924283234492
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    66838058,
+                    100991,
+                    189227,
+                    218790
+                ],
+                [
+                    0,
+                    11860,
+                    180878,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    422952,
+                    484266,
+                    42619805,
+                    993525
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    405391,
+                    11137418
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient267_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient267_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient267_wsi1.tif",
+            "slide_valid_tiles": 49,
+            "slide_skipped_empty_tiles": 2255,
+            "slide_tp": {
+                "1": 12805027,
+                "2": 347197,
+                "3": 1142479,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 143053,
+                "2": 18988,
+                "3": 59485,
+                "4": 448
+            },
+            "slide_fn": {
+                "1": 61704,
+                "2": 7115,
+                "3": 153155,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.992068235556712,
+                "non-invasive epithelium": 0.9637708415163422,
+                "invasive epithelium": 0.914862199601377,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    12805027,
+                    1772,
+                    59484,
+                    448
+                ],
+                [
+                    0,
+                    7114,
+                    347197,
+                    1,
+                    0
+                ],
+                [
+                    0,
+                    135939,
+                    17216,
+                    1142479,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient269_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient269_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient269_wsi1.tif",
+            "slide_valid_tiles": 95,
+            "slide_skipped_empty_tiles": 2209,
+            "slide_tp": {
+                "1": 34546830,
+                "2": 12890283,
+                "3": 0,
+                "4": 3542722
+            },
+            "slide_fp": {
+                "1": 263903,
+                "2": 343789,
+                "3": 269306,
+                "4": 822919
+            },
+            "slide_fn": {
+                "1": 598572,
+                "2": 732897,
+                "3": 0,
+                "4": 368448
+            },
+            "slide_class_dices": {
+                "other": 0.9876712028187378,
+                "non-invasive epithelium": 0.9599107905752978,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.856059658726048
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    34546830,
+                    238978,
+                    236362,
+                    123232
+                ],
+                [
+                    0,
+                    266,
+                    12890283,
+                    32944,
+                    699687
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    263637,
+                    104811,
+                    0,
+                    3542722
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient271_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient271_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient271_wsi1.tif",
+            "slide_valid_tiles": 156,
+            "slide_skipped_empty_tiles": 2148,
+            "slide_tp": {
+                "1": 107844664,
+                "2": 966913,
+                "3": 9097874,
+                "4": 5237610
+            },
+            "slide_fp": {
+                "1": 895415,
+                "2": 138444,
+                "3": 949923,
+                "4": 390994
+            },
+            "slide_fn": {
+                "1": 1087882,
+                "2": 12911,
+                "3": 1259443,
+                "4": 14540
+            },
+            "slide_class_dices": {
+                "other": 0.9908886246031168,
+                "non-invasive epithelium": 0.9274139750937689,
+                "invasive epithelium": 0.8917248881824429,
+                "necrosis": 0.9627292373304277
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    107844664,
+                    17544,
+                    939263,
+                    131075
+                ],
+                [
+                    0,
+                    10285,
+                    966913,
+                    0,
+                    2626
+                ],
+                [
+                    0,
+                    885130,
+                    117020,
+                    9097874,
+                    257293
+                ],
+                [
+                    0,
+                    0,
+                    3880,
+                    10660,
+                    5237610
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient272_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient272_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient272_wsi1.tif",
+            "slide_valid_tiles": 117,
+            "slide_skipped_empty_tiles": 2187,
+            "slide_tp": {
+                "1": 75261272,
+                "2": 5376320,
+                "3": 0,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 6398,
+                "2": 399748,
+                "3": 23493,
+                "4": 220465
+            },
+            "slide_fn": {
+                "1": 490353,
+                "2": 159751,
+                "3": 0,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9967106785924276,
+                "non-invasive epithelium": 0.9505399465123263,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    75261272,
+                    399748,
+                    18889,
+                    71716
+                ],
+                [
+                    0,
+                    6398,
+                    5376320,
+                    4604,
+                    148749
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient276_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient276_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient276_wsi1.tif",
+            "slide_valid_tiles": 18,
+            "slide_skipped_empty_tiles": 2286,
+            "slide_tp": {
+                "1": 2836,
+                "2": 5459759,
+                "3": 0,
+                "4": 340917
+            },
+            "slide_fp": {
+                "1": 3784,
+                "2": 3981,
+                "3": 80557,
+                "4": 41933
+            },
+            "slide_fn": {
+                "1": 17707,
+                "2": 112044,
+                "3": 0,
+                "4": 504
+            },
+            "slide_class_dices": {
+                "other": 0.2088134594853293,
+                "non-invasive epithelium": 0.9894862445826181,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.94140729091735
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    2836,
+                    3477,
+                    0,
+                    14230
+                ],
+                [
+                    0,
+                    3784,
+                    5459759,
+                    80557,
+                    27703
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    504,
+                    0,
+                    340917
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient282_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient282_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient282_wsi1.tif",
+            "slide_valid_tiles": 125,
+            "slide_skipped_empty_tiles": 2179,
+            "slide_tp": {
+                "1": 68490609,
+                "2": 355015,
+                "3": 4991602,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 166992,
+                "2": 338568,
+                "3": 493,
+                "4": 0
+            },
+            "slide_fn": {
+                "1": 493,
+                "2": 14,
+                "3": 505546,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9987788072629459,
+                "non-invasive epithelium": 0.677114128009216,
+                "invasive epithelium": 0.9517563850889907,
+                "necrosis": NaN
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    68490609,
+                    0,
+                    493,
+                    0
+                ],
+                [
+                    0,
+                    14,
+                    355015,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    166978,
+                    338568,
+                    4991602,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient286_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient286_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient286_wsi1.tif",
+            "slide_valid_tiles": 274,
+            "slide_skipped_empty_tiles": 2030,
+            "slide_tp": {
+                "1": 96255589,
+                "2": 254459,
+                "3": 72564489,
+                "4": 203165
+            },
+            "slide_fp": {
+                "1": 3564882,
+                "2": 76696304,
+                "3": 244023,
+                "4": 2552630
+            },
+            "slide_fn": {
+                "1": 261713,
+                "2": 72548,
+                "3": 82687932,
+                "4": 35646
+            },
+            "slide_class_dices": {
+                "other": 0.9805101436084843,
+                "non-invasive epithelium": 0.006585567880646659,
+                "invasive epithelium": 0.6363605379094016,
+                "necrosis": 0.13568729909710994
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    96255589,
+                    28262,
+                    222878,
+                    10573
+                ],
+                [
+                    0,
+                    2602,
+                    254459,
+                    21145,
+                    48801
+                ],
+                [
+                    0,
+                    3562280,
+                    76632396,
+                    72564489,
+                    2493256
+                ],
+                [
+                    0,
+                    0,
+                    35646,
+                    0,
+                    203165
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient289_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient289_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient289_wsi1.tif",
+            "slide_valid_tiles": 371,
+            "slide_skipped_empty_tiles": 1933,
+            "slide_tp": {
+                "1": 104603567,
+                "2": 2700231,
+                "3": 85732483,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 14247532,
+                "2": 11477246,
+                "3": 118424,
+                "4": 437409
+            },
+            "slide_fn": {
+                "1": 160968,
+                "2": 299500,
+                "3": 25820143,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9355657753339375,
+                "non-invasive epithelium": 0.3143969613688092,
+                "invasive epithelium": 0.8686013030982581,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    104603567,
+                    0,
+                    70030,
+                    90938
+                ],
+                [
+                    0,
+                    226639,
+                    2700231,
+                    48394,
+                    24467
+                ],
+                [
+                    0,
+                    14020893,
+                    11477246,
+                    85732483,
+                    322004
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient294_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient294_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient294_wsi1.tif",
+            "slide_valid_tiles": 22,
+            "slide_skipped_empty_tiles": 2250,
+            "slide_tp": {
+                "1": 54096,
+                "2": 3216466,
+                "3": 0,
+                "4": 87662
+            },
+            "slide_fp": {
+                "1": 14166,
+                "2": 4683,
+                "3": 47744,
+                "4": 40804
+            },
+            "slide_fn": {
+                "1": 13441,
+                "2": 93423,
+                "3": 0,
+                "4": 533
+            },
+            "slide_class_dices": {
+                "other": 0.7967068976943865,
+                "non-invasive epithelium": 0.9849784980580423,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.8092088562316245
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    54096,
+                    4150,
+                    0,
+                    9291
+                ],
+                [
+                    0,
+                    14166,
+                    3216466,
+                    47744,
+                    31513
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    533,
+                    0,
+                    87662
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient296_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient296_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient296_wsi1.tif",
+            "slide_valid_tiles": 187,
+            "slide_skipped_empty_tiles": 2085,
+            "slide_tp": {
+                "1": 130968064,
+                "2": 527895,
+                "3": 1575975,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 812905,
+                "2": 166471,
+                "3": 25303,
+                "4": 4738
+            },
+            "slide_fn": {
+                "1": 36730,
+                "2": 51686,
+                "3": 921001,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9967668149510824,
+                "non-invasive epithelium": 0.8287550423997231,
+                "invasive epithelium": 0.7690958149494882,
+                "necrosis": 0.0
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    130968064,
+                    13549,
+                    21380,
+                    1801
+                ],
+                [
+                    0,
+                    47763,
+                    527895,
+                    3923,
+                    0
+                ],
+                [
+                    0,
+                    765142,
+                    152922,
+                    1575975,
+                    2937
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient305_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient305_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient305_wsi1.tif",
+            "slide_valid_tiles": 260,
+            "slide_skipped_empty_tiles": 2012,
+            "slide_tp": {
+                "1": 168352193,
+                "2": 580193,
+                "3": 8407852,
+                "4": 34270590
+            },
+            "slide_fp": {
+                "1": 31262029,
+                "2": 139448,
+                "3": 245286,
+                "4": 496275
+            },
+            "slide_fn": {
+                "1": 514052,
+                "2": 10335,
+                "3": 1147626,
+                "4": 30471025
+            },
+            "slide_class_dices": {
+                "other": 0.9137645442682312,
+                "non-invasive epithelium": 0.8856765806548621,
+                "invasive epithelium": 0.9235025880055904,
+                "necrosis": 0.6887973768667756
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    168352193,
+                    12490,
+                    8031,
+                    493531
+                ],
+                [
+                    0,
+                    1323,
+                    580193,
+                    8876,
+                    136
+                ],
+                [
+                    0,
+                    1059766,
+                    85252,
+                    8407852,
+                    2608
+                ],
+                [
+                    0,
+                    30200940,
+                    41706,
+                    228379,
+                    34270590
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient308_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient308_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient308_wsi1.tif",
+            "slide_valid_tiles": 312,
+            "slide_skipped_empty_tiles": 1960,
+            "slide_tp": {
+                "1": 370522577,
+                "2": 338602,
+                "3": 8150188,
+                "4": 214771
+            },
+            "slide_fp": {
+                "1": 208666,
+                "2": 942268,
+                "3": 80097,
+                "4": 1122497
+            },
+            "slide_fn": {
+                "1": 1190281,
+                "2": 58738,
+                "3": 1101717,
+                "4": 2792
+            },
+            "slide_class_dices": {
+                "other": 0.9981157544411549,
+                "non-invasive epithelium": 0.4035275680635916,
+                "invasive epithelium": 0.9323989728975604,
+                "necrosis": 0.2762628221330807
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    370522577,
+                    36862,
+                    49066,
+                    1104353
+                ],
+                [
+                    0,
+                    21150,
+                    338602,
+                    31031,
+                    6557
+                ],
+                [
+                    0,
+                    187516,
+                    902614,
+                    8150188,
+                    11587
+                ],
+                [
+                    0,
+                    0,
+                    2792,
+                    0,
+                    214771
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "patient312_wsi1",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/patient312_wsi1.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/patient312_wsi1.tif",
+            "slide_valid_tiles": 123,
+            "slide_skipped_empty_tiles": 2181,
+            "slide_tp": {
+                "1": 0,
+                "2": 42982493,
+                "3": 0,
+                "4": 61269
+            },
+            "slide_fp": {
+                "1": 408495,
+                "2": 54034,
+                "3": 5661438,
+                "4": 598548
+            },
+            "slide_fn": {
+                "1": 0,
+                "2": 6668481,
+                "3": 0,
+                "4": 54034
+            },
+            "slide_class_dices": {
+                "other": 0.0,
+                "non-invasive epithelium": 0.9274711808229678,
+                "invasive epithelium": 0.0,
+                "necrosis": 0.15808907007947157
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    408495,
+                    42982493,
+                    5661438,
+                    598548
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    54034,
+                    0,
+                    61269
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "TCGA-A2-A0EP-01Z-00-DX1.1180C406-5C18-4373-8621-1B7B70875113",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/TCGA-A2-A0EP-01Z-00-DX1.1180C406-5C18-4373-8621-1B7B70875113.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/TCGA-A2-A0EP-01Z-00-DX1.1180C406-5C18-4373-8621-1B7B70875113.tif",
+            "slide_valid_tiles": 6,
+            "slide_skipped_empty_tiles": 919,
+            "slide_tp": {
+                "1": 1513524,
+                "2": 0,
+                "3": 100238,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 106119,
+                "2": 0,
+                "3": 43941,
+                "4": 0
+            },
+            "slide_fn": {
+                "1": 43941,
+                "2": 0,
+                "3": 106119,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.9527683667033038,
+                "non-invasive epithelium": NaN,
+                "invasive epithelium": 0.5719127279366456,
+                "necrosis": NaN
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1513524,
+                    0,
+                    43941,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    106119,
+                    0,
+                    100238,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "TCGA-AC-A5XS-01Z-00-DX1.E5F2481E-9314-4B20-84B7-370EF82AF4BB",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/TCGA-AC-A5XS-01Z-00-DX1.E5F2481E-9314-4B20-84B7-370EF82AF4BB.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/TCGA-AC-A5XS-01Z-00-DX1.E5F2481E-9314-4B20-84B7-370EF82AF4BB.tif",
+            "slide_valid_tiles": 2,
+            "slide_skipped_empty_tiles": 97,
+            "slide_tp": {
+                "1": 445653,
+                "2": 0,
+                "3": 153123,
+                "4": 0
+            },
+            "slide_fp": {
+                "1": 26647,
+                "2": 0,
+                "3": 97529,
+                "4": 0
+            },
+            "slide_fn": {
+                "1": 97529,
+                "2": 0,
+                "3": 26647,
+                "4": 0
+            },
+            "slide_class_dices": {
+                "other": 0.8777171825793072,
+                "non-invasive epithelium": NaN,
+                "invasive epithelium": 0.7115017355060848,
+                "necrosis": NaN
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    445653,
+                    0,
+                    97529,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    26647,
+                    0,
+                    153123,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            ],
+            "saved_slide_visuals": []
+        },
+        {
+            "slide": "TCGA-E2-A15J-01Z-00-DX1.BF7901D1-30B1-4A76-B0A5-E9B8B36EF4C9",
+            "wsi_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/development/wsis/TCGA-E2-A15J-01Z-00-DX1.BF7901D1-30B1-4A76-B0A5-E9B8B36EF4C9.tif",
+            "mask_path": "/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/annotations/masks/TCGA-E2-A15J-01Z-00-DX1.BF7901D1-30B1-4A76-B0A5-E9B8B36EF4C9.tif",
+            "slide_valid_tiles": 170,
+            "slide_skipped_empty_tiles": 787,
+            "slide_tp": {
+                "1": 48389535,
+                "2": 797456,
+                "3": 15857402,
+                "4": 569220
+            },
+            "slide_fp": {
+                "1": 2095675,
+                "2": 46057796,
+                "3": 1347174,
+                "4": 2409272
+            },
+            "slide_fn": {
+                "1": 5482346,
+                "2": 608924,
+                "3": 45810683,
+                "4": 7964
+            },
+            "slide_class_dices": {
+                "other": 0.9273837462563996,
+                "non-invasive epithelium": 0.03304720403984681,
+                "invasive epithelium": 0.40210135676796804,
+                "necrosis": 0.3201754040581875
+            },
+            "slide_confusion_matrix_rows_gt_cols_pred": [
+                [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    48389535,
+                    3308416,
+                    1266251,
+                    907679
+                ],
+                [
+                    0,
+                    145301,
+                    797456,
+                    80727,
+                    382896
+                ],
+                [
+                    0,
+                    1950374,
+                    42741612,
+                    15857402,
+                    1118697
+                ],
+                [
+                    0,
+                    0,
+                    7768,
+                    196,
+                    569220
+                ]
+            ],
+            "saved_slide_visuals": []
+        }
+    ],
+    "saved_class_visuals": {},
+    "saved_confusion_visuals": {},
+    "saved_large_area_visuals": [],
+    "saved_absolute_error_visuals": []
+}
