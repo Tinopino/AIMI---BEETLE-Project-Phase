@@ -1,11 +1,11 @@
 # AIMI BEETLE Project Phase
 
-Reproducible training, evaluation, and external-inference pipeline for multiclass
-breast-cancer histopathology segmentation on the BEETLE benchmark.
+Clean reproduction interface for the AIMI BEETLE breast-cancer
+histopathology-segmentation project.
 
 ## Task
 
-Each H&E image is segmented into four classes:
+Segment H&E pathology images into:
 
 | Label | Class |
 |---:|---|
@@ -14,60 +14,35 @@ Each H&E image is segmented into four classes:
 | 3 | Invasive epithelium |
 | 4 | Necrosis |
 
-The project focuses on the dominant epithelial error pattern:
+The project focused on the dominant clinically relevant error pattern:
 **invasive epithelium ↔ non-invasive epithelium confusion**.
 
-## Main experiment sequence
+## Final project result
 
-1. Released nnU-Net-for-pathology baseline.
-2. Dice + focal loss.
-3. Class-weighted focal loss.
-4. Confusion-aware sampling.
-5. Targeted hard-example mining.
-6. Weighted focal loss + CutMix + stain jitter + EMA.
-7. Context-1024 fine-tuning.
+| Model | External overall Dice |
+|---|---:|
+| Released BEETLE baseline | 0.8660 |
+| CutMix + stain jitter + EMA | 0.8441 |
+| CutMix + stain jitter + EMA + context-1024 FT100 | 0.8541 |
 
-The final local model is the five-fold CutMix + stain-jitter + EMA ensemble
-fine-tuned with 1024 × 1024 model patches.
+The final context model improves necrosis substantially and partially recovers
+the external-performance gap, but epithelial generalization remains weaker than
+the released baseline under multicentric domain shift.
 
-## Main external results
+## Clean interface
 
-| Model | Overall Dice | Other | Non-invasive | Invasive | Necrosis |
-|---|---:|---:|---:|---:|---:|
-| Released BEETLE baseline | 0.8660 | 0.9370 | 0.6523 | 0.7755 | 0.5110 |
-| CutMix + stain jitter + EMA | 0.8441 | 0.9298 | 0.6000 | 0.7249 | 0.6141 |
-| CutMix + stain jitter + EMA + context-1024 FT100 | 0.8541 | 0.9355 | 0.5981 | 0.7343 | 0.6477 |
+The user-facing workflow is intentionally reduced to three Python files:
 
-The context-1024 fine-tuned ensemble is the strongest local external model.
-It improves necrosis substantially and partially recovers the performance gap,
-but epithelial segmentation remains less robust than the released baseline
-under multicentric domain shift.
+| File | Responsibility |
+|---|---|
+| `experiments.py` | Single source of truth for experiment variants, trainers, paths, checkpoint tags, and native inference geometry. |
+| `train.py` | Train or resume any registered experiment. It also dispatches context-1024 fine-tuning. |
+| `validate.py` | Run held-out WSI evaluation, aggregate folds, run five-fold external ROI inference, validate PNGs, and create the submission ZIP. |
 
-## Repository layout
-
-- `nnUNet_pathology/`  
-  Pathology-specific nnU-Net implementation and custom trainer variants.
-
-- `preprocessing/`  
-  Dataset inspection and patient-level split utilities.
-
-- `reproducibility/`  
-  Compact metrics, configuration snapshots, split information, and checkpoint
-  location manifests. Large weight files are intentionally excluded.
-
-- `outputs/splits/`  
-  Generated split summaries.
-
-- `beetle_wf_hard_mining_package/`  
-  Hard-example-mining utilities.
-
-- Root-level `*.slurm` and `*.sh` files  
-  Training, evaluation, aggregation, inference, and queue-orchestration
-  wrappers used during the project.
+Internal implementation modules live in `internal/`. The pathology-specific
+nnU-Net source remains in `nnUNet_pathology/`.
 
 ## Installation
-
-Create and activate an environment:
 
 ```bash
 python -m venv .venv
@@ -76,88 +51,149 @@ pip install --upgrade pip
 pip install -e ./nnUNet_pathology
 ```
 
-Set the nnU-Net paths:
+Create the cluster configuration:
 
 ```bash
-export nnUNet_raw="/path/to/nnUNet_raw"
-export nnUNet_preprocessed="/path/to/nnUNet_preprocessed"
-export nnUNet_results="/path/to/nnUNet_results"
+cp reproducibility/configs/cluster_paths.env.example \
+   reproducibility/configs/cluster_paths.env
+
+nano reproducibility/configs/cluster_paths.env
+source reproducibility/configs/cluster_paths.env
 ```
 
-## Inference geometry
+## List registered experiments
 
-Standard models:
-
-```text
-model patch:  512 × 512
-sampler tile: 2048 × 2048
-output tile:  1536 × 1536
+```bash
+python experiments.py --show
 ```
 
-Context models:
+## Train or resume one fold
 
-```text
-model patch:  1024 × 1024
-sampler tile: 2048 × 2048
-output tile:  1024 × 1024
+```bash
+python train.py \
+    --experiment cutmix_stain_ema \
+    --fold 0
 ```
 
-The output crop removes lower-overlap borders before writing WSI predictions.
-Inference-time mirroring should remain enabled for final comparisons unless a
-speed ablation explicitly disables it.
+Standard nnU-Net pathology training automatically resumes when
+`checkpoint_latest.pth` exists.
 
-## Reproduction workflow
+## Fine-tune one fold with larger spatial context
 
-```text
-prepare dataset and patient-level splits
-→ train fold-specific models
-→ run held-out WSI evaluation per fold
-→ aggregate per-class Dice and confusion matrices
-→ run five-fold probability-averaged external ROI inference
-→ validate the 170 single-channel PNG predictions
-→ create the submission ZIP
+```bash
+python train.py \
+    --experiment context1024_ft100 \
+    --fold 0
 ```
 
-Important wrappers include:
+This imports the completed CutMix-stain-EMA fold's best weights and performs
+100 additional epochs using 1024 × 1024 model patches.
+
+## Run held-out WSI evaluation
+
+```bash
+python validate.py wsi \
+    --experiment context1024_ft100 \
+    --fold 0 \
+    --save-visuals
+```
+
+Final comparable evaluation uses inference-time mirroring by default.
+
+## Aggregate five completed folds
+
+```bash
+python validate.py aggregate \
+    --stage both
+```
+
+## Run external five-fold inference and create the challenge ZIP
+
+```bash
+python validate.py external \
+    --experiment context1024_ft100
+```
+
+The command validates:
+
+- exactly 170 ROI predictions;
+- identical input and output filenames;
+- identical image dimensions;
+- single-channel PNG format;
+- permitted class labels `{1, 2, 3, 4}`;
+- ZIP files with PNGs stored directly at the archive root.
+
+## Submit through SLURM
+
+```bash
+sbatch slurm/beetle_gpu_job.slurm \
+    train.py \
+    --experiment cutmix_stain_ema \
+    --fold 0
+
+sbatch slurm/beetle_gpu_job.slurm \
+    validate.py wsi \
+    --experiment context1024_ft100 \
+    --fold 0 \
+    --save-visuals
+
+sbatch slurm/beetle_gpu_job.slurm \
+    validate.py external \
+    --experiment context1024_ft100
+```
+
+## Native WSI inference geometry
+
+| Model | Model patch | Sampler tile | Written output tile |
+|---|---:|---:|---:|
+| Standard models | 512 | 2048 | 1536 |
+| Context models | 1024 | 2048 | 1024 |
+
+The written output tile equals `sampler tile − model patch size`. This discards
+lower-overlap border predictions before stitching.
+
+## Repository layout
 
 ```text
-run_external_ensemble_inference.slurm
-run_external_ensemble_inference_ctx1024ft100.slurm
-queue_only_five_cutmixema_folds.sh
-queue_context1024_finetuning_only.sh
-queue_context1024_evaluations.sh
-aggregate_cv_results.py
-aggregate_cv_results_v2.py
+.
+├── experiments.py
+├── train.py
+├── validate.py
+├── slurm/
+│   └── beetle_gpu_job.slurm
+├── internal/
+│   ├── aggregate_cv_results.py
+│   ├── context_finetune.py
+│   ├── wsi_validation_engine.py
+│   └── tools/
+├── nnUNet_pathology/
+├── preprocessing/
+├── reproducibility/
+├── outputs/
+└── archive/
+    ├── README.md
+    └── historical_hard_mining_package/
+```
+
+## Historical scripts
+
+The earlier root directory contained many one-off setup, repair, queue, and
+experiment-specific SLURM wrappers. They are removed from the clean tree but
+remain available through Git history at commit:
+
+```text
+fbcb9477914e3d0db0b424cbf8f8a87f4bec2f49
 ```
 
 ## Files intentionally excluded from Git
 
-The following are not versioned:
+Raw WSIs, annotation masks, nnU-Net preprocessed data, model checkpoints,
+generated external predictions, submission ZIP files, logs, and the full visual
+archive remain outside Git.
 
-- raw WSIs and annotation masks;
-- nnU-Net preprocessed data;
-- model checkpoints (`*.pth`, `*.pt`, `*.ckpt`, `*.safetensors`);
-- generated external ROI predictions;
-- challenge ZIP submissions;
-- large visual archives;
-- cluster logs and temporary queue records.
-
-Checkpoint paths are recorded in:
-
-```text
-reproducibility/checkpoints/checkpoint_locations_not_versioned.tsv
-```
-
-## Methodological conclusion
+## Methodological lesson
 
 Ordinary held-out-fold validation did not fully predict external multicentric
-generalization. Future model-selection workflows should incorporate an
-internal domain-shift proxy, such as source- or scanner-stratified validation,
-before committing compute to full five-fold training.
-
-## References
-
-- Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H.
-  (2021). *nnU-Net: a self-configuring method for deep learning-based
-  biomedical image segmentation*. Nature Methods, 18(2), 203–211.
-- BEETLE breast-cancer histopathology segmentation benchmark.
+generalization. Future model-selection workflows should incorporate a
+source- or scanner-stratified validation proxy before committing compute to
+full five-fold training.
