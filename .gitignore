@@ -1,28 +1,11 @@
-# Operating-system metadata
-.DS_Store
-._*
-
-# Python caches and notebooks
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ipynb_checkpoints/
-
-# Virtual environments
-.venv/
-venv/
-env/
-
-# Local environment configuration
+# Local configuration
 .env
-reproducibility/configs/cluster_paths.env
+paths.env
 
-# Data and nnU-Net runtime directories
-data/
-nnunet_raw/
-nnunet_preprocessed/
-nnunet_results/
+# Generated outputs
+outputs/*
+!outputs/.gitkeep
+!outputs/README.md
 
 # Model weights and checkpoints
 *.pth
@@ -30,28 +13,32 @@ nnunet_results/
 *.ckpt
 *.safetensors
 
-# Generated inference outputs and cluster logs
-inference_outputs/
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# Logs and archives
 logs/
 *.out
 *.err
-
-# Generated bundles and archives
 *.zip
+*.tar.gz
+
+# Editors and operating-system files
+.vscode/
+.DS_Store
+._*
+
+# Local project-maintenance artifacts
+inference_outputs/
 beetle_report_bundle_*/
-beetle_report_bundle_*.tar.gz
-beetle_folds*_delta_*/
-
-# Temporary project records
 queued_*.txt
-final_github_commit_audit.txt
-package_source_audit.txt
-paper_experiment_inventory.txt
-paper_metric_log_hits.txt
-staged_reproducibility_review.txt
-final_repro_staging_verification.txt
 
-# Local helper scripts used only during repository cleanup
 README_BEETLE_FINAL.md
 audit_final_github_commit.sh
 create_final_repro_branch.sh
@@ -59,7 +46,9 @@ inspect_final_package_sources.sh
 prepare_final_repro_commit_minimal.sh
 verify_final_repro_staging.sh
 
-# Local source-code backups
-*.bak
-*.bak_*
-*.before_*.bak
+final_github_commit_audit.txt
+final_repro_staging_verification.txt
+package_source_audit.txt
+paper_experiment_inventory.txt
+paper_metric_log_hits.txt
+staged_reproducibility_review.txt

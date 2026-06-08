@@ -1,11 +1,11 @@
-# AIMI BEETLE Project Phase
+# AIMI BEETLE Project
 
-Clean reproduction interface for the AIMI BEETLE breast-cancer
-histopathology-segmentation project.
+Minimal reproduction repository for multiclass breast-cancer histopathology
+segmentation on the BEETLE benchmark.
 
 ## Task
 
-Segment H&E pathology images into:
+The model predicts four classes:
 
 | Label | Class |
 |---:|---|
@@ -14,33 +14,56 @@ Segment H&E pathology images into:
 | 3 | Invasive epithelium |
 | 4 | Necrosis |
 
-The project focused on the dominant clinically relevant error pattern:
+The experiments focus on the dominant error pattern:
 **invasive epithelium ↔ non-invasive epithelium confusion**.
 
-## Final project result
+## Final external results
 
-| Model | External overall Dice |
+| Model | Overall Dice |
 |---|---:|
 | Released BEETLE baseline | 0.8660 |
 | CutMix + stain jitter + EMA | 0.8441 |
 | CutMix + stain jitter + EMA + context-1024 FT100 | 0.8541 |
 
-The final context model improves necrosis substantially and partially recovers
-the external-performance gap, but epithelial generalization remains weaker than
-the released baseline under multicentric domain shift.
+The context-1024 model is the strongest local model, but the released baseline
+remains strongest overall on the multicentric external benchmark.
 
-## Clean interface
+## Repository structure
 
-The user-facing workflow is intentionally reduced to three Python files:
+```text
+.
+├── experiments.py
+├── train.py
+├── validate.py
+├── paths.env.example
+├── splits_final.json
+├── pipeline/
+├── nnUNet_pathology/
+└── outputs/
+```
 
-| File | Responsibility |
+The public interface consists of three files:
+
+| File | Purpose |
 |---|---|
-| `experiments.py` | Single source of truth for experiment variants, trainers, paths, checkpoint tags, and native inference geometry. |
-| `train.py` | Train or resume any registered experiment. It also dispatches context-1024 fine-tuning. |
-| `validate.py` | Run held-out WSI evaluation, aggregate folds, run five-fold external ROI inference, validate PNGs, and create the submission ZIP. |
+| `experiments.py` | Experiment phases, trainer classes, checkpoint tags, and native inference geometry. |
+| `train.py` | Train or resume one registered experiment fold. |
+| `validate.py` | Held-out WSI validation, fold aggregation, external five-fold inference, submission checks, and ZIP creation. |
 
-Internal implementation modules live in `internal/`. The pathology-specific
-nnU-Net source remains in `nnUNet_pathology/`.
+`pipeline/` contains the implementation modules called by the public entry
+points. `nnUNet_pathology/` is the modified pathology-specific nnU-Net fork.
+
+## Scope of reproduction
+
+Raw WSIs, annotations, preprocessed tensors, and checkpoints are not included
+because they are external or large generated artifacts. This repository
+reproduces the project from a prepared BEETLE nnU-Net dataset onward.
+
+The exact patient-level split used in the project is stored in:
+
+```text
+splits_final.json
+```
 
 ## Installation
 
@@ -51,17 +74,15 @@ pip install --upgrade pip
 pip install -e ./nnUNet_pathology
 ```
 
-Create the cluster configuration:
+Configure local paths:
 
 ```bash
-cp reproducibility/configs/cluster_paths.env.example \
-   reproducibility/configs/cluster_paths.env
-
-nano reproducibility/configs/cluster_paths.env
-source reproducibility/configs/cluster_paths.env
+cp paths.env.example paths.env
+nano paths.env
+source paths.env
 ```
 
-## List registered experiments
+## List experiment phases
 
 ```bash
 python experiments.py --show
@@ -75,10 +96,7 @@ python train.py \
     --fold 0
 ```
 
-Standard nnU-Net pathology training automatically resumes when
-`checkpoint_latest.pth` exists.
-
-## Fine-tune one fold with larger spatial context
+Fine-tune the corresponding fold with larger context:
 
 ```bash
 python train.py \
@@ -86,10 +104,7 @@ python train.py \
     --fold 0
 ```
 
-This imports the completed CutMix-stain-EMA fold's best weights and performs
-100 additional epochs using 1024 × 1024 model patches.
-
-## Run held-out WSI evaluation
+## Run held-out WSI validation
 
 ```bash
 python validate.py wsi \
@@ -98,49 +113,24 @@ python validate.py wsi \
     --save-visuals
 ```
 
-Final comparable evaluation uses inference-time mirroring by default.
+Inference-time mirroring is enabled for final comparisons.
 
-## Aggregate five completed folds
+## Aggregate completed folds
 
 ```bash
 python validate.py aggregate \
     --stage both
 ```
 
-## Run external five-fold inference and create the challenge ZIP
+## Run external five-fold ensemble inference
 
 ```bash
 python validate.py external \
     --experiment context1024_ft100
 ```
 
-The command validates:
-
-- exactly 170 ROI predictions;
-- identical input and output filenames;
-- identical image dimensions;
-- single-channel PNG format;
-- permitted class labels `{1, 2, 3, 4}`;
-- ZIP files with PNGs stored directly at the archive root.
-
-## Submit through SLURM
-
-```bash
-sbatch slurm/beetle_gpu_job.slurm \
-    train.py \
-    --experiment cutmix_stain_ema \
-    --fold 0
-
-sbatch slurm/beetle_gpu_job.slurm \
-    validate.py wsi \
-    --experiment context1024_ft100 \
-    --fold 0 \
-    --save-visuals
-
-sbatch slurm/beetle_gpu_job.slurm \
-    validate.py external \
-    --experiment context1024_ft100
-```
+This validates all 170 ROI predictions and creates a challenge-ready ZIP under
+`outputs/submissions/`.
 
 ## Native WSI inference geometry
 
@@ -149,51 +139,10 @@ sbatch slurm/beetle_gpu_job.slurm \
 | Standard models | 512 | 2048 | 1536 |
 | Context models | 1024 | 2048 | 1024 |
 
-The written output tile equals `sampler tile − model patch size`. This discards
+The written output tile equals `sampler tile − model patch size`, discarding
 lower-overlap border predictions before stitching.
-
-## Repository layout
-
-```text
-.
-├── experiments.py
-├── train.py
-├── validate.py
-├── slurm/
-│   └── beetle_gpu_job.slurm
-├── internal/
-│   ├── aggregate_cv_results.py
-│   ├── context_finetune.py
-│   ├── wsi_validation_engine.py
-│   └── tools/
-├── nnUNet_pathology/
-├── preprocessing/
-├── reproducibility/
-├── outputs/
-└── archive/
-    ├── README.md
-    └── historical_hard_mining_package/
-```
-
-## Historical scripts
-
-The earlier root directory contained many one-off setup, repair, queue, and
-experiment-specific SLURM wrappers. They are removed from the clean tree but
-remain available through Git history at commit:
-
-```text
-fbcb9477914e3d0db0b424cbf8f8a87f4bec2f49
-```
 
 ## Files intentionally excluded from Git
 
-Raw WSIs, annotation masks, nnU-Net preprocessed data, model checkpoints,
-generated external predictions, submission ZIP files, logs, and the full visual
-archive remain outside Git.
-
-## Methodological lesson
-
-Ordinary held-out-fold validation did not fully predict external multicentric
-generalization. Future model-selection workflows should incorporate a
-source- or scanner-stratified validation proxy before committing compute to
-full five-fold training.
+Generated checkpoints, predictions, ZIP submissions, logs, visual archives,
+raw WSIs, annotations, and preprocessed tensors are intentionally excluded.

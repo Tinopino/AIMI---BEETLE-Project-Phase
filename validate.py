@@ -215,7 +215,7 @@ def run_wsi_evaluation(experiment_name: str, fold: int, save_visuals: bool) -> N
 
     print(json.dumps(updates, indent=2))
     runpy.run_path(
-        str(repo_root() / "internal" / "wsi_validation_engine.py"),
+        str(repo_root() / "pipeline" / "wsi_validation_engine.py"),
         run_name="__main__",
     )
 
@@ -224,7 +224,7 @@ def run_aggregation(stage: str) -> None:
     subprocess.run(
         [
             sys.executable,
-            str(repo_root() / "internal" / "aggregate_cv_results.py"),
+            str(repo_root() / "pipeline" / "aggregate_cv_results.py"),
             stage,
         ],
         check=True,
@@ -266,8 +266,12 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
-    require_environment()
     args = parse_args()
+
+    # Only model-running commands need nnU-Net environment variables.
+    # This keeps --help and check-submission usable on any machine.
+    if args.command in {"wsi", "external"}:
+        require_environment()
 
     if args.command == "wsi":
         run_wsi_evaluation(args.experiment, args.fold, args.save_visuals)

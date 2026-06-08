@@ -200,8 +200,12 @@ def validation_csv(fold: int) -> Path:
     return folder / f"fold{fold}_validation_inference_inputs.csv"
 
 
+def output_root() -> Path:
+    return Path(os.environ.get("BEETLE_OUTPUT_ROOT", str(repo_root() / "outputs")))
+
+
 def visual_root() -> Path:
-    fallback = Path(os.environ["nnUNet_results"]).parent / "validation_visuals"
+    fallback = output_root() / "visuals"
     return Path(os.environ.get("BEETLE_VISUAL_ROOT", str(fallback)))
 
 
@@ -216,17 +220,17 @@ def external_roi_folder() -> Path:
 def external_output_folder(experiment: Experiment) -> Path:
     base = Path(os.environ.get(
         "BEETLE_INFERENCE_OUTPUT_ROOT",
-        str(repo_root() / "inference_outputs"),
+        str(output_root() / "external_predictions"),
     ))
-    return base / f"{experiment.name}_external_rois"
+    return base / experiment.name
 
 
 def external_zip_path(experiment: Experiment) -> Path:
     base = Path(os.environ.get(
         "BEETLE_INFERENCE_OUTPUT_ROOT",
-        str(repo_root() / "inference_outputs"),
+        str(output_root() / "submissions"),
     ))
-    return base / f"{experiment.name}_external_submission.zip"
+    return base / f"{experiment.name}.zip"
 
 
 def print_registry() -> None:
