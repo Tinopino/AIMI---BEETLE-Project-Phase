@@ -1,0 +1,221 @@
+{
+    "stage": "base",
+    "model_dir": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d",
+    "checkpoint_tag": "cutmixema1000_best_mirror_visual",
+    "folds": [
+        {
+            "fold": 0,
+            "checkpoint": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_0/checkpoint_best.pth",
+            "confusion_matrix_csv": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_0/fold0_cutmixema1000_best_mirror_visual_confusion_matrix_rows_gt_cols_pred.csv",
+            "class_dices": {
+                "other": 0.9785569304140432,
+                "non-invasive epithelium": 0.7697771350785578,
+                "invasive epithelium": 0.742711097130066,
+                "necrosis": 0.7712358674991386
+            },
+            "macro_dice": 0.8155702575304514,
+            "micro_dice": 0.9091276433323983,
+            "non_invasive_to_invasive": 0.1215746428200569,
+            "invasive_to_non_invasive": 0.2517151214976947
+        },
+        {
+            "fold": 1,
+            "checkpoint": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_1/checkpoint_best.pth",
+            "confusion_matrix_csv": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_1/fold1_cutmixema1000_best_mirror_visual_confusion_matrix_rows_gt_cols_pred.csv",
+            "class_dices": {
+                "other": 0.9687403158103856,
+                "non-invasive epithelium": 0.7358523983170504,
+                "invasive epithelium": 0.7367961195974283,
+                "necrosis": 0.6645202346433277
+            },
+            "macro_dice": 0.776477267092048,
+            "micro_dice": 0.8938513056070089,
+            "non_invasive_to_invasive": 0.04379881875754658,
+            "invasive_to_non_invasive": 0.32762797314997133
+        },
+        {
+            "fold": 2,
+            "checkpoint": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_2/checkpoint_best.pth",
+            "confusion_matrix_csv": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_2/fold2_cutmixema1000_best_mirror_visual_confusion_matrix_rows_gt_cols_pred.csv",
+            "class_dices": {
+                "other": 0.979233635688734,
+                "non-invasive epithelium": 0.8501809304182039,
+                "invasive epithelium": 0.7888307280874601,
+                "necrosis": 0.778194989255184
+            },
+            "macro_dice": 0.8491100708623955,
+            "micro_dice": 0.932460948791431,
+            "non_invasive_to_invasive": 0.14029044756287531,
+            "invasive_to_non_invasive": 0.09743107088825621
+        },
+        {
+            "fold": 3,
+            "checkpoint": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_3/checkpoint_best.pth",
+            "confusion_matrix_csv": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_3/fold3_cutmixema1000_best_mirror_visual_confusion_matrix_rows_gt_cols_pred.csv",
+            "class_dices": {
+                "other": 0.9626718288985602,
+                "non-invasive epithelium": 0.901074732186579,
+                "invasive epithelium": 0.8135628117798043,
+                "necrosis": 0.5820655890807486
+            },
+            "macro_dice": 0.814843740486423,
+            "micro_dice": 0.9237629747280424,
+            "non_invasive_to_invasive": 0.019974454380937624,
+            "invasive_to_non_invasive": 0.14646874029299073
+        },
+        {
+            "fold": 4,
+            "checkpoint": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_4/checkpoint_best.pth",
+            "confusion_matrix_csv": "/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d/fold_4/fold4_cutmixema1000_best_mirror_visual_confusion_matrix_rows_gt_cols_pred.csv",
+            "class_dices": {
+                "other": 0.9769873276532651,
+                "non-invasive epithelium": 0.9037022590882814,
+                "invasive epithelium": 0.8638838436339425,
+                "necrosis": 0.8559976492361883
+            },
+            "macro_dice": 0.9001427699029193,
+            "micro_dice": 0.9499731672944625,
+            "non_invasive_to_invasive": 0.023819358178793472,
+            "invasive_to_non_invasive": 0.06834711327509455
+        }
+    ],
+    "fold_mean_std": {
+        "other": {
+            "mean": 0.9732380076929976,
+            "std": 0.007248607809902318,
+            "values": [
+                0.9785569304140432,
+                0.9687403158103856,
+                0.979233635688734,
+                0.9626718288985602,
+                0.9769873276532651
+            ]
+        },
+        "non-invasive epithelium": {
+            "mean": 0.8321174910177345,
+            "std": 0.07641834862060476,
+            "values": [
+                0.7697771350785578,
+                0.7358523983170504,
+                0.8501809304182039,
+                0.901074732186579,
+                0.9037022590882814
+            ]
+        },
+        "invasive epithelium": {
+            "mean": 0.7891569200457402,
+            "std": 0.05262778484647544,
+            "values": [
+                0.742711097130066,
+                0.7367961195974283,
+                0.7888307280874601,
+                0.8135628117798043,
+                0.8638838436339425
+            ]
+        },
+        "necrosis": {
+            "mean": 0.7304028659429175,
+            "std": 0.10731954559993993,
+            "values": [
+                0.7712358674991386,
+                0.6645202346433277,
+                0.778194989255184,
+                0.5820655890807486,
+                0.8559976492361883
+            ]
+        },
+        "macro_dice": {
+            "mean": 0.8312288211748474,
+            "std": 0.04631486148834207,
+            "values": [
+                0.8155702575304514,
+                0.776477267092048,
+                0.8491100708623955,
+                0.814843740486423,
+                0.9001427699029193
+            ]
+        },
+        "micro_dice": {
+            "mean": 0.9218352079506686,
+            "std": 0.02152294356090141,
+            "values": [
+                0.9091276433323983,
+                0.8938513056070089,
+                0.932460948791431,
+                0.9237629747280424,
+                0.9499731672944625
+            ]
+        },
+        "non_invasive_to_invasive": {
+            "mean": 0.06989154434004198,
+            "std": 0.05683823708441844,
+            "values": [
+                0.1215746428200569,
+                0.04379881875754658,
+                0.14029044756287531,
+                0.019974454380937624,
+                0.023819358178793472
+            ]
+        },
+        "invasive_to_non_invasive": {
+            "mean": 0.1783180038208015,
+            "std": 0.10877875723029201,
+            "values": [
+                0.2517151214976947,
+                0.32762797314997133,
+                0.09743107088825621,
+                0.14646874029299073,
+                0.06834711327509455
+            ]
+        }
+    },
+    "pooled": {
+        "class_dices": {
+            "other": 0.9738727749282194,
+            "non-invasive epithelium": 0.8342647842305758,
+            "invasive epithelium": 0.7882027516193166,
+            "necrosis": 0.7338338713859645
+        },
+        "macro_dice": 0.8325435455410191,
+        "micro_dice": 0.9232368292269489,
+        "non_invasive_to_invasive": 0.07648319927614819,
+        "invasive_to_non_invasive": 0.18570837110035943,
+        "confusion_matrix_rows_gt_cols_prediction": [
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                13862500179,
+                137858029,
+                212035771,
+                178363898
+            ],
+            [
+                0,
+                68198629,
+                2508019396,
+                219100840,
+                69373539
+            ],
+            [
+                0,
+                107569576,
+                467297969,
+                1921494999,
+                19937428
+            ],
+            [
+                0,
+                39785140,
+                34658305,
+                6704782,
+                480861711
+            ]
+        ]
+    }
+}
