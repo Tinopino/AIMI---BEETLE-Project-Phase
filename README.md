@@ -36,7 +36,7 @@ remains strongest overall on the multicentric external benchmark.
 ├── train.py
 ├── validate.py
 ├── paths.env.example
-├── splits_final.json
+├── splits.json
 ├── pipeline/
 ├── nnUNet_pathology/
 └── outputs/
@@ -62,7 +62,7 @@ reproduces the project from a prepared BEETLE nnU-Net dataset onward.
 The exact patient-level split used in the project is stored in:
 
 ```text
-splits_final.json
+splits.json
 ```
 
 ## Installation
