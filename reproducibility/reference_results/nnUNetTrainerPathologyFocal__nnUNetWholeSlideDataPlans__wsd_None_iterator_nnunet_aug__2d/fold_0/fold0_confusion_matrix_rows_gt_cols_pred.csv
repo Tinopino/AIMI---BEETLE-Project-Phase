@@ -1,6 +1,0 @@
-GT \ Pred,0_background_or_ignored,1_other,2_non_invasive_epithelium,3_invasive_epithelium,4_necrosis
-0_background_or_ignored,0,0,0,0,0
-1_other,0,2729909204,44607077,9943554,13755297
-2_non-invasive epithelium,0,23959788,447713970,82541166,18190747
-3_invasive epithelium,0,37494439,196467754,332407805,22035693
-4_necrosis,0,24031781,3688358,326008,117779678

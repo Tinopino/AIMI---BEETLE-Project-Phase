@@ -20,7 +20,7 @@ def require_environment() -> None:
         raise RuntimeError(
             "Missing required environment variables: "
             + ", ".join(missing)
-            + ". Source reproducibility/configs/cluster_paths.env.example "
+            + ". Source paths.env after copying and adapting paths.env.example "
               "after adapting it to your system."
         )
 
@@ -43,7 +43,7 @@ def context_finetuning_command(fold: int) -> list[str]:
     return [
         sys.executable,
         "-u",
-        str(repo_root() / "internal" / "context_finetune.py"),
+        str(repo_root() / "pipeline" / "context_finetune.py"),
         "--fold",
         str(fold),
     ]
