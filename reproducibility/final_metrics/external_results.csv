@@ -1,0 +1,4 @@
+model,overall_dice,other,non_invasive_epithelium,invasive_epithelium,necrosis
+released_BEETLE_baseline,0.8660,0.9370,0.6523,0.7755,0.5110
+cutmix_stain_ema_5fold,0.8441,0.9298,0.6000,0.7249,0.6141
+cutmix_stain_ema_context1024_ft100_5fold,0.8541,0.9355,0.5981,0.7343,0.6477

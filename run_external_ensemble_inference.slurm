@@ -17,6 +17,10 @@ set -euo pipefail
 cd /home/tijnveldwijk/AIMI---BEETLE-Project-Phase
 source /scratch/tijnveldwijk/virtual_environments/AIMI-BEETLE/bin/activate
 
+export nnUNet_raw="/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_raw"
+export nnUNet_preprocessed="/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_preprocessed"
+export nnUNet_results="/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results"
+
 MODEL_BASE_PATH="/vol/csedu-nobackup/course/IMC037_aimi/group14/nnunet/tijn/pathology/nnUNet_results/Dataset301_BEETLE/nnUNetTrainer_CutMixStainEMA__nnUNetWholeSlideDataPlans__wsd_None_iterator_nnunet_aug__2d"
 ROI_FOLDER="/vol/csedu-nobackup/course/IMC037_aimi/group14/aalina/images/evaluation/rois"
 OUTPUT_FOLDER="/home/tijnveldwijk/AIMI---BEETLE-Project-Phase/inference_outputs/cutmix_stain_ema_5fold_external_rois"
