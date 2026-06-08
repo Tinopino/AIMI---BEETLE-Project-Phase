@@ -189,16 +189,46 @@ def run_external_inference(
     validate_submission(roi_folder, output_folder, zip_path)
 
 
+def ensure_validation_csv(fold: int) -> Path:
+    """Generate the fold manifest from splits.json when it is not present yet."""
+    csv_path = validation_csv(fold)
+    if csv_path.is_file():
+        return csv_path
+
+    generator = repo_root() / "configure_validation_inputs.py"
+    if not generator.is_file():
+        raise FileNotFoundError(
+            f"Missing validation CSV: {csv_path}. "
+            f"Generator not found: {generator}"
+        )
+
+    print(f"Validation CSV is missing; generating fold {fold}: {csv_path}")
+    subprocess.run(
+        [
+            sys.executable,
+            str(generator),
+            "--fold",
+            str(fold),
+        ],
+        check=True,
+    )
+
+    if not csv_path.is_file():
+        raise FileNotFoundError(
+            f"Validation manifest generator completed, but CSV is still missing: {csv_path}"
+        )
+    return csv_path
+
+
 def run_wsi_evaluation(experiment_name: str, fold: int, save_visuals: bool) -> None:
     exp = get_experiment(experiment_name)
     base_path = model_dir(exp)
     checkpoint = base_path / f"fold_{fold}" / exp.checkpoint_name
-    csv_path = validation_csv(fold)
 
     if not checkpoint.is_file():
         raise FileNotFoundError(f"Missing checkpoint: {checkpoint}")
-    if not csv_path.is_file():
-        raise FileNotFoundError(f"Missing validation CSV: {csv_path}")
+
+    csv_path = ensure_validation_csv(fold)
 
     updates = {
         "MODEL_BASE_PATH": str(base_path),
