@@ -22,8 +22,7 @@ The experiments focus on the dominant error pattern:
 | Model | Overall Dice |
 |---|---:|
 | Released BEETLE baseline | 0.8660 |
-| CutMix + stain jitter + EMA | 0.8441 |
-| CutMix + stain jitter + EMA + context-1024 FT100 | 0.8541 |
+| CutMix + stain jitter + EMA + context-1024 FT100 | 0.8715|
 
 The context-1024 model is the strongest local model, but the released baseline
 remains strongest overall on the multicentric external benchmark.
