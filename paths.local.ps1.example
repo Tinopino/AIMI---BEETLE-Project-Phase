@@ -1,0 +1,27 @@
+# Copy to paths.local.ps1, adapt paths, then run:
+#   . .\paths.local.ps1
+
+$env:AIMI_REPO_ROOT = "D:\AIMI---BEETLE-Project-Phase"
+$env:BEETLE_DATA_ROOT = "D:\AIMI---BEETLE-Project-Phase\data"
+
+$env:nnUNet_raw = "D:\nnunet\nnUNet_raw"
+$env:nnUNet_preprocessed = "D:\nnunet\nnUNet_preprocessed"
+$env:nnUNet_results = "D:\nnunet\nnUNet_results"
+
+$env:BEETLE_EXTERNAL_ROIS = "$env:BEETLE_DATA_ROOT\images\evaluation\rois"
+$env:BEETLE_VALIDATION_MASK_ROOT = "$env:BEETLE_DATA_ROOT\annotations\masks"
+$env:BEETLE_VALIDATION_CSV_DIR = "$env:AIMI_REPO_ROOT\outputs\validation_inputs"
+
+$env:BEETLE_OUTPUT_ROOT = "$env:AIMI_REPO_ROOT\outputs"
+$env:BEETLE_VISUAL_ROOT = "$env:BEETLE_OUTPUT_ROOT\visuals"
+$env:BEETLE_EXTERNAL_PREDICTION_ROOT = "$env:BEETLE_OUTPUT_ROOT\external_predictions"
+$env:BEETLE_SUBMISSION_ROOT = "$env:BEETLE_OUTPUT_ROOT\submissions"
+
+New-Item -ItemType Directory -Force -Path $env:nnUNet_raw | Out-Null
+New-Item -ItemType Directory -Force -Path $env:nnUNet_preprocessed | Out-Null
+New-Item -ItemType Directory -Force -Path $env:nnUNet_results | Out-Null
+New-Item -ItemType Directory -Force -Path $env:BEETLE_VALIDATION_CSV_DIR | Out-Null
+New-Item -ItemType Directory -Force -Path $env:BEETLE_OUTPUT_ROOT | Out-Null
+New-Item -ItemType Directory -Force -Path $env:BEETLE_VISUAL_ROOT | Out-Null
+New-Item -ItemType Directory -Force -Path $env:BEETLE_EXTERNAL_PREDICTION_ROOT | Out-Null
+New-Item -ItemType Directory -Force -Path $env:BEETLE_SUBMISSION_ROOT | Out-Null

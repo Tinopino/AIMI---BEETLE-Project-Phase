@@ -2,12 +2,15 @@ import os
 import sys
 import numpy as np
 import torch
+from pathlib import Path
 from nnunetv2.training.nnUNetTrainer.nnUNetTrainer import nnUNetTrainer
 from batchgenerators.utilities.file_and_folder_operations import join, load_json
 
 # Whole slide data dataloader
 if os.name == 'nt':
-    os.add_dll_directory(r"C:\Program Files\openslide\bin") # windows
+    openslide_bin = Path(r"C:\Program Files\openslide\bin")
+    if openslide_bin.exists():
+        os.add_dll_directory(str(openslide_bin)) # windows
 from wholeslidedata.iterators import create_batch_iterator
 from wholeslidedata.iterators.batchiterator import BatchIterator
 # from wholeslidedata.samplers.utils import crop_data

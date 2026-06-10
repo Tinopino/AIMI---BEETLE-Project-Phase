@@ -38,7 +38,11 @@ remains strongest overall on the multicentric external benchmark.
 ├── train.py
 ├── validate.py
 ├── paths.env.example
+├── paths.local.ps1.example
 ├── splits.json
+├── splits_full587.json
+├── splits_project396.json
+├── REPRODUCING_FINAL_MODEL.md
 ├── pipeline/
 ├── nnUNet_pathology/
 └── outputs/
@@ -75,10 +79,31 @@ configure paths
 → validate 170 PNG masks and create a submission ZIP
 ```
 
-The exact WSI-level fold assignment used in the project is stored in:
+The default WSI-level fold assignment used for the actual final model training
+is the complete 587-slide BEETLE development split and is stored in:
 
 ```text
 splits.json
+```
+
+For clarity, the split profiles are also stored explicitly as:
+
+| File | Purpose |
+|---|---|
+| `splits.json` | Default actual final-model split; identical to `splits_full587.json`. |
+| `splits_full587.json` | Complete 587-slide BEETLE development split used for the actual final model. |
+| `splits_project396.json` | 396-slide project split used for earlier experiments and ablations. |
+
+Use `--reference-splits` with `configure_data_paths.py` when reproducing a
+non-default profile. Do not mix full587 final-model runs and project396
+experiment/ablation runs in the same `nnUNet_preprocessed` or
+`nnUNet_results` directories.
+
+For the shortest end-to-end instructions for reproducing the final model on the
+course cluster, see:
+
+```text
+REPRODUCING_FINAL_MODEL.md
 ```
 
 ## Required external data
@@ -139,7 +164,12 @@ python -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
 pip install -e ./nnUNet_pathology
+pip install -r requirements-cluster.txt
 ```
+
+`requirements-cluster.txt` lists project-level packages that are used by the
+BEETLE training/validation scripts but are not part of the upstream nnU-Net
+fork metadata.
 
 Configure local paths:
 
@@ -153,6 +183,9 @@ The defaults in `paths.env.example` match the original course-cluster layout.
 On another machine, adapt `BEETLE_DATA_ROOT`, `nnUNet_raw`,
 `nnUNet_preprocessed`, `nnUNet_results`, and `BEETLE_VENV`.
 
+On Windows/PowerShell, use `paths.local.ps1.example` as a template instead of
+the Bash-oriented `paths.env.example`.
+
 ## Rewrite the committed split paths for another machine
 
 The committed `splits.json` preserves the exact five-fold WSI assignments used
@@ -162,7 +195,8 @@ paths. Rewrite those path prefixes for another filesystem with:
 ```bash
 python configure_data_paths.py \
     --data-root /path/to/beetle-data \
-    --nnunet-preprocessed /path/to/nnUNet_preprocessed
+    --nnunet-preprocessed /path/to/nnUNet_preprocessed \
+    --reference-splits splits_full587.json
 ```
 
 This writes:
@@ -180,8 +214,13 @@ writing with:
 python configure_data_paths.py \
     --data-root /path/to/beetle-data \
     --nnunet-preprocessed /path/to/nnUNet_preprocessed \
+    --reference-splits splits_full587.json \
     --check-only
 ```
+
+To reproduce the earlier 396-slide experiments/ablations, replace
+`splits_full587.json` with `splits_project396.json` and use separate
+`nnUNet_preprocessed` and `nnUNet_results` roots.
 
 Use `--force` only after reviewing an existing destination file. Use
 `--skip-file-check` only when preparing paths before the external files are
